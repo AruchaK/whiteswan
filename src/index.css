@@ -3,6 +3,7 @@
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+  --font-poppins: 'Poppins', sans-serif;
 
   /* Warm espresso/brown palette */
   --color-espresso-50: #FAF6F1;

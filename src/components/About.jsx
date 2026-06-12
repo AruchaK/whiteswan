@@ -32,18 +32,18 @@ export default function About() {
         </div>
 
         {/* Right — Content */}
-        <div className={`flex flex-col justify-center px-8 py-16 sm:px-12 lg:px-16 lg:py-20 transition-all duration-1000 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+        <div className={`flex flex-col font-sans justify-center px-8 py-16 sm:px-12 lg:px-16 lg:py-20 transition-all duration-1000 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
           }`}>
           {/* Section title */}
           <h2
-            className="text-[13px] tracking-[0.25em] uppercase font-medium mb-8"
+            className="text-[24px] font-sans tracking-[0.25em] uppercase font-medium mb-8"
             style={{ color: '#7a5e3f' }}
           >
             An Honest Beginning
           </h2>
 
           {/* First paragraph */}
-          <div className="space-y-1 mb-8 text-[15px] leading-relaxed text-espresso-800">
+          <div className="space-y-1 mb-8 text-[20px] leading-relaxed text-espresso-800">
             <p>
               There's a particular kind of discomfort that visits at quiet
               moments. Not urgent. Not demanding.
@@ -54,14 +54,14 @@ export default function About() {
           </div>
 
           {/* Italic block */}
-          <div className="mb-8 text-[15px] leading-relaxed italic text-espresso-600/80">
+          <div className="mb-8 text-[20px] leading-relaxed italic text-espresso-600/80">
             <p>Conversations left unspoken.</p>
             <p>For the people you love.</p>
             <p>For when it matters.</p>
           </div>
 
           {/* Second paragraph */}
-          <div className="mb-8 text-[15px] leading-relaxed text-espresso-800">
+          <div className="mb-8 text-[20px] leading-relaxed text-espresso-800">
             <p>
               We keep putting it off. Because living always feels more urgent
               than preparing for what comes after. And because this kind of
@@ -71,7 +71,7 @@ export default function About() {
           </div>
 
           {/* Italic emphasis */}
-          <p className="mb-10 text-[15px] italic font-medium text-espresso-800">
+          <p className="mb-10 text-[20px] italic font-medium text-espresso-800">
             It doesn't have to feel this way.
           </p>
 
@@ -79,7 +79,7 @@ export default function About() {
           <a
             href="#begin"
             id="about-cta"
-            className="inline-flex items-center gap-3 self-start border border-espresso-600/30 rounded-full px-7 py-3 text-[14px] text-espresso-800 no-underline transition-all hover:bg-espresso-800 hover:text-cream-100 hover:border-espresso-800"
+            className="inline-flex items-center gap-3 self-start border border-espresso-600/30 rounded-full px-7 py-3 text-[14px] lg:text-[18px] text-espresso-800 no-underline transition-all hover:bg-espresso-800 hover:text-cream-100 hover:border-espresso-800"
           >
             Welcome to the journey of living and leaving with meaning
             <span className="text-[16px]">→</span>

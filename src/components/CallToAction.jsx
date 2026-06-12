@@ -17,27 +17,26 @@ export default function CallToAction() {
     <section
       ref={ref}
       id="cta"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden font-poppins"
     >
       {/* Background Image covering the entire section */}
-      <img 
-        src="/callimg.png" 
-        alt="A man sitting peacefully looking out at the ocean" 
+      <img
+        src="/callimg.png"
+        alt="A man sitting peacefully looking out at the ocean"
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
       {/* Solid Semi-transparent Overlay Panel with a sharp vertical edge and backdrop blur */}
-      <div 
+      <div
         className="absolute inset-y-0 left-0 w-full lg:w-[45%] backdrop-blur-md"
         style={{ backgroundColor: 'rgba(64, 58, 54, 0.82)' }}
         aria-hidden="true"
       />
 
       {/* Left — Text Panel */}
-      <div 
-        className={`relative z-10 w-full lg:w-[45%] px-10 py-24 sm:px-16 lg:px-20 flex flex-col justify-center min-h-screen transition-all duration-1000 ${
-          visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
-        }`}
+      <div
+        className={`relative z-10 w-full lg:w-[45%] px-10 py-24 sm:px-16 lg:px-20 flex flex-col justify-center min-h-screen transition-all duration-1000 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+          }`}
       >
         <div className="w-full text-center">
           <h2 className="font-sans text-[32px] sm:text-[36px] text-cream-100 font-light leading-snug tracking-wide mb-10">

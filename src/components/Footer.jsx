@@ -7,8 +7,8 @@ export default function Footer() {
         {/* Top — Logo and tagline */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
           <div>
-            <span className="font-serif text-xl tracking-[0.25em] text-cream-200">WHITESWAN</span>
-            <p className="text-cream-400/50 text-xs mt-2 tracking-wider">A Life & Legacy Planning Experience</p>
+            <img className="w-36" src="/logo-white.svg" alt="logo" />
+            <p className="text-cream-400/50 italic text-xs mt-2 tracking-wider">A Life & Legacy Planning Experience</p>
           </div>
         </div>
 

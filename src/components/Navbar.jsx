@@ -9,34 +9,29 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
 
         {/* Logo */}
-        <a
-          href="#"
-          className="font-sans text-2xl tracking-[0.18em] font-medium text-[#1a1208] no-underline"
-        >
-          WHITESWAN
-        </a>
+        <img className="w-48" src="/logo.svg" alt="logo" />
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex font-poppins items-center gap-8">
           <a
             href="#about"
-            className="text-sm text-[#2c1f10] no-underline hover:opacity-70 transition-opacity"
+            className="text-md text-[#2c1f10] no-underline hover:opacity-70 transition-opacity"
           >
             About
           </a>
           <a
             href="#contact"
-            className="text-sm text-[#2c1f10] no-underline hover:opacity-70 transition-opacity"
+            className="text-md text-[#2c1f10] no-underline hover:opacity-70 transition-opacity"
           >
             Contact us
           </a>
-          <button className="flex items-center gap-1 text-sm text-[#2c1f10] hover:opacity-70 transition-opacity bg-transparent border-none cursor-pointer p-0">
+          <button className="flex items-center gap-1 text-md text-[#2c1f10] hover:opacity-70 transition-opacity bg-transparent border-none cursor-pointer p-0">
             English
             <ChevronDown size={13} strokeWidth={1.8} />
           </button>
           <a
             href="#login"
-            className="text-sm bg-[#1a1208] text-[#f5f0eb] px-[22px] py-[9px] rounded-[6px] no-underline hover:bg-[#2e2010] transition-colors"
+            className="text-md bg-[#1a1208] text-[#f5f0eb] px-[22px] py-[9px] rounded-[6px] no-underline hover:bg-[#2e2010] transition-colors"
           >
             Log in
           </a>

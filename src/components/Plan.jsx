@@ -56,22 +56,22 @@ export default function Plan() {
                 {/* Header */}
                 <div className={`mb-14 transition-all duration-800 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                     }`}>
-                    <p className="text-[12px] tracking-[0.25em] uppercase text-gold-400 mb-4 font-medium">
+                    <p className="text-[22px] tracking-[0.25em] uppercase text-gold-400 mb-4 font-medium">
                         What Lives Inside Your Plan
                     </p>
-                    <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-cream-100 font-light leading-snug mb-4">
+                    <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl text-cream-100 font-light leading-snug mb-4">
                         A complete framework for what life's
                         <br className="hidden sm:block" />
                         preparation means.
                     </h2>
-                    <p className="text-cream-300/50 text-lg sm:text-xl font-light">
+                    <p className="text-cream-300/50 font-poppins text-lg sm:text-2xl font-light">
                         Five dimensions of a life thoughtfully prepared for.
                     </p>
                 </div>
 
                 {/* Scrollable cards row */}
                 <div
-                    className="flex gap-5 overflow-x-auto pb-6"
+                    className="flex gap-5 overflow-x-auto pb-6 font-poppins"
                     style={{
                         scrollbarWidth: 'none',
                         msOverflowStyle: 'none',
@@ -99,12 +99,12 @@ export default function Plan() {
                             </div>
 
                             {/* Title */}
-                            <h3 className="font-serif text-2xl sm:text-3xl text-espresso-900 mb-4 font-medium">
+                            <h3 className="text-2xl sm:text-3xl text-espresso-900 mb-4 font-medium">
                                 {dim.title}
                             </h3>
 
                             {/* Description */}
-                            <p className="text-espresso-700 text-[14px] leading-relaxed">
+                            <p className="text-espresso-700 text-[14px] font-medium  leading-relaxed">
                                 {dim.description}
                             </p>
                         </div>

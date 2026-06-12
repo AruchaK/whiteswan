@@ -17,8 +17,8 @@ function App() {
         <Tagline />
         <About />
         <Features />
-        <Plan />
         <Quote />
+        <Plan />
         <CallToAction />
       </main>
       <Footer />

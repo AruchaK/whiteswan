@@ -63,22 +63,22 @@ export default function Features() {
         {/* Section header */}
         <div className={`text-center mb-16 transition-all duration-800 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-          <p className="text-[12px] tracking-[0.3em] uppercase text-gold-400 mb-5 font-medium">
+          <p className="text-[20px] tracking-[0.3em] uppercase text-gold-400 mb-5 font-medium">
             The Journey
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-cream-100 font-light leading-snug">
+          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl text-cream-100 font-light leading-snug">
             A private planning experience for life, legacy,
             <br className="hidden sm:block" />
             and family peace of mind.
           </h2>
-          <p className="mt-6 text-cream-300/60 text-[15px] max-w-3xl mx-auto leading-relaxed">
+          <p className="mt-6 font-poppins text-cream-300/60 text-[18px] max-w-3xl mx-auto leading-relaxed">
             WhiteSwan brings structure to conversations that are often difficult to begin. Through
             a thoughtful guided process, we help you reflect, organize, document, and prepare.
           </p>
         </div>
 
         {/* Three step cards with arrows */}
-        <div className="flex flex-col lg:flex-row items-stretch justify-center gap-0">
+        <div className="flex fonts-poppins gap-4 flex-col lg:flex-row items-stretch justify-center gap-0">
           {steps.map((step, i) => (
             <div key={step.number} className="flex items-stretch">
               {/* Card */}
@@ -99,12 +99,12 @@ export default function Features() {
                 <p className="text-gold-400 font-serif text-lg mb-3">{step.number}</p>
 
                 {/* Title */}
-                <h3 className="font-serif text-2xl sm:text-3xl text-cream-100 mb-4">
+                <h3 className=" text-2xl sm:text-3xl text-cream-100 mb-4">
                   {step.title}
                 </h3>
 
                 {/* Subtitle */}
-                <p className="text-gold-400 italic text-sm mb-5 font-medium">
+                <p className="text-gold-400 italic text-md mb-5 font-medium">
                   {step.subtitle}
                 </p>
 

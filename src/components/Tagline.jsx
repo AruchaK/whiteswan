@@ -20,11 +20,11 @@ export default function Tagline() {
       className="relative py-32 sm:py-40 lg:py-48 bg-[#e8e4df] px-6 overflow-hidden flex items-center justify-center min-h-[50vh]"
     >
       {/* Background Watermark Text */}
-      <div 
+      <div
         className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
         aria-hidden="true"
       >
-        <span 
+        <span
           className="font-serif uppercase tracking-widest text-white/50"
           style={{ fontSize: 'clamp(5rem, 15vw, 14rem)', lineHeight: 1 }}
         >
@@ -33,21 +33,20 @@ export default function Tagline() {
       </div>
 
       {/* Foreground Content */}
-      <div 
-        className={`relative z-10 flex flex-col items-center text-center transition-all duration-1000 ${
-          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-        }`}
+      <div
+        className={`relative z-10 flex flex-col items-center text-center transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}
       >
         {/* Top Divider */}
         <div className="w-16 h-px bg-espresso-800 mb-8" />
 
         {/* Main tagline */}
-        <h2 className="font-serif text-[28px] sm:text-[36px] lg:text-[42px] text-espresso-900 font-normal leading-snug tracking-wide">
+        <h2 className="font-serif text-[28px] sm:text-[36px] lg:text-[52px] text-espresso-900 font-normal leading-snug tracking-wide">
           You've spent a lifetime building what matters.
         </h2>
 
         {/* Sub text */}
-        <p className="font-serif text-[20px] sm:text-[24px] lg:text-[28px] text-espresso-800 font-normal italic leading-snug tracking-wide mt-4">
+        <p className="font-serif text-[20px] sm:text-[24px] lg:text-[32px] text-espresso-800 font-normal italic leading-snug tracking-wide mt-4">
           WhiteSwan helps you make sure it's not lost.
         </p>
 

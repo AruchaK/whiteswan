@@ -22,13 +22,12 @@ export default function Quote() {
       <div className="grid lg:grid-cols-2">
         {/* Left — Quote text */}
         <div
-          className={`flex flex-col justify-center items-center text-center px-10 py-20 sm:px-16 lg:px-20 lg:py-28 transition-all duration-1000 ${
-            visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-          }`}
+          className={`flex flex-col justify-center items-center text-center px-10 py-20 sm:px-16 lg:px-20 lg:py-28 transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
           style={{ backgroundColor: '#d5c4af' }}
         >
           {/* Top line */}
-          <p className="text-[17px] sm:text-[19px] text-espresso-800 leading-relaxed mb-8 max-w-lg">
+          <p className="text-[17px] sm:text-[22px] font-poppins text-espresso-800 leading-relaxed mb-8">
             Life's most important moments rarely announce themselves,
             <br className="hidden sm:block" />
             but you can be ready for them.
@@ -44,7 +43,7 @@ export default function Quote() {
           </div>
 
           {/* Main quote */}
-          <p className="text-[17px] sm:text-[19px] text-espresso-800 leading-relaxed max-w-lg">
+          <p className="text-[17px] font-poppins sm:text-[22px] text-espresso-800 leading-relaxed">
             Because planning, done well, is <strong>two gifts at once:</strong>
             <br />
             <strong><em>a quieter mind</em></strong> for you and <strong><em>a softer landing</em></strong>
@@ -54,9 +53,8 @@ export default function Quote() {
         </div>
 
         {/* Right — Image */}
-        <div className={`relative overflow-hidden transition-all duration-1000 delay-200 ${
-          visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-        }`}>
+        <div className={`relative overflow-hidden transition-all duration-1000 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+          }`}>
           <img
             src="/quoteimg.png"
             alt="A serene living space with natural light and greenery"
