@@ -63,7 +63,7 @@ export default function Features() {
         {/* Section header */}
         <div className={`text-center mb-16 transition-all duration-800 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-          <p className="text-[16px] tracking-[0.3em] uppercase text-[#DDDDDD] mb-5 font-medium">
+          <p className="text-[16px] tracking-[0.3em] uppercase text-mist-100 mb-5 font-medium">
             WHAT WE HELP YOU DO
           </p>
           <h2 className="font-poppins text-3xl sm:text-3xl lg:text-4xl text-cream-100 font-light leading-snug">

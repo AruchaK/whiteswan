@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthLayout from '../components/AuthLayout'
+import Button from '../components/ui/Button'
 
 const TOTAL_STEPS = 4
 
@@ -10,7 +11,7 @@ function StepProgress({ current }) {
       {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
         <div
           key={i}
-          className={`h-[2px] flex-1 transition-colors duration-400 ${
+          className={`h-0.5 flex-1 transition-colors duration-400 ${
             i < current ? 'bg-espresso-800' : 'bg-espresso-200'
           }`}
         />
@@ -35,26 +36,27 @@ const inputClass =
 
 function ContinueButton({ onClick, disabled }) {
   return (
-    <button
+    <Button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex-1 bg-espresso-900 text-cream-50 py-3 text-xs tracking-[0.12em] uppercase hover:bg-espresso-700 active:bg-espresso-950 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+      className="flex-1 py-3 text-xs tracking-[0.12em] uppercase"
     >
       Continue →
-    </button>
+    </Button>
   )
 }
 
 function BackButton({ onClick }) {
   return (
-    <button
+    <Button
+      variant="outline"
       type="button"
       onClick={onClick}
-      className="flex-1 border border-espresso-300 text-espresso-700 py-3 text-xs tracking-[0.12em] uppercase hover:bg-cream-100 transition-colors"
+      className="flex-1 py-3 text-xs tracking-[0.12em] uppercase"
     >
       ← Back
-    </button>
+    </Button>
   )
 }
 
@@ -213,7 +215,7 @@ function Step3({ data, onChange, onNext, onBack }) {
             type="checkbox"
             checked={data.agreed}
             onChange={(e) => onChange({ agreed: e.target.checked })}
-            className="mt-0.5 accent-espresso-700 w-3.5 h-3.5 flex-shrink-0"
+            className="mt-0.5 accent-espresso-700 w-3.5 h-3.5 shrink-0"
           />
           <span className="text-[11px] text-espresso-500 leading-relaxed">
             I understand WhiteSwan encrypts my vault with AES-256 and agree to the{' '}
@@ -251,7 +253,7 @@ function Step4({ email }) {
 
       <div className="border border-espresso-200 p-6 mb-8">
         <div className="flex items-start gap-4">
-          <div className="w-6 h-6 rounded-full border border-espresso-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <div className="w-6 h-6 rounded-full border border-espresso-400 flex items-center justify-center shrink-0 mt-0.5">
             <svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true">
               <path
                 d="M1 4L3.5 6.5L9 1"
@@ -273,12 +275,9 @@ function Step4({ email }) {
         </div>
       </div>
 
-      <button
-        type="button"
-        className="w-full bg-espresso-900 text-cream-50 py-3 text-xs tracking-[0.12em] uppercase hover:bg-espresso-700 active:bg-espresso-950 transition-colors"
-      >
+      <Button type="button" className="w-full py-3 text-xs tracking-[0.12em] uppercase">
         Enter the vault →
-      </button>
+      </Button>
     </>
   )
 }

@@ -36,16 +36,14 @@ export default function About() {
           }`}>
           {/* Section title */}
           <h2
-            className="text-[20px] font-sans tracking-[0.25em] uppercase font-medium mb-3 text-[#493225]"
+            className="text-[20px] font-sans tracking-[0.25em] uppercase font-medium mb-3 text-espresso-750"
           >
             The Quite Truth
           </h2>
 
           {/* First paragraph */}
           <div className="mb-8 text-[45px] lg:text-[54px] text-espresso-800">
-            <h2s>
-              Most families are unprepared <br /> for life’s difficult moments.
-            </h2s>
+            Most families are unprepared <br /> for life’s difficult moments.
           </div>
 
 

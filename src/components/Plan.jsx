@@ -50,13 +50,13 @@ export default function Plan() {
         <section
             ref={ref}
             id="plan"
-            className="bg-[#474B54] py-20 sm:py-28 lg:py-32 overflow-hidden"
+            className="bg-slate-800 py-20 sm:py-28 lg:py-32 overflow-hidden"
         >
             <div className="max-w-[1800px] mx-auto px-6 lg:px-10">
                 {/* Header */}
                 <div className={`mb-14 transition-all flex flex-col items-center duration-800 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                     }`}>
-                    <p className="text:xl lg:text-[18px] tracking-[0.25em] uppercase text-[#D0DADC] mb-4 font-medium">
+                    <p className="text:xl lg:text-[18px] tracking-[0.25em] uppercase text-mist-200 mb-4 font-medium">
                         A COMPLETE FRAMEWORK FOR A LIFE’S PREPARATION
                     </p>
                     <h2 className="font-poppins text-2xl lg:text-4xl text-cream-100 font-light leading-snug mt-4 mb-8">
@@ -79,12 +79,11 @@ export default function Plan() {
                     {dimensions.map((dim, i) => (
                         <div
                             key={dim.numeral}
-                            className={`flex-shrink-0 w-[280px] sm:w-[300px] rounded-2xl p-7 sm:p-8 flex flex-col transition-all duration-700 ${visible
+                            className={`flex-shrink-0 w-[280px] sm:w-[300px] rounded-2xl p-7 sm:p-8 flex flex-col bg-white/80 transition-all duration-700 ${visible
                                 ? 'opacity-100 translate-y-0'
                                 : 'opacity-0 translate-y-8'
                                 }`}
                             style={{
-                                backgroundColor: '#FFFFFFCC',
                                 transitionDelay: visible ? `${(i + 1) * 150}ms` : '0ms',
                             }}
                         >

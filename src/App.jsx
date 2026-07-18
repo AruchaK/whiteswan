@@ -14,6 +14,11 @@ import AboutPage from './pages/AboutPage'
 import DashboardPage from './pages/DashboardPage'
 import VaultPage from './pages/VaultPage'
 import SettingsPage from './pages/SettingsPage'
+import FamilyPage from './pages/FamilyPage'
+import FamilyAddPage from './pages/FamilyAddPage'
+import FamilyTreePage from './pages/FamilyTreePage'
+import PlanningPage from './pages/PlanningPage'
+import PillarPlanningPage from './pages/PillarPlanningPage'
 
 function LandingPage() {
   return (
@@ -44,6 +49,11 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/dashboard/vault" element={<VaultPage />} />
         <Route path="/dashboard/settings" element={<SettingsPage />} />
+        <Route path="/dashboard/family" element={<FamilyPage />} />
+        <Route path="/family/add" element={<FamilyAddPage />} />
+        <Route path="/family/tree" element={<FamilyTreePage />} />
+        <Route path="/dashboard/planning" element={<PlanningPage />} />
+        <Route path="/dashboard/planning/:pillar" element={<PillarPlanningPage />} />
       </Routes>
     </BrowserRouter>
   )

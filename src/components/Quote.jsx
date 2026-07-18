@@ -22,9 +22,8 @@ export default function Quote() {
       <div className="grid lg:grid-cols-2">
         {/* Left — Quote text */}
         <div
-          className={`flex flex-col justify-center items-center text-center px-10 py-20 sm:px-16 lg:px-20 lg:py-28 transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          className={`flex flex-col justify-center items-center text-center px-10 py-20 sm:px-16 lg:px-20 lg:py-28 bg-sand-500 transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
-          style={{ backgroundColor: '#d5c4af' }}
         >
           {/* Top line */}
           <p className="text-[17px] sm:text-[22px] font-poppins text-espresso-800 leading-relaxed mb-8">
@@ -35,8 +34,7 @@ export default function Quote() {
 
           {/* Decorative quote mark */}
           <div
-            className="font-serif text-6xl leading-none mb-6"
-            style={{ color: '#9c8b78' }}
+            className="font-serif text-6xl leading-none mb-6 text-sand-700"
             aria-hidden="true"
           >
             "

@@ -1,6 +1,19 @@
-import { Search, Upload, Lock, ChevronDown } from 'lucide-react'
-import DashboardLayout from '../components/DashboardLayout'
-import './VaultPage.css'
+import { Search, Upload, Lock, ChevronDown, ShieldCheck, TriangleAlert } from 'lucide-react'
+import AppLayout from '../components/AppLayout'
+import CategoryIcon from '../components/ui/CategoryIcon'
+
+const STATUS_BADGE = {
+  verified: {
+    label: 'Verified',
+    icon: ShieldCheck,
+    className: 'text-green-700 bg-green-50 border-green-100',
+  },
+  draft: {
+    label: 'Draft',
+    icon: TriangleAlert,
+    className: 'text-amber-700 bg-amber-50 border-amber-100',
+  },
+}
 
 /* ── Mock data ── */
 const documents = [
@@ -66,115 +79,107 @@ const documents = [
   },
 ]
 
-const user = {
-  preparedness: 44,
-}
-
 /* ── Page ── */
 export default function VaultPage() {
   return (
-    <DashboardLayout>
-      <div className="max-w-[1200px] mx-auto space-y-6 animate-fade-in">
+    <AppLayout>
+      <div className="max-w-300 mx-auto space-y-7 animate-fade-in">
 
         {/* ─ Header ─ */}
-        <section className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+        <section className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3.5">
           <div>
-            <p className="text-[10px] font-bold tracking-[0.16em] text-espresso-400 uppercase mb-2">
+            <p className="text-[11px] font-bold tracking-[0.16em] text-espresso-400 uppercase mb-2">
               Life Vault
             </p>
-            <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
+            <h1 className="text-[32px] sm:text-[40px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
               Your encrypted archive.
             </h1>
-            <p className="text-[14px] text-espresso-500 leading-relaxed">
+            <p className="text-[15px] text-espresso-500 leading-relaxed">
               Documents, letters and records — sealed, searchable, sharable on your terms.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-white border border-espresso-200 rounded-full px-4 py-2 shrink-0 self-start">
-            <Lock size={13} strokeWidth={2} className="text-espresso-500" />
-            <span className="text-[12px] font-medium text-espresso-700">AES-256 · 6 files</span>
+          <div className="flex items-center gap-2 bg-white border border-espresso-200 rounded-full px-5 py-2.5 shrink-0 self-start">
+            <Lock size={14} strokeWidth={2} className="text-espresso-500" />
+            <span className="text-[13px] font-medium text-espresso-700">AES-256 · 6 files</span>
           </div>
         </section>
 
         {/* ─ Upload Dropzone ─ */}
-        <section className="vault-dropzone">
-          <div className="vault-dropzone-icon">
-            <Upload size={20} strokeWidth={1.8} className="text-espresso-500" />
+        <section className="border-2 border-dashed border-espresso-300 rounded-2xl py-12 px-8 flex flex-col items-center justify-center text-center transition-colors duration-200 bg-cream-50 hover:border-espresso-400 hover:bg-cream-100">
+          <div className="w-14 h-14 rounded-xl bg-cream-200 flex items-center justify-center mb-4">
+            <Upload size={22} strokeWidth={1.8} className="text-espresso-500" />
           </div>
-          <p className="vault-dropzone-title">Drop a file to upload</p>
-          <p className="vault-dropzone-subtitle">
+          <p className="text-[16px] font-medium text-espresso-800 mb-1">Drop a file to upload</p>
+          <p className="text-[13px] text-espresso-500 mb-4">
             PDF, DOCX, JPG up to 25 MB. All files are<br />encrypted on upload.
           </p>
-          <button className="vault-dropzone-btn">Choose file</button>
+          <button className="text-[14px] font-medium text-espresso-700 cursor-pointer underline underline-offset-2 bg-transparent border-none p-0 transition-colors hover:text-espresso-800">Choose file</button>
         </section>
 
         {/* ─ Search & Filter ─ */}
-        <section className="vault-search-bar">
-          <div className="vault-search-input-wrap">
-            <Search size={15} strokeWidth={1.8} className="text-espresso-400 shrink-0" />
-            <input type="text" placeholder="Search documents..." />
+        <section className="flex items-center gap-3.5">
+          <div className="flex-1 flex items-center gap-2.5 bg-cream-150 border border-espresso-200 rounded-[10px] px-4 py-2.5">
+            <Search size={16} strokeWidth={1.8} className="text-espresso-400 shrink-0" />
+            <input
+              type="text"
+              placeholder="Search documents..."
+              className="flex-1 bg-transparent border-none outline-none text-[14px] text-espresso-800 placeholder:text-espresso-400"
+            />
           </div>
-          <div className="vault-filter-group">
-            <div className="vault-tag-select flex items-center gap-1">
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="text-[13px] text-espresso-700 bg-cream-150 border border-espresso-200 rounded-lg px-3.5 py-2 cursor-pointer flex items-center gap-1">
               All tags
-              <ChevronDown size={12} strokeWidth={2} className="text-espresso-500" />
+              <ChevronDown size={13} strokeWidth={2} className="text-espresso-500" />
             </div>
-            <span className="vault-count">6 of 6</span>
+            <span className="text-[13px] text-espresso-500 whitespace-nowrap">6 of 6</span>
           </div>
         </section>
 
         {/* ─ Document Cards Grid ─ */}
-        <section className="vault-cards-grid">
-          {documents.map((doc) => (
-            <div key={doc.id} className="vault-card">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {documents.map((doc) => {
+            const status = STATUS_BADGE[doc.status]
+            const StatusIcon = status.icon
+            return (
+            <div
+              key={doc.id}
+              className="bg-white border border-espresso-200 rounded-[14px] px-6 py-5 flex flex-col gap-3.5 transition-[box-shadow,border-color] duration-200 cursor-pointer hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-espresso-300"
+            >
               {/* Icon + title */}
-              <div className="vault-card-header">
-                <div className={`vault-card-icon ${doc.category}`}>
-                  {doc.title[0]}
-                </div>
+              <div className="flex items-center gap-3">
+                <CategoryIcon category={doc.category} size={40} />
                 <div>
-                  <p className="vault-card-title">{doc.title}</p>
-                  <p className="vault-card-meta">{doc.type} · {doc.size}</p>
+                  <p className="text-[15px] font-semibold text-espresso-800 leading-[1.3]">{doc.title}</p>
+                  <p className="text-[12.5px] text-espresso-500">{doc.type} · {doc.size}</p>
                 </div>
               </div>
 
               {/* Status + date */}
-              <div className="flex items-center">
-                <span className={`vault-status ${doc.status}`}>
-                  <span className="vault-status-dot" />
-                  {doc.status === 'verified' ? 'Verified' : 'Draft'}
+              <div className="flex items-center gap-2">
+                <span className={`inline-flex items-center gap-1 text-[12px] font-medium rounded-full border px-2.5 py-1 ${status.className}`}>
+                  <StatusIcon size={12} strokeWidth={2} />
+                  {status.label}
                 </span>
-                <span className="vault-card-date">{doc.date}</span>
+                <span className="text-[12.5px] text-espresso-400">{doc.date}</span>
               </div>
 
               {/* Tags */}
-              <div className="vault-tags">
+              <div className="flex flex-wrap gap-2">
                 {doc.tags.map((tag) => (
-                  <span key={tag} className="vault-tag">{tag}</span>
+                  <span
+                    key={tag}
+                    className="text-[12px] font-medium text-espresso-700 bg-cream-200 border border-espresso-200 rounded-full py-1 px-3 leading-normal"
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
             </div>
-          ))}
+            )
+          })}
         </section>
       </div>
-
-      {/* ─ Floating widget ─ */}
-      <div className="vault-floating-widget hidden lg:block">
-        <p className="text-[9px] font-bold tracking-[0.18em] text-espresso-500 uppercase mb-2">Preparedness</p>
-        <div className="flex items-baseline gap-1.5 mb-1">
-          <span className="text-[28px] font-serif font-semibold text-espresso-900 leading-none">{user.preparedness}%</span>
-          <span className="text-[11px] text-espresso-400">overall</span>
-        </div>
-        <a
-          href="/dashboard/planning"
-          className="inline-flex items-center gap-1 text-[12px] font-medium text-gold-600 hover:text-gold-500 transition-colors no-underline mt-1"
-        >
-          Continue planning <span aria-hidden>→</span>
-        </a>
-        <p className="text-[10px] italic text-espresso-400 leading-snug mt-4 border-t border-black/[0.06] pt-3">
-          &ldquo;The most loving decisions are often the ones made before they are needed.&rdquo;
-        </p>
-      </div>
-    </DashboardLayout>
+    </AppLayout>
   )
 }

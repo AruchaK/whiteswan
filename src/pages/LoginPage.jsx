@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Eye, EyeOff } from 'lucide-react'
 import AuthLayout from '../components/AuthLayout'
+import Button from '../components/ui/Button'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -93,12 +94,9 @@ export default function LoginPage() {
         </div>
 
         {/* Submit */}
-        <button
-          type="submit"
-          className="w-full bg-espresso-900 text-cream-50 py-3 text-xs tracking-[0.12em] uppercase hover:bg-espresso-700 active:bg-espresso-950 transition-colors"
-        >
+        <Button type="submit" className="w-full py-3 text-xs tracking-[0.12em] uppercase">
           Sign in →
-        </button>
+        </Button>
       </form>
 
       <p className="text-[11px] text-espresso-400 text-center mt-8">

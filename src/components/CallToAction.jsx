@@ -40,7 +40,7 @@ export default function   CallToAction() {
       >
         <div className="w-full">
           <h2
-            className="text-[16px] tracking-[0.25em] uppercase font-medium mb-4 text-[#DDDDDD]"
+            className="text-[16px] tracking-[0.25em] uppercase font-medium mb-4 text-mist-100"
           >
             BEGIN GENTLY
           </h2>
@@ -49,7 +49,7 @@ export default function   CallToAction() {
             is <em>before</em> you need to.
           </h2>
 
-          <p className="text-[#D0DADC] text-[20px] leading-relaxed mb-16">
+          <p className="text-mist-200 text-[20px] leading-relaxed mb-16">
            A thoughtful plan today can <br /> bring clarity and peace of mind <br />tomorrow.
           </p>
 
@@ -64,7 +64,7 @@ export default function   CallToAction() {
           <a
             href=""
             id="cta-book"
-            className="w-fit inline-flex items-center justify-center px-8 py-3 bg-[#d6cdc2] text-espresso-900 text-[15px] font-medium rounded-full transition-all duration-500 hover:bg-white hover:shadow-lg hover:-translate-y-0.5 no-underline"
+            className="w-fit inline-flex items-center justify-center px-8 py-3 bg-sand-400 text-espresso-900 text-[15px] font-medium rounded-full transition-all duration-500 hover:bg-white hover:shadow-lg hover:-translate-y-0.5 no-underline"
           >
             Speak to a WhiteSwan advisor
           </a>

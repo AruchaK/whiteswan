@@ -95,7 +95,7 @@ export default function AboutPage() {
         {/* ── THE PROBLEM WE SEE ── */}
         <FadeIn delay={600} className="mb-4">
           <p
-            className="uppercase text-[#493225] font-medium text-md"
+            className="uppercase text-espresso-750 font-medium text-md"
           >
             The Problem We See
           </p>
@@ -146,7 +146,7 @@ export default function AboutPage() {
 
         {/* ── OUR APPROACH ── */}
         <FadeIn delay={1100} className="mb-4">
-          <p className="uppercase text-[#493225] font-medium text-md">
+          <p className="uppercase text-espresso-750 font-medium text-md">
             Our Approach
           </p>
         </FadeIn>
@@ -210,7 +210,7 @@ export default function AboutPage() {
 
         {/* ── WHY WE EXIST ── */}
         <FadeIn delay={1800} className="mb-4">
-          <p className="uppercase text-[#493225] font-medium text-md">
+          <p className="uppercase text-espresso-750 font-medium text-md">
             Why We Exist
           </p>
         </FadeIn>

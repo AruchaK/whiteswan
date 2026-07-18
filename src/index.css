@@ -9,11 +9,14 @@
   --color-espresso-50: #FAF6F1;
   --color-espresso-100: #F5EDE3;
   --color-espresso-200: #E8D9C8;
+  --color-espresso-250: #E2D5C3;
   --color-espresso-300: #D4BFA6;
   --color-espresso-400: #B89B78;
   --color-espresso-500: #9C7D5A;
+  --color-espresso-550: #6B6259;
   --color-espresso-600: #7A5E3F;
   --color-espresso-700: #5C4530;
+  --color-espresso-750: #493225;
   --color-espresso-800: #3D2B1F;
   --color-espresso-900: #2A1D14;
   --color-espresso-950: #1A110C;
@@ -21,14 +24,31 @@
   /* Warm cream/beige palette */
   --color-cream-50: #FDFCFA;
   --color-cream-100: #FAF7F2;
+  --color-cream-150: #F6F3EF;
   --color-cream-200: #F5F0E8;
   --color-cream-300: #EDE5D8;
   --color-cream-400: #DDD1BF;
 
   /* Muted gold accents */
+  --color-gold-100: #F5E4CE;
   --color-gold-400: #C9A96E;
   --color-gold-500: #B8944F;
   --color-gold-600: #9E7D3F;
+
+  /* Cool neutral dark grays — distinct hue from the warm espresso browns */
+  --color-slate-800: #474B54;
+  --color-slate-900: #222428;
+
+  /* Misty light grays — mist-50 as a light bg tint, mist-100/200 as text-on-dark */
+  --color-mist-50: #EEF2F4;
+  --color-mist-100: #DDDDDD;
+  --color-mist-200: #D0DADC;
+
+  /* Dusty taupe family used for CTA/Hero/Quote panel backgrounds */
+  --color-sand-400: #D6CDC2;
+  --color-sand-500: #D5C4AF;
+  --color-sand-600: #C9B8A2;
+  --color-sand-700: #9C8B78;
 }
 
 @layer base {
@@ -64,18 +84,6 @@
 }
 
 /* Animations */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -86,64 +94,41 @@
   }
 }
 
-@keyframes draw-line {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes subtle-float {
+@keyframes gentle-pulse {
 
   0%,
   100% {
-    transform: translateY(0);
+    box-shadow: 0 0 0 0 rgba(180, 130, 60, 0.2);
   }
 
   50% {
-    transform: translateY(-6px);
+    box-shadow: 0 0 0 6px rgba(180, 130, 60, 0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @layer utilities {
-  .animate-fade-in-up {
-    animation: fade-in-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    opacity: 0;
-  }
-
   .animate-fade-in {
     animation: fade-in 1s ease-out forwards;
     opacity: 0;
   }
 
-  .animation-delay-100 {
-    animation-delay: 0.1s;
+  .animate-gentle-pulse {
+    animation: gentle-pulse 2.5s ease-in-out infinite;
   }
 
-  .animation-delay-200 {
-    animation-delay: 0.2s;
-  }
-
-  .animation-delay-300 {
-    animation-delay: 0.3s;
-  }
-
-  .animation-delay-400 {
-    animation-delay: 0.4s;
-  }
-
-  .animation-delay-500 {
-    animation-delay: 0.5s;
-  }
-
-  .animation-delay-600 {
-    animation-delay: 0.6s;
-  }
-
-  .animation-delay-800 {
-    animation-delay: 0.8s;
+  .animate-slide-up {
+    animation: slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 }
