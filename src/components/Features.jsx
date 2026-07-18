@@ -3,16 +3,16 @@ import { useEffect, useRef, useState } from 'react'
 const steps = [
   {
     number: '1',
-    title: 'Reflect',
-    subtitle: 'We begin by listening',
+    title: 'Clarify wishes',
+    subtitle: 'Make important decisions before they become urgent.',
     paragraphs: [
-      'A thoughtful, guided conversation to understand where you are in life — and to surface what matters most to you.',
+      'A thoughtful, guided conversation to understand where you are in life and to surface what matters most to you.',
     ],
   },
   {
     number: '2',
-    title: 'Plan',
-    subtitle: 'The decisions that matter, made with care',
+    title: 'Thoughtfully plan',
+    subtitle: 'Keep everything securely stored and accessible.',
     paragraphs: [
       'The documents. The wishes. The intentions you want the people you love to inherit — clearly expressed, before the moment arrives.',
       'Where deeper expertise is needed (legal, financial, medical, etc.), we bring the right people to you.',
@@ -20,8 +20,8 @@ const steps = [
   },
   {
     number: '3',
-    title: 'Preserve',
-    subtitle: 'A secure home for all your important decisions',
+    title: 'Preserve stories',
+    subtitle: 'Pass on more than assets. Leave clarity, not confusion.',
     paragraphs: [
       'Everything you have built — your plan, your wishes, your story — lives in one secure, beautifully organized digital home. Ready for you. Ready for your loved ones. There when it matters most.',
     ],
@@ -63,15 +63,15 @@ export default function Features() {
         {/* Section header */}
         <div className={`text-center mb-16 transition-all duration-800 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}>
-          <p className="text-[20px] tracking-[0.3em] uppercase text-gold-400 mb-5 font-medium">
-            The Journey
+          <p className="text-[16px] tracking-[0.3em] uppercase text-[#DDDDDD] mb-5 font-medium">
+            WHAT WE HELP YOU DO
           </p>
-          <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl text-cream-100 font-light leading-snug">
+          <h2 className="font-poppins text-3xl sm:text-3xl lg:text-4xl text-cream-100 font-light leading-snug">
             A private planning experience for life, legacy,
             <br className="hidden sm:block" />
             and family peace of mind.
           </h2>
-          <p className="mt-6 font-poppins text-cream-300/60 text-[18px] max-w-3xl mx-auto leading-relaxed">
+          <p className="mt-6 font-poppins text-cream-300/60 text-[16px] max-w-3xl mx-auto leading-relaxed">
             WhiteSwan brings structure to conversations that are often difficult to begin. Through
             a thoughtful guided process, we help you reflect, organize, document, and prepare.
           </p>

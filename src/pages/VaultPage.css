@@ -1,0 +1,295 @@
+/* ── Vault page styles ── */
+
+/* Upload dropzone */
+.vault-dropzone {
+  border: 2px dashed #d4bfa6;
+  border-radius: 16px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: border-color 0.2s, background-color 0.2s;
+  background: #fdfcfa;
+}
+
+.vault-dropzone:hover {
+  border-color: #b89b78;
+  background: #faf7f2;
+}
+
+.vault-dropzone-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #f5f0e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.vault-dropzone-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #3d2b1f;
+  margin-bottom: 4px;
+}
+
+.vault-dropzone-subtitle {
+  font-size: 12px;
+  color: #9c7d5a;
+  margin-bottom: 14px;
+}
+
+.vault-dropzone-btn {
+  font-size: 13px;
+  font-weight: 500;
+  color: #5c4530;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.vault-dropzone-btn:hover {
+  color: #3d2b1f;
+}
+
+/* Search bar area */
+.vault-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+}
+
+.vault-search-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f6f3ef;
+  border: 1px solid #e8d9c8;
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+.vault-search-input-wrap input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: #3d2b1f;
+  font-family: inherit;
+}
+
+.vault-search-input-wrap input::placeholder {
+  color: #b89b78;
+}
+
+.vault-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.vault-tag-select {
+  font-size: 12px;
+  color: #5c4530;
+  background: #f6f3ef;
+  border: 1px solid #e8d9c8;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  appearance: auto;
+}
+
+.vault-count {
+  font-size: 12px;
+  color: #9c7d5a;
+  white-space: nowrap;
+}
+
+/* Document cards grid */
+.vault-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .vault-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .vault-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Document card */
+.vault-card {
+  background: white;
+  border: 1px solid #e8d9c8;
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.vault-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-color: #d4bfa6;
+}
+
+.vault-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vault-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.vault-card-icon.legal {
+  background: #F0EAE0;
+  color: #7A5E3F;
+}
+
+.vault-card-icon.medical {
+  background: #FCEAE4;
+  color: #C67A5C;
+}
+
+.vault-card-icon.financial {
+  background: #E4F0E8;
+  color: #5E8C6A;
+}
+
+.vault-card-icon.personal {
+  background: #FDF3E0;
+  color: #B8944F;
+}
+
+.vault-card-icon.family {
+  background: #FDF3E0;
+  color: #e73d5b;
+}
+
+.vault-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3d2b1f;
+  line-height: 1.3;
+}
+
+.vault-card-meta {
+  font-size: 11.5px;
+  color: #9c7d5a;
+}
+
+/* Status badges */
+.vault-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 0;
+}
+
+.vault-status.verified {
+  color: #3d8b5e;
+}
+
+.vault-status.draft {
+  color: #c67a5c;
+}
+
+.vault-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.vault-status.verified .vault-status-dot {
+  background: #3d8b5e;
+}
+
+.vault-status.draft .vault-status-dot {
+  background: #c67a5c;
+}
+
+.vault-card-date {
+  font-size: 11.5px;
+  color: #b89b78;
+  margin-left: 8px;
+}
+
+/* Tag pills */
+.vault-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vault-tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: #5c4530;
+  background: #f5f0e8;
+  border: 1px solid #e8d9c8;
+  border-radius: 6px;
+  padding: 2px 10px;
+  line-height: 1.5;
+}
+
+/* Floating widget — reused from DashboardPage */
+.vault-floating-widget {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 40;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  width: 180px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  animation: vault-slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes vault-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

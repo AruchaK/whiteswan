@@ -1,0 +1,197 @@
+/* ── Dashboard-specific styles ── */
+
+/* Preparedness progress bar */
+.preparedness-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: #ede5d8;
+  overflow: hidden;
+}
+
+.preparedness-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #9C7D5A, #B8944F);
+  transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Pillar progress bars */
+.pillar-bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: #f0ebe4;
+  overflow: hidden;
+}
+
+.pillar-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pillar-bar-fill.legal {
+  background: #7A5E3F;
+}
+
+.pillar-bar-fill.medical {
+  background: #C67A5C;
+}
+
+.pillar-bar-fill.financial {
+  background: #5E8C6A;
+}
+
+.pillar-bar-fill.personal {
+  background: #B8944F;
+}
+
+.pillar-bar-fill.family {
+  background: #e73d5b;
+}
+
+/* Pillar icon badges */
+.pillar-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.pillar-icon.legal {
+  background: #F0EAE0;
+  color: #7A5E3F;
+}
+
+.pillar-icon.medical {
+  background: #FCEAE4;
+  color: #C67A5C;
+}
+
+.pillar-icon.financial {
+  background: #E4F0E8;
+  color: #5E8C6A;
+}
+
+.pillar-icon.personal {
+  background: #FDF3E0;
+  color: #B8944F;
+}
+
+.pillar-icon.family {
+  background: #FDF3E0;
+  color: #e73d5b;
+}
+
+
+/* Pentagon / Radar chart */
+.pentagon-chart {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.pentagon-label {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 500;
+  color: #5C4530;
+  white-space: nowrap;
+}
+
+.pentagon-label .pct {
+  display: block;
+  font-size: 11px;
+  color: #9C7D5A;
+  font-weight: 400;
+}
+
+/* Label positions for 5-point radar */
+.pentagon-label.top {
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.pentagon-label.top-right {
+  top: 30%;
+  right: -42px;
+  text-align: left;
+}
+
+.pentagon-label.bot-right {
+  bottom: 10%;
+  right: -42px;
+  text-align: left;
+}
+
+.pentagon-label.bot-left {
+  bottom: 10%;
+  left: -42px;
+  text-align: right;
+}
+
+.pentagon-label.top-left {
+  top: 30%;
+  left: -42px;
+  text-align: right;
+}
+
+/* Floating widget */
+.floating-widget {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 40;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  width: 180px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  animation: slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Attention badge pulse */
+@keyframes gentle-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(180, 130, 60, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(180, 130, 60, 0);
+  }
+}
+
+.attention-badge {
+  animation: gentle-pulse 2.5s ease-in-out infinite;
+}
+
+/* Quote decoration */
+.quote-mark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 48px;
+  line-height: 1;
+  color: #B89B78;
+  opacity: 0.6;
+}

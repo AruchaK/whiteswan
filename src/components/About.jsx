@@ -36,54 +36,34 @@ export default function About() {
           }`}>
           {/* Section title */}
           <h2
-            className="text-[24px] font-sans tracking-[0.25em] uppercase font-medium mb-8"
-            style={{ color: '#7a5e3f' }}
+            className="text-[20px] font-sans tracking-[0.25em] uppercase font-medium mb-3 text-[#493225]"
           >
-            An Honest Beginning
+            The Quite Truth
           </h2>
 
           {/* First paragraph */}
-          <div className="space-y-1 mb-8 text-[20px] leading-relaxed text-espresso-800">
-            <p>
-              There's a particular kind of discomfort that visits at quiet
-              moments. Not urgent. Not demanding.
-            </p>
-            <p>
-              Just there — a soft reminder that there are things left undone.
-            </p>
+          <div className="mb-8 text-[45px] lg:text-[54px] text-espresso-800">
+            <h2s>
+              Most families are unprepared <br /> for life’s difficult moments.
+            </h2s>
           </div>
 
-          {/* Italic block */}
-          <div className="mb-8 text-[20px] leading-relaxed italic text-espresso-600/80">
-            <p>Conversations left unspoken.</p>
-            <p>For the people you love.</p>
-            <p>For when it matters.</p>
-          </div>
 
           {/* Second paragraph */}
-          <div className="mb-8 text-[20px] leading-relaxed text-espresso-800">
+          <div className="space-y-4 mb-8 text-[20px] leading-relaxed text-espresso-800">
             <p>
-              We keep putting it off. Because living always feels more urgent
-              than preparing for what comes after. And because this kind of
-              planning — honest, complete, and deeply personal — is not
-              something life easily makes room for.
+              When illness, incapacity, or loss happens <br /> unexpectedly, important wishes, documents, <br /> and responsibilities are often unclear.
+            </p>
+            <p>
+              Families are left making difficult decisions <br /> without guidance.
             </p>
           </div>
 
           {/* Italic emphasis */}
-          <p className="mb-10 text-[20px] italic font-medium text-espresso-800">
-            It doesn't have to feel this way.
+          <p className="mb-10 text-[20px] font-medium text-espresso-800">
+            WhiteSwan helps you prepare before that <br /> day comes.
           </p>
 
-          {/* CTA button */}
-          <a
-            href="#begin"
-            id="about-cta"
-            className="inline-flex items-center gap-3 self-start border border-espresso-600/30 rounded-full px-7 py-3 text-[14px] lg:text-[18px] text-espresso-800 no-underline transition-all hover:bg-espresso-800 hover:text-cream-100 hover:border-espresso-800"
-          >
-            Welcome to the journey of living and leaving with meaning
-            <span className="text-[16px]">→</span>
-          </a>
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-export default function CallToAction() {
+export default function   CallToAction() {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
 
@@ -38,27 +38,38 @@ export default function CallToAction() {
         className={`relative z-10 w-full lg:w-[45%] px-10 py-24 sm:px-16 lg:px-20 flex flex-col justify-center min-h-screen transition-all duration-1000 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
           }`}
       >
-        <div className="w-full text-center">
-          <h2 className="font-sans text-[32px] sm:text-[36px] text-cream-100 font-light leading-snug tracking-wide mb-10">
-            There is never a perfect moment.<br />
-            There is only the one you choose.
+        <div className="w-full">
+          <h2
+            className="text-[16px] tracking-[0.25em] uppercase font-medium mb-4 text-[#DDDDDD]"
+          >
+            BEGIN GENTLY
+          </h2>
+          <h2 className=" text-[32px] sm:text-[36px] text-cream-100 font-light leading-snug tracking-wide mb-4">
+            The best time to prepare <br />
+            is <em>before</em> you need to.
           </h2>
 
-          <p className="text-cream-300/80 text-[15px] leading-relaxed mb-16 max-w-[420px] mx-auto">
-            Life's most important transitions rarely announce themselves. The diagnosis. The sudden loss. The moment your family needs answers — and finds the gift of clarity that you have beautifully prepared.
+          <p className="text-[#D0DADC] text-[20px] leading-relaxed mb-16">
+           A thoughtful plan today can <br /> bring clarity and peace of mind <br />tomorrow.
           </p>
 
-          <p className="text-cream-100 text-[17px] tracking-wide font-light mb-8">
-            Begin your plan. Leave something beautiful.
-          </p>
-
+        <div className="flex flex-col gap-4">
           <a
-            href="#begin"
+            href=""
             id="cta-book"
-            className="inline-flex items-center justify-center px-8 py-3 bg-[#d6cdc2] text-espresso-900 text-[15px] font-medium rounded-full transition-all duration-500 hover:bg-white hover:shadow-lg hover:-translate-y-0.5 no-underline"
+            className="w-fit inline-flex items-center justify-center px-8 py-3 bg-white text-espresso-900 text-[15px] font-medium rounded-full transition-all duration-500 hover:bg-white hover:shadow-lg hover:-translate-y-0.5 no-underline"
           >
-            Begin a conversation
+            Start your life readiness compass
           </a>
+          <a
+            href=""
+            id="cta-book"
+            className="w-fit inline-flex items-center justify-center px-8 py-3 bg-[#d6cdc2] text-espresso-900 text-[15px] font-medium rounded-full transition-all duration-500 hover:bg-white hover:shadow-lg hover:-translate-y-0.5 no-underline"
+          >
+            Speak to a WhiteSwan advisor
+          </a>
+            
+        </div>
         </div>
       </div>
     </section>

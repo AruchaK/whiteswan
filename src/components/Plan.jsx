@@ -50,21 +50,19 @@ export default function Plan() {
         <section
             ref={ref}
             id="plan"
-            className="bg-espresso-800 py-20 sm:py-28 lg:py-32 overflow-hidden"
+            className="bg-[#474B54] py-20 sm:py-28 lg:py-32 overflow-hidden"
         >
-            <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+            <div className="max-w-[1800px] mx-auto px-6 lg:px-10">
                 {/* Header */}
-                <div className={`mb-14 transition-all duration-800 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                <div className={`mb-14 transition-all flex flex-col items-center duration-800 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                     }`}>
-                    <p className="text-[22px] tracking-[0.25em] uppercase text-gold-400 mb-4 font-medium">
-                        What Lives Inside Your Plan
+                    <p className="text:xl lg:text-[18px] tracking-[0.25em] uppercase text-[#D0DADC] mb-4 font-medium">
+                        A COMPLETE FRAMEWORK FOR A LIFE’S PREPARATION
                     </p>
-                    <h2 className="font-poppins text-3xl sm:text-4xl lg:text-5xl text-cream-100 font-light leading-snug mb-4">
-                        A complete framework for what life's
-                        <br className="hidden sm:block" />
-                        preparation means.
+                    <h2 className="font-poppins text-2xl lg:text-4xl text-cream-100 font-light leading-snug mt-4 mb-8">
+                        Life readiness is knowing that the important things are in place.
                     </h2>
-                    <p className="text-cream-300/50 font-poppins text-lg sm:text-2xl font-light">
+                    <p className="text-white font-poppins text-lg sm:text-2xl font-light">
                         Five dimensions of a life thoughtfully prepared for.
                     </p>
                 </div>
@@ -86,7 +84,7 @@ export default function Plan() {
                                 : 'opacity-0 translate-y-8'
                                 }`}
                             style={{
-                                backgroundColor: '#d6cdc2',
+                                backgroundColor: '#FFFFFFCC',
                                 transitionDelay: visible ? `${(i + 1) * 150}ms` : '0ms',
                             }}
                         >
