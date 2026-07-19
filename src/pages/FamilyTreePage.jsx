@@ -1,36 +1,398 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Share2, ShieldCheck, TriangleAlert } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
+import Button from '../components/ui/Button'
 
+/* ── Mock data — three generations of the trusted circle ── */
+const members = [
+  {
+    id: 'pisan',
+    name: 'Pisan Jaidee',
+    relation: 'Father',
+    bornYear: 1958,
+    bornFull: 'January 12, 1958',
+    age: '67 years',
+    location: 'Bangkok',
+    generation: 1,
+    spouse: 'Somsri Jaidee',
+    children: '—',
+    email: 'pisan.jaidee@gmail.com',
+    phone: '+66 81 234 5678',
+    badge: null,
+    reflection: 'You have full authorization to make any changes without prior approval.',
+    documents: [{ title: 'Last Will & Testament', status: 'verified', date: '1 month ago' }],
+  },
+  {
+    id: 'somsri',
+    name: 'Somsri Jaidee',
+    relation: 'Mother',
+    bornYear: 1960,
+    bornFull: 'May 3, 1960',
+    age: '65 years',
+    location: 'Chiang Mai',
+    generation: 1,
+    spouse: 'Pisan Jaidee',
+    children: '—',
+    email: 'somsri.jaidee@gmail.com',
+    phone: '+66 81 345 6789',
+    badge: null,
+    reflection: 'Please feel free to make any adjustments as you see fit.',
+    documents: [{ title: 'Healthcare Directive', status: 'draft', date: '2 weeks ago' }],
+  },
+  {
+    id: 'somchai',
+    name: 'Somchai Jaidee',
+    relation: 'You',
+    bornYear: 1986,
+    bornFull: 'March 14, 1986',
+    age: '39 years',
+    location: 'Bangkok',
+    generation: 2,
+    spouse: 'Pim Siriwong',
+    children: 'Nara · Ploy',
+    email: 'somchai.jaidee@gmail.com',
+    phone: '+66 90 123 4567',
+    avatar: '/avatar-somchai.png',
+    badge: 'Primary Executor',
+    reflection: 'I want my family to live boldly, hold each other with care, and remember the love that built this home.',
+    documents: [
+      { title: 'Last Will & Testament', status: 'verified', date: '12 days ago' },
+      { title: 'Power of Attorney', status: 'draft', date: '3 weeks ago' },
+    ],
+  },
+  {
+    id: 'pim',
+    name: 'Pim Siriwong',
+    relation: 'Spouse',
+    bornYear: 1989,
+    bornFull: 'August 22, 1989',
+    age: '36 years',
+    location: 'Bangkok',
+    generation: 2,
+    spouse: 'Somchai Jaidee',
+    children: 'Nara · Ploy',
+    email: 'pim.siriwong@gmail.com',
+    phone: '+66 89 456 7890',
+    badge: null,
+    reflection: 'We share everything together. Decide as one.',
+    documents: [{ title: 'Medical Power of Attorney', status: 'verified', date: '2 hours ago' }],
+  },
+  {
+    id: 'nara',
+    name: 'Nara Jaidee',
+    relation: 'Daughter',
+    bornYear: 2017,
+    bornFull: 'June 9, 2017',
+    age: '8 years',
+    location: 'Bangkok',
+    generation: 3,
+    spouse: '—',
+    children: '—',
+    email: '—',
+    phone: '—',
+    badge: null,
+    reflection: 'Too young for an account yet — added so she’s remembered in the plan.',
+    documents: [],
+  },
+  {
+    id: 'ploy',
+    name: 'Ploy Jaidee',
+    relation: 'Son',
+    bornYear: 2020,
+    bornFull: 'November 2, 2020',
+    age: '5 years',
+    location: 'Bangkok',
+    generation: 3,
+    spouse: '—',
+    children: '—',
+    email: '—',
+    phone: '—',
+    badge: null,
+    reflection: 'Too young for an account yet — added so he’s remembered in the plan.',
+    documents: [],
+  },
+]
+
+const STATUS_BADGE = {
+  verified: { label: 'Verified', icon: ShieldCheck, className: 'text-green-700 bg-green-50 border-green-100' },
+  draft: { label: 'Draft', icon: TriangleAlert, className: 'text-amber-700 bg-amber-50 border-amber-100' },
+}
+
+function initials(name) {
+  return name.split(' ').map((part) => part[0]).join('')
+}
+
+/* ── Gold-ringed avatar (photo, or serif initials fallback) ── */
+function Avatar({ member, size = 56, dark = false }) {
+  return (
+    <div
+      className="rounded-full p-[2px] bg-gradient-to-br from-gold-400 to-gold-600 shrink-0"
+      style={{ width: size, height: size }}
+    >
+      <div className={`w-full h-full rounded-full p-[2px] ${dark ? 'bg-espresso-900' : 'bg-white'}`}>
+        <div className="w-full h-full rounded-full overflow-hidden bg-cream-300 flex items-center justify-center">
+          {member.avatar ? (
+            <img src={member.avatar} alt="" className="w-full h-full object-cover" />
+          ) : (
+            <span className="font-serif font-semibold text-espresso-700" style={{ fontSize: size * 0.28 }}>
+              {initials(member.name)}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ── Genogram layout ──
+   A real family tree isn't three centered pairs on one spine: a person's
+   parents connect straight down into *that person's* box, while a couple's
+   children fork from the couple's own connector — which is why the parents'
+   row sits shifted left of the couple/children rows below it. Coordinates
+   are computed once so every connector is a plain horizontal/vertical
+   segment (no diagonals needed). */
+const NODE_W = 190
+const NODE_H = 176
+const COL_GAP = 56
+const ROW_GAP = 56
+
+const X_LEFT = 130 // Somchai / Nara column
+const X_RIGHT = X_LEFT + NODE_W + COL_GAP // Pim / Ploy column
+const X_PISAN = X_LEFT + NODE_W / 2 - (NODE_W * 2 + COL_GAP) / 2 // row centered on Somchai's box
+const X_SOMSRI = X_PISAN + NODE_W + COL_GAP
+
+const Y1 = 0
+const Y2 = Y1 + NODE_H + ROW_GAP
+const Y3 = Y2 + NODE_H + ROW_GAP
+const FORK_Y = Y2 + NODE_H + ROW_GAP / 2
+
+const CANVAS_W = X_RIGHT + NODE_W + 24
+const CANVAS_H = Y3 + NODE_H + 24
+
+const NODE_POSITIONS = {
+  pisan: { x: X_PISAN, y: Y1 },
+  somsri: { x: X_SOMSRI, y: Y1 },
+  somchai: { x: X_LEFT, y: Y2 },
+  pim: { x: X_RIGHT, y: Y2 },
+  nara: { x: X_LEFT, y: Y3 },
+  ploy: { x: X_RIGHT, y: Y3 },
+}
+
+function TreeNode({ member, isSelected, onSelect }) {
+  const pos = NODE_POSITIONS[member.id]
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(member.id)}
+      aria-pressed={isSelected}
+      style={{ left: pos.x, top: pos.y, width: NODE_W, height: NODE_H }}
+      className={`absolute z-10 flex flex-col items-center justify-center text-center rounded-2xl border px-4 py-4 cursor-pointer transition-all duration-150 ${
+        isSelected
+          ? 'bg-slate-800 border-slate-800 shadow-[0_8px_24px_rgba(34,36,40,0.22)]'
+          : 'bg-white border-espresso-250 hover:border-gold-400 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)]'
+      }`}
+    >
+      <Avatar member={member} size={56} dark={isSelected} />
+      <p className={`text-[15px] font-serif font-semibold leading-tight mt-3 truncate ${isSelected ? 'text-cream-50' : 'text-espresso-900'}`}>
+        {member.name}
+      </p>
+      <p className={`text-[10px] font-bold tracking-[0.12em] uppercase mt-1.5 ${isSelected ? 'text-gold-400' : 'text-gold-600'}`}>
+        {member.relation} · {member.bornYear}
+      </p>
+      <p className={`text-[11.5px] mt-1 truncate ${isSelected ? 'text-mist-100' : 'text-espresso-400'}`}>
+        {member.location}
+      </p>
+    </button>
+  )
+}
+
+function Segment({ x, y, w = 1.5, h = 1.5 }) {
+  return <div className="absolute bg-espresso-300" style={{ left: x, top: y, width: w, height: h }} />
+}
+
+function Dot({ x, y }) {
+  return (
+    <div
+      className="absolute rounded-full bg-espresso-700 ring-2 ring-cream-50"
+      style={{ left: x - 4.5, top: y - 4.5, width: 9, height: 9 }}
+    />
+  )
+}
+
+function TreeConnectors() {
+  const row1Y = Y1 + NODE_H / 2
+  const row1DotX = X_LEFT + NODE_W / 2
+  const row2Y = Y2 + NODE_H / 2
+  const row2DotX = (X_LEFT + NODE_W + X_RIGHT) / 2
+  const naraCenterX = X_LEFT + NODE_W / 2
+  const ployCenterX = X_RIGHT + NODE_W / 2
+
+  return (
+    <>
+      {/* Pisan — Somsri */}
+      <Segment x={X_PISAN + NODE_W} y={row1Y} w={COL_GAP} />
+      <Dot x={row1DotX} y={row1Y} />
+      {/* down into Somchai's box */}
+      <Segment x={row1DotX} y={row1Y} h={Y2 - row1Y} />
+
+      {/* Somchai — Pim */}
+      <Segment x={X_LEFT + NODE_W} y={row2Y} w={COL_GAP} />
+      <Dot x={row2DotX} y={row2Y} />
+
+      {/* fork down to Nara / Ploy */}
+      <Segment x={row2DotX} y={row2Y} h={FORK_Y - row2Y} />
+      <Segment x={naraCenterX} y={FORK_Y} w={ployCenterX - naraCenterX} />
+      <Segment x={naraCenterX} y={FORK_Y} h={Y3 - FORK_Y} />
+      <Segment x={ployCenterX} y={FORK_Y} h={Y3 - FORK_Y} />
+    </>
+  )
+}
+
+/* ── Page ── */
 export default function FamilyTreePage() {
+  const [selectedId, setSelectedId] = useState('somchai')
+  const selected = members.find((m) => m.id === selectedId) ?? members[2]
+
   return (
     <AppLayout>
       <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
+
+        {/* ─ Header ─ */}
         <section>
           <Link
             to="/dashboard/family"
             className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-espresso-500 hover:text-espresso-700 transition-colors no-underline mb-4"
           >
             <ArrowLeft size={14} strokeWidth={2} />
-            Back to family
+            Back to Family
           </Link>
           <p className="text-[10px] font-bold tracking-[0.16em] text-espresso-400 uppercase mb-2">
-            Family Tree
+            Three Generations
           </p>
           <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
-            See everyone connected to your legacy.
+            Family Tree.
           </h1>
           <p className="text-[14px] text-espresso-500 leading-relaxed">
-            A visual map of your trusted circle and how everyone is connected.
+            Three generations · {members.length} members preserved in your legacy
           </p>
         </section>
 
-        <Card className="p-8">
-          <p className="text-[13px] text-espresso-400 italic">
-            Coming soon — the interactive family tree will appear here.
-          </p>
-        </Card>
+        {/* ─ Tree + Selected member ─ */}
+        <section className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-5 items-start">
+
+          {/* Tree */}
+          <Card className="p-6 sm:p-10 overflow-x-auto">
+            <div className="rounded-3xl border border-espresso-200 bg-cream-50/40 p-6 sm:p-8">
+              <div className="relative mx-auto" style={{ width: CANVAS_W, height: CANVAS_H }}>
+                <TreeConnectors />
+                {members.map((member) => (
+                  <TreeNode
+                    key={member.id}
+                    member={member}
+                    isSelected={selectedId === member.id}
+                    onSelect={setSelectedId}
+                  />
+                ))}
+              </div>
+            </div>
+          </Card>
+
+          {/* Selected member */}
+          <Card className="p-6">
+            <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-400 uppercase mb-4">
+              Selected Member
+            </p>
+
+            <div className="flex items-center gap-3 mb-4">
+              <Avatar member={selected} size={52} />
+              <div className="min-w-0">
+                <p className="text-[16px] font-serif font-semibold text-espresso-900 leading-tight truncate">
+                  {selected.name}
+                </p>
+                <p className="text-[12px] text-espresso-500 mt-0.5">
+                  Generation {selected.generation} · {selected.relation} · Born {selected.bornYear}
+                </p>
+              </div>
+            </div>
+
+            {selected.badge && (
+              <span className="inline-flex items-center text-[11px] font-semibold text-espresso-700 border border-espresso-250 rounded-full px-3 py-1 mb-4">
+                {selected.badge.toUpperCase()}
+              </span>
+            )}
+
+            <div className="border-t border-black/6 pt-4 mb-4">
+              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-400 uppercase mb-3">Personal</p>
+              <div className="grid grid-cols-2 gap-y-3 gap-x-3">
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Born</p>
+                  <p className="text-[13px] text-espresso-800">{selected.bornFull} · {selected.location}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Age</p>
+                  <p className="text-[13px] text-espresso-800">{selected.age}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Spouse</p>
+                  <p className="text-[13px] text-espresso-800 truncate">{selected.spouse}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Children</p>
+                  <p className="text-[13px] text-espresso-800 truncate">{selected.children}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Email</p>
+                  <p className="text-[13px] text-espresso-800 truncate">{selected.email}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Phone</p>
+                  <p className="text-[13px] text-espresso-800">{selected.phone}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-black/6 pt-4 mb-4">
+              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-400 uppercase mb-2">Reflection</p>
+              <p className="text-[13px] text-espresso-700 italic leading-relaxed">"{selected.reflection}"</p>
+            </div>
+
+            <div className="border-t border-black/6 pt-4 mb-5">
+              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-400 uppercase mb-3">Shared Documents</p>
+              {selected.documents.length > 0 ? (
+                <div className="flex flex-col gap-2.5">
+                  {selected.documents.map((doc) => {
+                    const status = STATUS_BADGE[doc.status]
+                    const StatusIcon = status.icon
+                    return (
+                      <div key={doc.title} className="flex items-center justify-between gap-3">
+                        <span className="text-[13px] text-espresso-800 truncate">{doc.title}</span>
+                        <span className={`inline-flex items-center gap-1 text-[11px] font-medium rounded-full border px-2.25 py-0.75 shrink-0 ${status.className}`}>
+                          <StatusIcon size={11} strokeWidth={2} />
+                          {status.label} · {doc.date}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <p className="text-[12.5px] text-espresso-400 italic">No documents shared yet.</p>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2.5">
+              <Button variant="dark" className="flex items-center gap-1.5 text-[13px] font-medium px-4 py-2 rounded-full">
+                View profile
+                <ArrowRight size={13} strokeWidth={2} />
+              </Button>
+              <Button variant="outline" className="flex items-center gap-1.5 text-[13px] font-medium px-4 py-2 rounded-full">
+                <Share2 size={13} strokeWidth={1.8} />
+                Send message
+              </Button>
+            </div>
+          </Card>
+        </section>
       </div>
     </AppLayout>
   )
