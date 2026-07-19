@@ -120,23 +120,48 @@ const STATUS_BADGE = {
   draft: { label: 'Draft', icon: TriangleAlert, className: 'text-amber-700 bg-amber-50 border-amber-100' },
 }
 
+/* ── Exact design tokens (mirrored from the reference template) ── */
+const C = {
+  cardBorder: '#E7DCCD',
+  name: '#1F1612',
+  role: '#704C35',
+  born: '#545656',
+  ring: '#C9A96E', // gold avatar ring
+  ringGap: '#FFFFFF',
+  line: '#C8B7A2', // connectors
+  dot: '#3D2B1F',
+  selBg: '#464B54', // slate "you" card
+  selName: '#FFFFFF',
+  selRole: '#D8C7B6',
+  selBorn: '#D6CABC',
+  selRing: '#8A9099',
+}
+
 function initials(name) {
   return name.split(' ').map((part) => part[0]).join('')
 }
 
-/* ── Gold-ringed avatar (photo, or serif initials fallback) ── */
-function Avatar({ member, size = 56, dark = false }) {
+/* ── Avatar: thin gold ring + gap around a photo (or serif initials) ── */
+function Avatar({ member, size = 60, selected = false }) {
+  const gap = 2
+  const inner = size - 4 * gap
   return (
     <div
-      className="rounded-full p-[2px] bg-gradient-to-br from-gold-400 to-gold-600 shrink-0"
-      style={{ width: size, height: size }}
+      className="rounded-full shrink-0"
+      style={{ width: size, height: size, padding: gap, background: selected ? C.selRing : C.ring }}
     >
-      <div className={`w-full h-full rounded-full p-[2px] ${dark ? 'bg-espresso-900' : 'bg-white'}`}>
-        <div className="w-full h-full rounded-full overflow-hidden bg-cream-300 flex items-center justify-center">
+      <div
+        className="rounded-full w-full h-full"
+        style={{ padding: gap, background: selected ? C.selBg : C.ringGap }}
+      >
+        <div
+          className="rounded-full overflow-hidden flex items-center justify-center bg-cream-300"
+          style={{ width: inner, height: inner }}
+        >
           {member.avatar ? (
             <img src={member.avatar} alt="" className="w-full h-full object-cover" />
           ) : (
-            <span className="font-serif font-semibold text-espresso-700" style={{ fontSize: size * 0.28 }}>
+            <span className="font-serif font-semibold text-espresso-700" style={{ fontSize: size * 0.3 }}>
               {initials(member.name)}
             </span>
           )}
@@ -149,27 +174,27 @@ function Avatar({ member, size = 56, dark = false }) {
 /* ── Genogram layout ──
    A real family tree isn't three centered pairs on one spine: a person's
    parents connect straight down into *that person's* box, while a couple's
-   children fork from the couple's own connector — which is why the parents'
-   row sits shifted left of the couple/children rows below it. Coordinates
-   are computed once so every connector is a plain horizontal/vertical
-   segment (no diagonals needed). */
-const NODE_W = 190
-const NODE_H = 176
-const COL_GAP = 56
+   children fork from the couple's own connector. The parents' row therefore
+   sits centered over the "You" card, and every connector is a plain
+   horizontal / vertical segment (no diagonals). */
+const NODE_W = 210
+const NODE_H = 164
+const COL_GAP = 60
 const ROW_GAP = 56
+const PAD = 8 // breathing room inside the canvas
 
-const X_LEFT = 130 // Somchai / Nara column
+const X_LEFT = 140 // Somchai / Nara column
 const X_RIGHT = X_LEFT + NODE_W + COL_GAP // Pim / Ploy column
-const X_PISAN = X_LEFT + NODE_W / 2 - (NODE_W * 2 + COL_GAP) / 2 // row centered on Somchai's box
+const X_PISAN = X_LEFT + NODE_W / 2 - (NODE_W * 2 + COL_GAP) / 2 // parents centered over Somchai
 const X_SOMSRI = X_PISAN + NODE_W + COL_GAP
 
-const Y1 = 0
+const Y1 = PAD
 const Y2 = Y1 + NODE_H + ROW_GAP
 const Y3 = Y2 + NODE_H + ROW_GAP
 const FORK_Y = Y2 + NODE_H + ROW_GAP / 2
 
-const CANVAS_W = X_RIGHT + NODE_W + 24
-const CANVAS_H = Y3 + NODE_H + 24
+const CANVAS_W = X_RIGHT + NODE_W + PAD
+const CANVAS_H = Y3 + NODE_H + PAD
 
 const NODE_POSITIONS = {
   pisan: { x: X_PISAN, y: Y1 },
@@ -187,66 +212,78 @@ function TreeNode({ member, isSelected, onSelect }) {
       type="button"
       onClick={() => onSelect(member.id)}
       aria-pressed={isSelected}
-      style={{ left: pos.x, top: pos.y, width: NODE_W, height: NODE_H }}
-      className={`absolute z-10 flex flex-col items-center justify-center text-center rounded-2xl border px-4 py-4 cursor-pointer transition-all duration-150 ${
-        isSelected
-          ? 'bg-slate-800 border-slate-800 shadow-[0_8px_24px_rgba(34,36,40,0.22)]'
-          : 'bg-white border-espresso-250 hover:border-gold-400 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)]'
-      }`}
+      style={{
+        left: pos.x,
+        top: pos.y,
+        width: NODE_W,
+        height: NODE_H,
+        background: isSelected ? C.selBg : '#FFFFFF',
+        borderColor: isSelected ? C.selBg : C.cardBorder,
+        boxShadow: isSelected
+          ? '0 10px 28px rgba(70,75,84,0.24)'
+          : '0 1px 3px rgba(0,0,0,0.04)',
+      }}
+      className="absolute z-10 flex flex-col items-center justify-center text-center rounded-[22px] border px-4 py-4 cursor-pointer transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-0.5"
     >
-      <Avatar member={member} size={56} dark={isSelected} />
-      <p className={`text-[15px] font-serif font-semibold leading-tight mt-3 truncate ${isSelected ? 'text-cream-50' : 'text-espresso-900'}`}>
+      <Avatar member={member} size={60} selected={isSelected} />
+      <p
+        className="font-serif font-medium leading-tight mt-3 truncate w-full"
+        style={{ fontSize: 18, color: isSelected ? C.selName : C.name }}
+      >
         {member.name}
       </p>
-      <p className={`text-[10px] font-bold tracking-[0.12em] uppercase mt-1.5 ${isSelected ? 'text-gold-400' : 'text-gold-600'}`}>
+      <p
+        className="font-bold uppercase mt-2 truncate w-full"
+        style={{ fontSize: 10, letterSpacing: '0.18em', color: isSelected ? C.selRole : C.role }}
+      >
         {member.relation} · {member.bornYear}
       </p>
-      <p className={`text-[11.5px] mt-1 truncate ${isSelected ? 'text-mist-100' : 'text-espresso-400'}`}>
+      <p className="mt-1.5 truncate w-full" style={{ fontSize: 11, color: isSelected ? C.selBorn : C.born }}>
         {member.location}
       </p>
     </button>
   )
 }
 
-function Segment({ x, y, w = 1.5, h = 1.5 }) {
-  return <div className="absolute bg-espresso-300" style={{ left: x, top: y, width: w, height: h }} />
-}
-
-function Dot({ x, y }) {
-  return (
-    <div
-      className="absolute rounded-full bg-espresso-700 ring-2 ring-cream-50"
-      style={{ left: x - 4.5, top: y - 4.5, width: 9, height: 9 }}
-    />
-  )
-}
-
+/* ── Connectors: one crisp SVG overlay behind the nodes ── */
 function TreeConnectors() {
-  const row1Y = Y1 + NODE_H / 2
-  const row1DotX = X_LEFT + NODE_W / 2
-  const row2Y = Y2 + NODE_H / 2
-  const row2DotX = (X_LEFT + NODE_W + X_RIGHT) / 2
-  const naraCenterX = X_LEFT + NODE_W / 2
-  const ployCenterX = X_RIGHT + NODE_W / 2
+  const somchaiCX = X_LEFT + NODE_W / 2
+  const pimCX = X_RIGHT + NODE_W / 2
+  const ployCX = pimCX
+  const naraCX = somchaiCX
+
+  const row1CY = Y1 + NODE_H / 2
+  const row2CY = Y2 + NODE_H / 2
+  const coupleCX = (X_LEFT + NODE_W + X_RIGHT) / 2
+
+  const stroke = C.line
+  const sw = 1.5
 
   return (
-    <>
-      {/* Pisan — Somsri */}
-      <Segment x={X_PISAN + NODE_W} y={row1Y} w={COL_GAP} />
-      <Dot x={row1DotX} y={row1Y} />
-      {/* down into Somchai's box */}
-      <Segment x={row1DotX} y={row1Y} h={Y2 - row1Y} />
+    <svg
+      width={CANVAS_W}
+      height={CANVAS_H}
+      viewBox={`0 0 ${CANVAS_W} ${CANVAS_H}`}
+      className="absolute inset-0 pointer-events-none"
+      aria-hidden="true"
+    >
+      {/* Parents: horizontal link + drop into Somchai */}
+      <line x1={X_PISAN + NODE_W} y1={row1CY} x2={X_SOMSRI} y2={row1CY} stroke={stroke} strokeWidth={sw} />
+      <line x1={somchaiCX} y1={row1CY} x2={somchaiCX} y2={Y2} stroke={stroke} strokeWidth={sw} />
 
-      {/* Somchai — Pim */}
-      <Segment x={X_LEFT + NODE_W} y={row2Y} w={COL_GAP} />
-      <Dot x={row2DotX} y={row2Y} />
+      {/* Couple: horizontal link */}
+      <line x1={X_LEFT + NODE_W} y1={row2CY} x2={X_RIGHT} y2={row2CY} stroke={stroke} strokeWidth={sw} />
 
-      {/* fork down to Nara / Ploy */}
-      <Segment x={row2DotX} y={row2Y} h={FORK_Y - row2Y} />
-      <Segment x={naraCenterX} y={FORK_Y} w={ployCenterX - naraCenterX} />
-      <Segment x={naraCenterX} y={FORK_Y} h={Y3 - FORK_Y} />
-      <Segment x={ployCenterX} y={FORK_Y} h={Y3 - FORK_Y} />
-    </>
+      {/* Fork down to the children */}
+      <line x1={coupleCX} y1={row2CY} x2={coupleCX} y2={FORK_Y} stroke={stroke} strokeWidth={sw} />
+      <line x1={naraCX} y1={FORK_Y} x2={ployCX} y2={FORK_Y} stroke={stroke} strokeWidth={sw} />
+      <line x1={naraCX} y1={FORK_Y} x2={naraCX} y2={Y3} stroke={stroke} strokeWidth={sw} />
+      <line x1={ployCX} y1={FORK_Y} x2={ployCX} y2={Y3} stroke={stroke} strokeWidth={sw} />
+
+      {/* Junction dots */}
+      <circle cx={somchaiCX} cy={row1CY} r={4.5} fill={C.dot} stroke="#FBF8F3" strokeWidth={1.5} />
+      <circle cx={coupleCX} cy={row2CY} r={4.5} fill={C.dot} stroke="#FBF8F3" strokeWidth={1.5} />
+    </svg>
   )
 }
 
@@ -282,22 +319,20 @@ export default function FamilyTreePage() {
         {/* ─ Tree + Selected member ─ */}
         <section className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-5 items-start">
 
-          {/* Tree */}
-          <Card className="p-6 sm:p-10 overflow-x-auto">
-            <div className="rounded-3xl border border-espresso-200 bg-cream-50/40 p-6 sm:p-8">
-              <div className="relative mx-auto" style={{ width: CANVAS_W, height: CANVAS_H }}>
-                <TreeConnectors />
-                {members.map((member) => (
-                  <TreeNode
-                    key={member.id}
-                    member={member}
-                    isSelected={selectedId === member.id}
-                    onSelect={setSelectedId}
-                  />
-                ))}
-              </div>
+          {/* Tree — single clean frame */}
+          <div className="rounded-3xl border border-espresso-200 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 sm:p-10 overflow-x-auto">
+            <div className="relative mx-auto" style={{ width: CANVAS_W, height: CANVAS_H }}>
+              <TreeConnectors />
+              {members.map((member) => (
+                <TreeNode
+                  key={member.id}
+                  member={member}
+                  isSelected={selectedId === member.id}
+                  onSelect={setSelectedId}
+                />
+              ))}
             </div>
-          </Card>
+          </div>
 
           {/* Selected member */}
           <Card className="p-6">
