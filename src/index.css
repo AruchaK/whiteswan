@@ -64,6 +64,14 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Keyboard focus — a deliberate, visible ring on every interactive element.
+     Uses :focus-visible so it shows for keyboard/AT users without ringing on
+     mouse clicks. Outline follows each element's own border-radius. */
+  :where(a, button, input, textarea, select, summary, [role="switch"], [role="button"], [tabindex]):focus-visible {
+    outline: 2px solid var(--color-espresso-600);
+    outline-offset: 2px;
+  }
+
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
@@ -130,5 +138,16 @@
 
   .animate-slide-up {
     animation: slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+/* Reduced-motion alternative: land content in its final state, no travel.
+   Unlayered so it reliably wins over the layered .animate-* utilities. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-gentle-pulse {
+    animation: none;
+    opacity: 1;
   }
 }
