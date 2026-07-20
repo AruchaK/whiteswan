@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Share2, ShieldCheck, TriangleAlert } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Share2 } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
+import StatusBadge from '../components/ui/StatusBadge'
 import { initials } from '../lib/initials'
 
 /* ── Mock data — three generations of the trusted circle ── */
@@ -115,11 +116,6 @@ const members = [
     documents: [],
   },
 ]
-
-const STATUS_BADGE = {
-  verified: { label: 'Verified', icon: ShieldCheck, className: 'text-green-700 bg-green-50 border-green-100' },
-  draft: { label: 'Draft', icon: TriangleAlert, className: 'text-amber-700 bg-amber-50 border-amber-100' },
-}
 
 /* ── Exact design tokens (mirrored from the reference template) ── */
 const C = {
@@ -391,19 +387,12 @@ export default function FamilyTreePage() {
               <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-600 uppercase mb-3">Shared Documents</p>
               {selected.documents.length > 0 ? (
                 <div className="flex flex-col gap-2.5">
-                  {selected.documents.map((doc) => {
-                    const status = STATUS_BADGE[doc.status]
-                    const StatusIcon = status.icon
-                    return (
-                      <div key={doc.title} className="flex items-center justify-between gap-3">
-                        <span className="text-[13px] text-espresso-800 truncate">{doc.title}</span>
-                        <span className={`inline-flex items-center gap-1 text-[11px] font-medium rounded-full border px-2.25 py-0.75 shrink-0 ${status.className}`}>
-                          <StatusIcon size={11} strokeWidth={2} />
-                          {status.label} · {doc.date}
-                        </span>
-                      </div>
-                    )
-                  })}
+                  {selected.documents.map((doc) => (
+                    <div key={doc.title} className="flex items-center justify-between gap-3">
+                      <span className="text-[13px] text-espresso-800 truncate">{doc.title}</span>
+                      <StatusBadge status={doc.status} size="sm" className="shrink-0">{` · ${doc.date}`}</StatusBadge>
+                    </div>
+                  ))}
                 </div>
               ) : (
                 <p className="text-[13px] text-espresso-600 italic">No documents shared yet.</p>

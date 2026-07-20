@@ -1,21 +1,9 @@
-import { Search, Upload, Lock, ChevronDown, ShieldCheck, TriangleAlert, FileText } from 'lucide-react'
+import { Search, Upload, Lock, ChevronDown, FileText } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import CategoryIcon from '../components/ui/CategoryIcon'
+import StatusBadge from '../components/ui/StatusBadge'
 import { LoadingSkeleton, ErrorState, EmptyState } from '../components/ui/StateViews'
 import { useResource } from '../lib/useResource'
-
-const STATUS_BADGE = {
-  verified: {
-    label: 'Verified',
-    icon: ShieldCheck,
-    className: 'text-green-700 bg-green-50 border-green-100',
-  },
-  draft: {
-    label: 'Draft',
-    icon: TriangleAlert,
-    className: 'text-amber-700 bg-amber-50 border-amber-100',
-  },
-}
 
 /* ── Mock data ── */
 const DOCUMENTS = [
@@ -83,8 +71,6 @@ const DOCUMENTS = [
 
 /* Single document card — the success-state unit. */
 function DocumentCard({ doc }) {
-  const status = STATUS_BADGE[doc.status]
-  const StatusIcon = status.icon
   return (
     <div className="bg-white border border-espresso-250 rounded-xl px-6 py-5 flex flex-col gap-3.5 transition-[box-shadow,border-color] duration-200 cursor-pointer hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-espresso-300">
       {/* Icon + title */}
@@ -98,10 +84,7 @@ function DocumentCard({ doc }) {
 
       {/* Status + date */}
       <div className="flex items-center gap-2">
-        <span className={`inline-flex items-center gap-1 text-[12px] font-medium rounded-full border px-2.5 py-1 ${status.className}`}>
-          <StatusIcon size={12} strokeWidth={2} />
-          {status.label}
-        </span>
+        <StatusBadge status={doc.status} />
         <span className="text-[13px] text-espresso-600">{doc.date}</span>
       </div>
 
