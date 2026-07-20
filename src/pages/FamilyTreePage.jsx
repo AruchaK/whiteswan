@@ -4,7 +4,7 @@ import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
 import StatusBadge from '../components/ui/StatusBadge'
-import BackLink from '../components/ui/BackLink'
+import PageHeader from '../components/ui/PageHeader'
 import { initials } from '../lib/initials'
 
 /* ── Mock data — three generations of the trusted circle ── */
@@ -290,15 +290,11 @@ export default function FamilyTreePage() {
       <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
 
         {/* ─ Header ─ */}
-        <section>
-          <BackLink to="/dashboard/family" className="mb-4">Back to Family</BackLink>
-          <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
-            Family Tree.
-          </h1>
-          <p className="text-[14px] text-espresso-600 leading-relaxed">
-            Three generations · {members.length} members preserved in your legacy
-          </p>
-        </section>
+        <PageHeader
+          back={{ to: '/dashboard/family', label: 'Back to Family' }}
+          title="Family Tree."
+          subtitle={`Three generations · ${members.length} members preserved in your legacy`}
+        />
 
         {/* ─ Tree + Selected member ─ */}
         <section className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-5 items-start">

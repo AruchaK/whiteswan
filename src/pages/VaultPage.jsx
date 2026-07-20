@@ -2,6 +2,7 @@ import { Search, Upload, Lock, ChevronDown, FileText } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import CategoryIcon from '../components/ui/CategoryIcon'
 import StatusBadge from '../components/ui/StatusBadge'
+import PageHeader from '../components/ui/PageHeader'
 import { LoadingSkeleton, ErrorState, EmptyState } from '../components/ui/StateViews'
 import { useResource } from '../lib/useResource'
 
@@ -116,21 +117,17 @@ export default function VaultPage() {
       <div className="max-w-300 mx-auto space-y-7 animate-fade-in">
 
         {/* ─ Header ─ */}
-        <section className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3.5">
-          <div>
-            <h1 className="text-[32px] sm:text-[40px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
-              Your encrypted archive.
-            </h1>
-            <p className="text-[15px] text-espresso-600 leading-relaxed">
-              Documents, letters and records — sealed, searchable, sharable on your terms.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 bg-white border border-espresso-250 rounded-full px-5 py-2.5 shrink-0 self-start">
-            <Lock size={14} strokeWidth={2} className="text-espresso-600" />
-            <span className="text-[13px] font-medium text-espresso-700">AES-256 · {count} {count === 1 ? 'file' : 'files'}</span>
-          </div>
-        </section>
+        <PageHeader
+          size="lg"
+          title="Your encrypted archive."
+          subtitle="Documents, letters and records — sealed, searchable, sharable on your terms."
+          actions={
+            <div className="flex items-center gap-2 bg-white border border-espresso-250 rounded-full px-5 py-2.5">
+              <Lock size={14} strokeWidth={2} className="text-espresso-600" />
+              <span className="text-[13px] font-medium text-espresso-700">AES-256 · {count} {count === 1 ? 'file' : 'files'}</span>
+            </div>
+          }
+        />
 
         {/* ─ Upload Dropzone ─ */}
         <section className="border-2 border-dashed border-espresso-300 rounded-2xl py-12 px-8 flex flex-col items-center justify-center text-center transition-colors duration-200 bg-cream-50 hover:border-espresso-400 hover:bg-cream-100">

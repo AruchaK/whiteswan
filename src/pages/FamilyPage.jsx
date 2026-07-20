@@ -4,6 +4,7 @@ import AppLayout from '../components/AppLayout'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import FeaturePanel from '../components/ui/FeaturePanel'
+import PageHeader from '../components/ui/PageHeader'
 import { initials } from '../lib/initials'
 
 /* ── Mock data ── */
@@ -47,24 +48,21 @@ export default function FamilyPage() {
       <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
 
         {/* ─ Header ─ */}
-        <section className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-          <div>
-            <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight">
-              Your family.
-            </h1>
-          </div>
-
-          <div className="flex items-center gap-2.5 shrink-0">
-            <Button as={Link} to="/family/add" variant="outline" className="flex items-center gap-1.5 text-[13px] font-medium px-4 py-2 rounded-full no-underline">
-              <Plus size={14} strokeWidth={2} />
-              Add member
-            </Button>
-            <Button as={Link} to="/family/tree" variant="dark" className="flex items-center gap-1.5 text-[13px] font-medium px-4 py-2 rounded-full no-underline">
-              Family tree
-              <ArrowRight size={14} strokeWidth={2} />
-            </Button>
-          </div>
-        </section>
+        <PageHeader
+          title="Your family."
+          actions={
+            <>
+              <Button as={Link} to="/family/add" variant="outline" className="flex items-center gap-1.5 text-[13px] font-medium px-4 py-2 rounded-full no-underline">
+                <Plus size={14} strokeWidth={2} />
+                Add member
+              </Button>
+              <Button as={Link} to="/family/tree" variant="dark" className="flex items-center gap-1.5 text-[13px] font-medium px-4 py-2 rounded-full no-underline">
+                Family tree
+                <ArrowRight size={14} strokeWidth={2} />
+              </Button>
+            </>
+          }
+        />
 
         {/* ─ Member cards ─ */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

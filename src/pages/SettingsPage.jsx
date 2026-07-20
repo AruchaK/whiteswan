@@ -2,6 +2,7 @@ import { useState } from 'react'
 import AppLayout from '../components/AppLayout'
 import Button from '../components/ui/Button'
 import ToggleSwitch from '../components/ui/ToggleSwitch'
+import PageHeader from '../components/ui/PageHeader'
 
 /* ── Section definitions ── */
 const sections = ['Account', 'Notifications', 'Privacy & Sharing', 'Language & Region']
@@ -58,14 +59,10 @@ export default function SettingsPage() {
       <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
 
         {/* ─ Header ─ */}
-        <section>
-          <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
-            Settings.
-          </h1>
-          <p className="text-[14px] text-espresso-600 leading-relaxed">
-            Manage your account, notifications, privacy and regional preferences.
-          </p>
-        </section>
+        <PageHeader
+          title="Settings."
+          subtitle="Manage your account, notifications, privacy and regional preferences."
+        />
 
         {/* ─ Settings card ─ */}
         <div className="bg-white border border-espresso-250 rounded-xl flex flex-col md:flex-row overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] min-h-120">

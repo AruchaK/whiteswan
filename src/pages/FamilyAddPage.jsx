@@ -4,7 +4,7 @@ import { ArrowUp } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
-import BackLink from '../components/ui/BackLink'
+import PageHeader from '../components/ui/PageHeader'
 
 const RELATIONSHIPS = ['Spouse', 'Child', 'Parent', 'Sibling', 'Grandparent', 'Grandchild', 'Other']
 
@@ -87,15 +87,11 @@ export default function FamilyAddPage() {
   return (
     <AppLayout>
       <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
-        <section>
-          <BackLink to="/dashboard/family" className="mb-4">Back to family</BackLink>
-          <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
-            Add a family member.
-          </h1>
-          <p className="text-[14px] text-espresso-600 leading-relaxed">
-            Invite someone to your trusted circle and assign their role.
-          </p>
-        </section>
+        <PageHeader
+          back={{ to: '/dashboard/family', label: 'Back to family' }}
+          title="Add a family member."
+          subtitle="Invite someone to your trusted circle and assign their role."
+        />
 
         <Card className="p-6 md:p-8">
           <form onSubmit={handleSubmit} noValidate>
