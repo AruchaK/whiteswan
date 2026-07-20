@@ -3,7 +3,8 @@ export const currentUser = {
   fullName: 'Somchai Jaidee',
   avatar: '/avatar-somchai.png',
   lastUpdated: '2 hours ago',
-  preparedness: 44,
+  // Overall preparedness is derived from the pillars — see lib/readiness.js
+  // (overallPreparedness). It is intentionally not stored here.
   born: 'March 14, 1986 · Bangkok',
   age: '39 years',
   spouse: 'Pim Siriwong',
