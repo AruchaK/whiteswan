@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowUp } from 'lucide-react'
+import { ArrowUp } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
+import BackLink from '../components/ui/BackLink'
 
 const RELATIONSHIPS = ['Spouse', 'Child', 'Parent', 'Sibling', 'Grandparent', 'Grandchild', 'Other']
 
@@ -87,13 +88,7 @@ export default function FamilyAddPage() {
     <AppLayout>
       <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
         <section>
-          <Link
-            to="/dashboard/family"
-            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline mb-4"
-          >
-            <ArrowLeft size={14} strokeWidth={2} />
-            Back to family
-          </Link>
+          <BackLink to="/dashboard/family" className="mb-4">Back to family</BackLink>
           <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
             Add a family member.
           </h1>

@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Share2 } from 'lucide-react'
+import { ArrowRight, Share2 } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
 import StatusBadge from '../components/ui/StatusBadge'
+import BackLink from '../components/ui/BackLink'
 import { initials } from '../lib/initials'
 
 /* ── Mock data — three generations of the trusted circle ── */
@@ -291,13 +291,7 @@ export default function FamilyTreePage() {
 
         {/* ─ Header ─ */}
         <section>
-          <Link
-            to="/dashboard/family"
-            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline mb-4"
-          >
-            <ArrowLeft size={14} strokeWidth={2} />
-            Back to Family
-          </Link>
+          <BackLink to="/dashboard/family" className="mb-4">Back to Family</BackLink>
           <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
             Family Tree.
           </h1>

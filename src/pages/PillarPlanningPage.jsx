@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
-  ArrowLeft,
   ArrowRight,
   Check,
   AlertTriangle,
@@ -18,6 +17,7 @@ import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
 import ProgressBar from '../components/ui/ProgressBar'
 import Toast from '../components/ui/Toast'
+import BackLink from '../components/ui/BackLink'
 import NewTaskDialog from '../components/NewTaskDialog'
 import { PILLARS, PILLARS_BY_KEY } from '../lib/pillars'
 import { PILLAR_DATA } from '../lib/pillarData'
@@ -43,13 +43,7 @@ const PRIORITY_STYLES = {
 function PillarTabs({ activeKey }) {
   return (
     <nav className="flex items-center gap-2 flex-wrap">
-      <Link
-        to="/dashboard/planning"
-        className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline pr-1"
-      >
-        <ArrowLeft size={14} strokeWidth={2} />
-        Planning
-      </Link>
+      <BackLink to="/dashboard/planning" className="pr-1">Planning</BackLink>
       <span className="text-espresso-300 select-none" aria-hidden>·</span>
       {PILLARS.map((p) => {
         const active = p.key === activeKey
@@ -436,13 +430,7 @@ export default function PillarPlanningPage() {
     return (
       <AppLayout>
         <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
-          <Link
-            to="/dashboard/planning"
-            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline"
-          >
-            <ArrowLeft size={14} strokeWidth={2} />
-            Back to planning
-          </Link>
+          <BackLink to="/dashboard/planning">Back to planning</BackLink>
           <Card className="p-8">
             <p className="text-[13px] text-espresso-600 italic">
               We couldn&rsquo;t find a pillar called &ldquo;{pillarKey}&rdquo;.
