@@ -177,7 +177,7 @@ export default function SettingsPage() {
                         <p className="text-[13.5px] font-medium text-espresso-800 mb-0.5">{label}</p>
                         <p className="text-xs text-espresso-600">{desc}</p>
                       </div>
-                      <ToggleSwitch checked={enabled} onChange={() => toggleNotification(key)} />
+                      <ToggleSwitch checked={enabled} onChange={() => toggleNotification(key)} ariaLabel={`Toggle ${label} notifications`} />
                     </div>
                   ))}
                 </div>
