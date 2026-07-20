@@ -4,6 +4,7 @@ import AppLayout from '../components/AppLayout'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import FeaturePanel from '../components/ui/FeaturePanel'
+import { initials } from '../lib/initials'
 
 /* ── Mock data ── */
 const members = [
@@ -38,10 +39,6 @@ const activity = [
   { name: 'Somsri Jaidee', action: 'shared a memory letter', time: 'Yesterday, 18:42' },
   { name: 'Pisan Jaidee', action: 'acknowledged the will draft', time: '3 days ago' },
 ]
-
-function initials(name) {
-  return name.split(' ').map((part) => part[0]).join('')
-}
 
 /* ── Page ── */
 export default function FamilyPage() {

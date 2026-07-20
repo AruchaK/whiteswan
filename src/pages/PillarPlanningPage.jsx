@@ -23,6 +23,7 @@ import { PILLARS, PILLARS_BY_KEY } from '../lib/pillars'
 import { PILLAR_DATA } from '../lib/pillarData'
 import { PILLAR_READINESS, essentialsLabel } from '../lib/readiness'
 import { addTask, useAddedTasks } from '../lib/addedTasksStore'
+import { initials } from '../lib/initials'
 
 /* Pillars that surface an attention dot in the top pill bar. */
 const ATTENTION_KEYS = new Set(['personal'])
@@ -30,16 +31,6 @@ const ATTENTION_KEYS = new Set(['personal'])
 /* Turn a solid banner color into a soft diagonal gradient for the hero. */
 function bannerGradient(color) {
   return `linear-gradient(135deg, ${color} 0%, ${color} 45%, rgba(255,255,255,0.14) 130%)`
-}
-
-function initials(name) {
-  return name
-    .replace(/^(Khun|Dr\.|Phra|Ajahn)\s+/i, '')
-    .split(' ')
-    .map((part) => part[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join('')
 }
 
 const PRIORITY_STYLES = {

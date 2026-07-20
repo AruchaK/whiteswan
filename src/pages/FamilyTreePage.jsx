@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Share2, ShieldCheck, TriangleAlert } from 'lucid
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
+import { initials } from '../lib/initials'
 
 /* ── Mock data — three generations of the trusted circle ── */
 const members = [
@@ -135,10 +136,6 @@ const C = {
   selRole: '#D8C7B6',
   selBorn: '#D6CABC',
   selRing: '#8A9099',
-}
-
-function initials(name) {
-  return name.split(' ').map((part) => part[0]).join('')
 }
 
 /* ── Avatar: thin gold ring + gap around a photo (or serif initials) ── */
