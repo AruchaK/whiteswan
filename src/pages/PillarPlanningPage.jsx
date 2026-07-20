@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -12,14 +12,16 @@ import {
   FileText,
   Phone,
   Mail,
-  X,
 } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
+import ProgressBar from '../components/ui/ProgressBar'
+import Toast from '../components/ui/Toast'
 import NewTaskDialog from '../components/NewTaskDialog'
 import { PILLARS, PILLARS_BY_KEY } from '../lib/pillars'
 import { PILLAR_DATA } from '../lib/pillarData'
+import { PILLAR_READINESS, essentialsLabel } from '../lib/readiness'
 import { addTask, useAddedTasks } from '../lib/addedTasksStore'
 
 /* Pillars that surface an attention dot in the top pill bar. */
@@ -91,6 +93,7 @@ function BadgeIcon({ type }) {
 
 function Hero({ pillar, data }) {
   const Icon = pillar.icon
+  const readiness = PILLAR_READINESS[pillar.key].readiness
   return (
     <section className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-5">
       {/* Banner */}
@@ -127,18 +130,13 @@ function Hero({ pillar, data }) {
 
         <div className="flex items-baseline gap-1 mb-4">
           <span className="font-serif text-5xl font-semibold" style={{ color: pillar.color }}>
-            {data.readiness}
+            {readiness}
           </span>
           <span className="font-serif text-xl" style={{ color: pillar.color }}>%</span>
         </div>
 
-        <div className="h-1.5 rounded-full bg-cream-300 overflow-hidden mb-2">
-          <div
-            className="h-full rounded-full transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-            style={{ width: `${data.readiness}%`, background: pillar.color }}
-          />
-        </div>
-        <p className="text-[12px] text-espresso-600 mb-5">{data.essentials}</p>
+        <ProgressBar value={readiness} color={pillar.color} className="mb-2" />
+        <p className="text-[12px] text-espresso-600 mb-5">{essentialsLabel(pillar.key)}</p>
 
         <Button
           variant="primary"
@@ -421,44 +419,6 @@ function NotesPanel({ data, pillar }) {
         ))}
       </div>
     </Card>
-  )
-}
-
-/* ── Transient confirmation toast ── */
-function Toast({ message, action, onDismiss }) {
-  useEffect(() => {
-    const id = setTimeout(onDismiss, 4500)
-    return () => clearTimeout(id)
-  }, [onDismiss])
-
-  return (
-    <div
-      role="status"
-      aria-live="polite"
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 rounded-full bg-espresso-900 text-cream-50 pl-3.5 pr-2 py-2 shadow-lg animate-slide-up"
-    >
-      <span className="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center shrink-0">
-        <Check size={12} className="text-white" strokeWidth={2.5} />
-      </span>
-      <span className="text-[13px] font-medium">{message}</span>
-      {action && (
-        <Link
-          to={action.to}
-          onClick={onDismiss}
-          className="text-[13px] font-semibold text-gold-400 hover:text-gold-100 no-underline transition-colors"
-        >
-          {action.label}
-        </Link>
-      )}
-      <button
-        type="button"
-        onClick={onDismiss}
-        aria-label="Dismiss notification"
-        className="p-1 rounded-full text-cream-50/60 hover:text-cream-50 transition-colors cursor-pointer"
-      >
-        <X size={15} strokeWidth={2} />
-      </button>
-    </div>
   )
 }
 

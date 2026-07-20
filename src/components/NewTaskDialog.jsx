@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Upload, X } from 'lucide-react'
 import Button from './ui/Button'
+import ToggleSwitch from './ui/ToggleSwitch'
 import { PILLARS } from '../lib/pillars'
 
 const PRIORITIES = ['HIGH', 'MED', 'LOW']
@@ -173,22 +174,11 @@ export default function NewTaskDialog({ onClose, onSave, defaultPillar = 'legal'
               <p className="text-[13px] font-medium text-espresso-800 leading-tight">Requires document</p>
               <p className="text-[12px] text-espresso-600 mt-0.5">Links this task to the Vault</p>
             </div>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={requiresDoc}
-              aria-label="Requires document"
-              onClick={() => setRequiresDoc((v) => !v)}
-              className={`relative w-11 h-6 rounded-full transition-colors cursor-pointer shrink-0 ${
-                requiresDoc ? 'bg-espresso-800' : 'bg-espresso-250'
-              }`}
-            >
-              <span
-                className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
-                  requiresDoc ? 'translate-x-5' : 'translate-x-0'
-                }`}
-              />
-            </button>
+            <ToggleSwitch
+              checked={requiresDoc}
+              onChange={(e) => setRequiresDoc(e.target.checked)}
+              ariaLabel="Requires document"
+            />
           </div>
         </div>
 
