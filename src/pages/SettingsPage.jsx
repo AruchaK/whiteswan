@@ -59,22 +59,19 @@ export default function SettingsPage() {
 
         {/* ─ Header ─ */}
         <section>
-          <p className="text-[10px] font-bold tracking-[0.16em] text-espresso-400 uppercase mb-2">
-            Preferences
-          </p>
           <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
             Settings.
           </h1>
-          <p className="text-[14px] text-espresso-500 leading-relaxed">
+          <p className="text-[14px] text-espresso-600 leading-relaxed">
             Manage your account, notifications, privacy and regional preferences.
           </p>
         </section>
 
         {/* ─ Settings card ─ */}
-        <div className="bg-white border border-espresso-250 rounded-[14px] flex flex-col md:flex-row overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] min-h-120">
+        <div className="bg-white border border-espresso-250 rounded-xl flex flex-col md:flex-row overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] min-h-120">
           {/* Sections nav */}
-          <div className="w-full md:w-60 shrink-0 border-b md:border-b-0 md:border-r border-black/6 px-5 pt-5 pb-4 md:px-6 md:py-7">
-            <p className="text-[10px] font-bold tracking-[0.14em] uppercase text-espresso-500 mb-4">Sections</p>
+          <div className="w-full md:w-60 shrink-0 border-b md:border-b-0 md:border-r border-espresso-250 px-5 pt-5 pb-4 md:px-6 md:py-7">
+            <p className="text-[10px] font-bold tracking-[0.14em] uppercase text-espresso-600 mb-4">Sections</p>
             <nav className="flex flex-row flex-wrap gap-1.5 md:flex-col md:gap-0.5 space-y-2">
               {sections.map((section) => {
                 const isActive = activeSection === section
@@ -100,7 +97,7 @@ export default function SettingsPage() {
             {activeSection === 'Account' && (
               <>
                 <h2 className="text-base font-semibold text-espresso-800 mb-1">Account</h2>
-                <p className="text-[13px] text-espresso-500 mb-6">Update your personal details and security.</p>
+                <p className="text-[13px] text-espresso-600 mb-6">Update your personal details and security.</p>
 
                 {/* Avatar */}
                 <div className="flex items-center gap-4 mb-7">
@@ -148,12 +145,12 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Security */}
-                <div className="border-t border-black/6 pt-6 mt-2">
+                <div className="border-t border-espresso-250 pt-6 mt-2">
                   <h3 className="text-[14.5px] font-semibold text-espresso-800 mb-4">Security</h3>
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <p className="text-[13.5px] font-medium text-espresso-800 mb-0.5">Two-factor authentication</p>
-                      <p className="text-xs text-espresso-500">Adds a one-time code on every new sign-in.</p>
+                      <p className="text-xs text-espresso-600">Adds a one-time code on every new sign-in.</p>
                     </div>
                     <ToggleSwitch
                       checked={form.twoFactor}
@@ -164,21 +161,21 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Save */}
-                <Button variant="dark" className="mt-7 text-[13.5px] font-semibold rounded-[10px] px-6 py-2.5">Save changes</Button>
+                <Button variant="dark" className="mt-7 text-[13.5px] font-semibold rounded-lg px-6 py-2.5">Save changes</Button>
               </>
             )}
 
             {activeSection === 'Notifications' && (
               <>
                 <h2 className="text-base font-semibold text-espresso-800 mb-1">Notifications</h2>
-                <p className="text-[13px] text-espresso-500 mb-6">Choose what we update you about.</p>
+                <p className="text-[13px] text-espresso-600 mb-6">Choose what we update you about.</p>
 
-                <div className="border-t border-black/6 divide-y divide-black/6">
+                <div className="border-t border-espresso-250 divide-y divide-espresso-250">
                   {Object.entries(notifications).map(([key, { label, desc, enabled }]) => (
                     <div key={key} className="flex items-center justify-between gap-4 py-4 first:pt-5">
                       <div>
                         <p className="text-[13.5px] font-medium text-espresso-800 mb-0.5">{label}</p>
-                        <p className="text-xs text-espresso-500">{desc}</p>
+                        <p className="text-xs text-espresso-600">{desc}</p>
                       </div>
                       <ToggleSwitch checked={enabled} onChange={() => toggleNotification(key)} />
                     </div>
@@ -190,11 +187,11 @@ export default function SettingsPage() {
             {activeSection === 'Privacy & Sharing' && (
               <>
                 <h2 className="text-base font-semibold text-espresso-800 mb-1">Privacy & Sharing</h2>
-                <p className="text-[13px] text-espresso-500 mb-6">Manage who can see your vault data.</p>
+                <p className="text-[13px] text-espresso-600 mb-6">Manage who can see your vault data.</p>
 
-                <div className="border-t border-black/6 pt-5">
+                <div className="border-t border-espresso-250 pt-5">
                   <h3 className="text-[14.5px] font-semibold text-espresso-800 mb-0.5">Shared Access</h3>
-                  <p className="text-xs text-espresso-500 mb-4">
+                  <p className="text-xs text-espresso-600 mb-4">
                     {sharedAccess.length} people currently hold access to parts of your vault.
                   </p>
 
@@ -205,7 +202,7 @@ export default function SettingsPage() {
                         className="flex items-center justify-between gap-4 border border-espresso-250 rounded-lg px-4 py-3"
                       >
                         <span className="text-[13.5px] font-medium text-espresso-800">{person.name}</span>
-                        <span className="text-[11.5px] font-medium text-espresso-600 bg-cream-150 border border-espresso-200 rounded-full px-3 py-1">
+                        <span className="text-[11.5px] font-medium text-espresso-600 bg-cream-150 border border-espresso-250 rounded-full px-3 py-1">
                           {person.role}
                         </span>
                       </div>
@@ -217,9 +214,9 @@ export default function SettingsPage() {
                   </Button>
                 </div>
 
-                <div className="border-t border-black/6 mt-6 pt-6">
+                <div className="border-t border-espresso-250 mt-6 pt-6">
                   <h3 className="text-[14.5px] font-semibold text-red-700 mb-0.5">Danger Zone</h3>
-                  <p className="text-xs text-espresso-500 mb-4">Irreversible actions regarding your data.</p>
+                  <p className="text-xs text-espresso-600 mb-4">Irreversible actions regarding your data.</p>
                   <div className="flex flex-wrap gap-3">
                     <Button variant="outline" className="text-[13px] font-medium rounded-lg px-4 py-2">
                       Export data
@@ -235,9 +232,9 @@ export default function SettingsPage() {
             {activeSection === 'Language & Region' && (
               <>
                 <h2 className="text-base font-semibold text-espresso-800 mb-1">Language & Region</h2>
-                <p className="text-[13px] text-espresso-500 mb-6">Set your preferred language and regional formats.</p>
+                <p className="text-[13px] text-espresso-600 mb-6">Set your preferred language and regional formats.</p>
 
-                <div className="border-t border-black/6 pt-5">
+                <div className="border-t border-espresso-250 pt-5">
                   <h3 className="text-[13.5px] font-semibold text-espresso-800 mb-3">Language</h3>
                   <div className="flex flex-wrap gap-2.5 mb-6">
                     {LANGUAGES.map((lang) => (
@@ -265,7 +262,7 @@ export default function SettingsPage() {
                       </Button>
                     ))}
                   </div>
-                  <p className="text-xs text-espresso-500">Times always shown in Asia/Bangkok.</p>
+                  <p className="text-xs text-espresso-600">Times always shown in Asia/Bangkok.</p>
                 </div>
               </>
             )}

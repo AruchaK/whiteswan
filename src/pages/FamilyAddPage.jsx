@@ -89,18 +89,15 @@ export default function FamilyAddPage() {
         <section>
           <Link
             to="/dashboard/family"
-            className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-espresso-500 hover:text-espresso-700 transition-colors no-underline mb-4"
+            className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline mb-4"
           >
             <ArrowLeft size={14} strokeWidth={2} />
             Back to family
           </Link>
-          <p className="text-[10px] font-bold tracking-[0.16em] text-espresso-400 uppercase mb-2">
-            Trusted Circle
-          </p>
           <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
             Add a family member.
           </h1>
-          <p className="text-[14px] text-espresso-500 leading-relaxed">
+          <p className="text-[14px] text-espresso-600 leading-relaxed">
             Invite someone to your trusted circle and assign their role.
           </p>
         </section>
@@ -123,7 +120,7 @@ export default function FamilyAddPage() {
                   <ArrowUp size={14} strokeWidth={2} />
                   Upload photo
                 </button>
-                <p className="text-[11.5px] text-espresso-400 mt-1">JPG or PNG · max 5 MB</p>
+                <p className="text-[11.5px] text-espresso-600 mt-1">JPG or PNG · max 5 MB</p>
                 {photoError && <p className="text-[11.5px] text-red-600 mt-1">{photoError}</p>}
                 <input
                   ref={fileInputRef}
@@ -205,7 +202,7 @@ export default function FamilyAddPage() {
               </div>
             </div>
 
-            <div className="border-t border-black/6 pt-6 mb-6">
+            <div className="border-t border-espresso-250 pt-6 mb-6">
               <h3 className="text-[14.5px] font-semibold text-espresso-800 mb-4">Access level</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {ACCESS_LEVELS.map((level) => {
@@ -222,14 +219,14 @@ export default function FamilyAddPage() {
                       }`}
                     >
                       <p className="text-[14px] font-semibold mb-0.5">{level.label}</p>
-                      <p className={`text-[12px] leading-snug ${isSelected ? 'text-cream-200' : 'text-espresso-500'}`}>
+                      <p className={`text-[12px] leading-snug ${isSelected ? 'text-cream-200' : 'text-espresso-600'}`}>
                         {level.desc}
                       </p>
                     </button>
                   )
                 })}
               </div>
-              <p className="text-[12px] text-espresso-400 mt-3">
+              <p className="text-[12px] text-espresso-600 mt-3">
                 Viewer can see shared documents only. Editor can update. Trustee gets posthumous access.
               </p>
             </div>
@@ -239,7 +236,7 @@ export default function FamilyAddPage() {
               <textarea
                 rows={4}
                 placeholder="Any private context about this person..."
-                className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.5 transition-colors duration-150 outline-none w-full box-border resize-none focus:border-espresso-400 placeholder:text-espresso-400"
+                className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.5 transition-colors duration-150 outline-none w-full box-border resize-none focus:border-espresso-400 placeholder:text-espresso-600"
                 value={form.notes}
                 onChange={handleChange('notes')}
               />
