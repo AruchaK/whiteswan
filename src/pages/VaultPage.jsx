@@ -1,6 +1,8 @@
-import { Search, Upload, Lock, ChevronDown, ShieldCheck, TriangleAlert } from 'lucide-react'
+import { Search, Upload, Lock, ChevronDown, ShieldCheck, TriangleAlert, FileText } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import CategoryIcon from '../components/ui/CategoryIcon'
+import { LoadingSkeleton, ErrorState, EmptyState } from '../components/ui/StateViews'
+import { useResource } from '../lib/useResource'
 
 const STATUS_BADGE = {
   verified: {
@@ -16,7 +18,7 @@ const STATUS_BADGE = {
 }
 
 /* ── Mock data ── */
-const documents = [
+const DOCUMENTS = [
   {
     id: 1,
     title: 'Will & Testament',
@@ -79,8 +81,53 @@ const documents = [
   },
 ]
 
+/* Single document card — the success-state unit. */
+function DocumentCard({ doc }) {
+  const status = STATUS_BADGE[doc.status]
+  const StatusIcon = status.icon
+  return (
+    <div className="bg-white border border-espresso-250 rounded-xl px-6 py-5 flex flex-col gap-3.5 transition-[box-shadow,border-color] duration-200 cursor-pointer hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-espresso-300">
+      {/* Icon + title */}
+      <div className="flex items-center gap-3">
+        <CategoryIcon category={doc.category} size={40} />
+        <div>
+          <p className="text-[15px] font-semibold text-espresso-800 leading-[1.3]">{doc.title}</p>
+          <p className="text-[12.5px] text-espresso-600">{doc.type} · {doc.size}</p>
+        </div>
+      </div>
+
+      {/* Status + date */}
+      <div className="flex items-center gap-2">
+        <span className={`inline-flex items-center gap-1 text-[12px] font-medium rounded-full border px-2.5 py-1 ${status.className}`}>
+          <StatusIcon size={12} strokeWidth={2} />
+          {status.label}
+        </span>
+        <span className="text-[12.5px] text-espresso-600">{doc.date}</span>
+      </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2">
+        {doc.tags.map((tag) => (
+          <span
+            key={tag}
+            className="text-[12px] font-medium text-espresso-700 bg-cream-200 border border-espresso-250 rounded-full py-1 px-3 leading-normal"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 /* ── Page ── */
 export default function VaultPage() {
+  // Reference wiring for the data-fetch seam (lib/useResource.js): the page is
+  // written against the full loading / error / empty / success lifecycle even
+  // though the mock resolves synchronously today.
+  const { status, data: documents, error, retry } = useResource(DOCUMENTS)
+  const count = documents?.length ?? 0
+
   return (
     <AppLayout>
       <div className="max-w-300 mx-auto space-y-7 animate-fade-in">
@@ -88,30 +135,27 @@ export default function VaultPage() {
         {/* ─ Header ─ */}
         <section className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3.5">
           <div>
-            <p className="text-[11px] font-bold tracking-[0.16em] text-espresso-400 uppercase mb-2">
-              Life Vault
-            </p>
             <h1 className="text-[32px] sm:text-[40px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
               Your encrypted archive.
             </h1>
-            <p className="text-[15px] text-espresso-500 leading-relaxed">
+            <p className="text-[15px] text-espresso-600 leading-relaxed">
               Documents, letters and records — sealed, searchable, sharable on your terms.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-white border border-espresso-200 rounded-full px-5 py-2.5 shrink-0 self-start">
-            <Lock size={14} strokeWidth={2} className="text-espresso-500" />
-            <span className="text-[13px] font-medium text-espresso-700">AES-256 · 6 files</span>
+          <div className="flex items-center gap-2 bg-white border border-espresso-250 rounded-full px-5 py-2.5 shrink-0 self-start">
+            <Lock size={14} strokeWidth={2} className="text-espresso-600" />
+            <span className="text-[13px] font-medium text-espresso-700">AES-256 · {count} {count === 1 ? 'file' : 'files'}</span>
           </div>
         </section>
 
         {/* ─ Upload Dropzone ─ */}
         <section className="border-2 border-dashed border-espresso-300 rounded-2xl py-12 px-8 flex flex-col items-center justify-center text-center transition-colors duration-200 bg-cream-50 hover:border-espresso-400 hover:bg-cream-100">
           <div className="w-14 h-14 rounded-xl bg-cream-200 flex items-center justify-center mb-4">
-            <Upload size={22} strokeWidth={1.8} className="text-espresso-500" />
+            <Upload size={22} strokeWidth={1.8} className="text-espresso-600" />
           </div>
           <p className="text-[16px] font-medium text-espresso-800 mb-1">Drop a file to upload</p>
-          <p className="text-[13px] text-espresso-500 mb-4">
+          <p className="text-[13px] text-espresso-600 mb-4">
             PDF, DOCX, JPG up to 25 MB. All files are<br />encrypted on upload.
           </p>
           <button className="text-[14px] font-medium text-espresso-700 cursor-pointer underline underline-offset-2 bg-transparent border-none p-0 transition-colors hover:text-espresso-800">Choose file</button>
@@ -119,66 +163,49 @@ export default function VaultPage() {
 
         {/* ─ Search & Filter ─ */}
         <section className="flex items-center gap-3.5">
-          <div className="flex-1 flex items-center gap-2.5 bg-cream-150 border border-espresso-200 rounded-[10px] px-4 py-2.5">
-            <Search size={16} strokeWidth={1.8} className="text-espresso-400 shrink-0" />
+          <div className="flex-1 flex items-center gap-2.5 bg-cream-150 border border-espresso-250 rounded-lg px-4 py-2.5">
+            <Search size={16} strokeWidth={1.8} className="text-espresso-600 shrink-0" />
             <input
               type="text"
               placeholder="Search documents..."
-              className="flex-1 bg-transparent border-none outline-none text-[14px] text-espresso-800 placeholder:text-espresso-400"
+              className="flex-1 bg-transparent border-none outline-none text-[14px] text-espresso-800 placeholder:text-espresso-600"
             />
           </div>
           <div className="flex items-center gap-3 shrink-0">
-            <div className="text-[13px] text-espresso-700 bg-cream-150 border border-espresso-200 rounded-lg px-3.5 py-2 cursor-pointer flex items-center gap-1">
+            <div className="text-[13px] text-espresso-700 bg-cream-150 border border-espresso-250 rounded-lg px-3.5 py-2 cursor-pointer flex items-center gap-1">
               All tags
-              <ChevronDown size={13} strokeWidth={2} className="text-espresso-500" />
+              <ChevronDown size={13} strokeWidth={2} className="text-espresso-600" />
             </div>
-            <span className="text-[13px] text-espresso-500 whitespace-nowrap">6 of 6</span>
+            <span className="text-[13px] text-espresso-600 whitespace-nowrap">{count} of {count}</span>
           </div>
         </section>
 
-        {/* ─ Document Cards Grid ─ */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {documents.map((doc) => {
-            const status = STATUS_BADGE[doc.status]
-            const StatusIcon = status.icon
-            return (
-            <div
-              key={doc.id}
-              className="bg-white border border-espresso-200 rounded-[14px] px-6 py-5 flex flex-col gap-3.5 transition-[box-shadow,border-color] duration-200 cursor-pointer hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-espresso-300"
-            >
-              {/* Icon + title */}
-              <div className="flex items-center gap-3">
-                <CategoryIcon category={doc.category} size={40} />
-                <div>
-                  <p className="text-[15px] font-semibold text-espresso-800 leading-[1.3]">{doc.title}</p>
-                  <p className="text-[12.5px] text-espresso-500">{doc.type} · {doc.size}</p>
-                </div>
-              </div>
+        {/* ─ Documents: full loading / error / empty / success lifecycle ─ */}
+        {status === 'loading' && <LoadingSkeleton count={6} />}
 
-              {/* Status + date */}
-              <div className="flex items-center gap-2">
-                <span className={`inline-flex items-center gap-1 text-[12px] font-medium rounded-full border px-2.5 py-1 ${status.className}`}>
-                  <StatusIcon size={12} strokeWidth={2} />
-                  {status.label}
-                </span>
-                <span className="text-[12.5px] text-espresso-400">{doc.date}</span>
-              </div>
+        {status === 'error' && (
+          <ErrorState
+            title="Couldn’t open your vault"
+            message={error?.message ?? 'Your documents didn’t load. Please try again.'}
+            onRetry={retry}
+          />
+        )}
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2">
-                {doc.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[12px] font-medium text-espresso-700 bg-cream-200 border border-espresso-200 rounded-full py-1 px-3 leading-normal"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-            )
-          })}
-        </section>
+        {status === 'success' && count === 0 && (
+          <EmptyState
+            icon={FileText}
+            title="Your vault is empty"
+            message="Upload a document to seal it here — encrypted, searchable, and shared only on your terms."
+          />
+        )}
+
+        {status === 'success' && count > 0 && (
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {documents.map((doc) => (
+              <DocumentCard key={doc.id} doc={doc} />
+            ))}
+          </section>
+        )}
       </div>
     </AppLayout>
   )

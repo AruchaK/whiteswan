@@ -19,6 +19,8 @@ import FamilyAddPage from './pages/FamilyAddPage'
 import FamilyTreePage from './pages/FamilyTreePage'
 import PlanningPage from './pages/PlanningPage'
 import PillarPlanningPage from './pages/PillarPlanningPage'
+import NotFoundPage from './pages/NotFoundPage'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function LandingPage() {
   return (
@@ -42,18 +44,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/dashboard/vault" element={<VaultPage />} />
-        <Route path="/dashboard/settings" element={<SettingsPage />} />
-        <Route path="/dashboard/family" element={<FamilyPage />} />
-        <Route path="/family/add" element={<FamilyAddPage />} />
-        <Route path="/family/tree" element={<FamilyTreePage />} />
-        <Route path="/dashboard/planning" element={<PlanningPage />} />
-        <Route path="/dashboard/planning/:pillar" element={<PillarPlanningPage />} />
+
+        {/* Authenticated surfaces — guarded by the auth seam (lib/auth.js) */}
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+        <Route path="/dashboard/vault" element={<ProtectedRoute><VaultPage /></ProtectedRoute>} />
+        <Route path="/dashboard/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+        <Route path="/dashboard/family" element={<ProtectedRoute><FamilyPage /></ProtectedRoute>} />
+        <Route path="/family/add" element={<ProtectedRoute><FamilyAddPage /></ProtectedRoute>} />
+        <Route path="/family/tree" element={<ProtectedRoute><FamilyTreePage /></ProtectedRoute>} />
+        <Route path="/dashboard/planning" element={<ProtectedRoute><PlanningPage /></ProtectedRoute>} />
+        <Route path="/dashboard/planning/:pillar" element={<ProtectedRoute><PillarPlanningPage /></ProtectedRoute>} />
+
+        {/* Catch-all */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   )
