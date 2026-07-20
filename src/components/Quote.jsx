@@ -26,7 +26,7 @@ export default function Quote() {
             }`}
         >
           {/* Top line */}
-          <p className="text-[17px] sm:text-[22px] font-poppins text-espresso-800 leading-relaxed mb-8">
+          <p className="text-[16px] sm:text-[22px] font-poppins text-espresso-800 leading-relaxed mb-8">
             Life's most important moments rarely announce themselves,
             <br className="hidden sm:block" />
             but you can be ready for them.
@@ -41,7 +41,7 @@ export default function Quote() {
           </div>
 
           {/* Main quote */}
-          <p className="text-[17px] font-poppins sm:text-[22px] text-espresso-800 leading-relaxed">
+          <p className="text-[16px] font-poppins sm:text-[22px] text-espresso-800 leading-relaxed">
             Because planning, done well, is <strong>two gifts at once:</strong>
             <br />
             <strong><em>a quieter mind</em></strong> for you and <strong><em>a softer landing</em></strong>

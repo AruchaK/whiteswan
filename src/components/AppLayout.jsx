@@ -138,7 +138,7 @@ export default function AppLayout({ children }) {
                 key={path}
                 to={path}
                 onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[14.5px] font-medium no-underline transition-all duration-150 ${
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[14px] font-medium no-underline transition-all duration-150 ${
                   isActive
                     ? 'bg-espresso-800 text-cream-50 shadow-sm'
                     : 'text-espresso-600 hover:bg-espresso-50 hover:text-espresso-800'
@@ -166,7 +166,7 @@ export default function AppLayout({ children }) {
                   key={path}
                   to={path}
                   className={`
-                    flex items-center gap-2.5 xl:gap-3 px-3 xl:px-4 py-2 xl:py-2.5 rounded-lg text-[13.5px] xl:text-[14.5px] font-medium no-underline transition-all duration-150
+                    flex items-center gap-2.5 xl:gap-3 px-3 xl:px-4 py-2 xl:py-2.5 rounded-lg text-[13px] xl:text-[14px] font-medium no-underline transition-all duration-150
                     ${isActive
                       ? 'bg-espresso-800 text-cream-50 shadow-sm'
                       : 'text-espresso-600 hover:bg-espresso-50 hover:text-espresso-800'

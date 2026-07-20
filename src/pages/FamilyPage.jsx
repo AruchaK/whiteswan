@@ -58,11 +58,11 @@ export default function FamilyPage() {
           </div>
 
           <div className="flex items-center gap-2.5 shrink-0">
-            <Button as={Link} to="/family/add" variant="outline" className="flex items-center gap-1.5 text-[13.5px] font-medium px-4 py-2 rounded-full no-underline">
+            <Button as={Link} to="/family/add" variant="outline" className="flex items-center gap-1.5 text-[13px] font-medium px-4 py-2 rounded-full no-underline">
               <Plus size={14} strokeWidth={2} />
               Add member
             </Button>
-            <Button as={Link} to="/family/tree" variant="dark" className="flex items-center gap-1.5 text-[13.5px] font-medium px-4 py-2 rounded-full no-underline">
+            <Button as={Link} to="/family/tree" variant="dark" className="flex items-center gap-1.5 text-[13px] font-medium px-4 py-2 rounded-full no-underline">
               Family tree
               <ArrowRight size={14} strokeWidth={2} />
             </Button>
@@ -83,7 +83,7 @@ export default function FamilyPage() {
                 </div>
               </div>
 
-              <p className="text-[12.5px] text-espresso-600 mb-3">
+              <p className="text-[13px] text-espresso-600 mb-3">
                 Born {member.born} · {member.location}
               </p>
 
@@ -98,7 +98,7 @@ export default function FamilyPage() {
 
               <Link
                 to="/family/tree"
-                className="mt-auto inline-flex items-center gap-1 text-[12.5px] font-medium text-espresso-600 hover:text-espresso-800 transition-colors no-underline"
+                className="mt-auto inline-flex items-center gap-1 text-[13px] font-medium text-espresso-600 hover:text-espresso-800 transition-colors no-underline"
               >
                 View on family tree <span aria-hidden>→</span>
               </Link>
@@ -127,7 +127,7 @@ export default function FamilyPage() {
                   <p className="text-[13px] text-espresso-700">
                     <span className="font-semibold text-espresso-900">{item.name}</span> {item.action}
                   </p>
-                  <span className="text-[11.5px] text-espresso-600 shrink-0">{item.time}</span>
+                  <span className="text-[12px] text-espresso-600 shrink-0">{item.time}</span>
                 </div>
               ))}
             </div>

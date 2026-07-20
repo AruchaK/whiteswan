@@ -92,7 +92,7 @@ function DocumentCard({ doc }) {
         <CategoryIcon category={doc.category} size={40} />
         <div>
           <p className="text-[15px] font-semibold text-espresso-800 leading-[1.3]">{doc.title}</p>
-          <p className="text-[12.5px] text-espresso-600">{doc.type} · {doc.size}</p>
+          <p className="text-[13px] text-espresso-600">{doc.type} · {doc.size}</p>
         </div>
       </div>
 
@@ -102,7 +102,7 @@ function DocumentCard({ doc }) {
           <StatusIcon size={12} strokeWidth={2} />
           {status.label}
         </span>
-        <span className="text-[12.5px] text-espresso-600">{doc.date}</span>
+        <span className="text-[13px] text-espresso-600">{doc.date}</span>
       </div>
 
       {/* Tags */}

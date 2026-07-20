@@ -183,7 +183,7 @@ export default function DashboardPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h2 className="text-3xl font-semibold font-serif text-espresso-900 leading-tight">{currentUser.fullName}</h2>
-                    <button className="flex items-center gap-1 text-[11.5px] text-espresso-600 bg-espresso-50 border border-espresso-250 rounded-full px-2.5 py-0.5 hover:bg-espresso-100 transition-colors cursor-pointer">
+                    <button className="flex items-center gap-1 text-[12px] text-espresso-600 bg-espresso-50 border border-espresso-250 rounded-full px-2.5 py-0.5 hover:bg-espresso-100 transition-colors cursor-pointer">
                       <Pencil size={10} strokeWidth={2} />
                       Edit profile
                     </button>
@@ -215,7 +215,7 @@ export default function DashboardPage() {
                 ].map(([label, value]) => (
                   <div key={label}>
                     <p className="text-[10px] font-semibold tracking-[0.12em] text-espresso-600 uppercase mb-1">{label}</p>
-                    <p className="text-[13.5px] font-medium text-espresso-800">{value}</p>
+                    <p className="text-[13px] font-medium text-espresso-800">{value}</p>
                   </div>
                 ))}
               </div>
@@ -224,7 +224,7 @@ export default function DashboardPage() {
             {/* Quote section — shares the outer gradient, with left border */}
             <div className="border-t lg:border-t-0 lg:border-l border-espresso-250 p-6 xl:p-8 flex flex-col justify-center">
               <span className="font-serif text-5xl leading-none text-espresso-600 opacity-60 select-none">&ldquo;</span>
-              <blockquote className="font-serif text-[17px] sm:text-[18px] italic text-espresso-700 leading-relaxed -mt-4 mb-4">
+              <blockquote className="font-serif text-[16px] sm:text-[18px] italic text-espresso-700 leading-relaxed -mt-4 mb-4">
                 {quote.text}
               </blockquote>
               <p className="text-[11px] tracking-[0.06em] text-espresso-600 italic">
@@ -263,7 +263,7 @@ export default function DashboardPage() {
 
                   <div className='w-full'>
                     <div className='flex flex-row justify-between w-full'>
-                      <span className="text-[13.5px] font-medium text-espresso-800 w-18 shrink-0">{pillar.label}</span>
+                      <span className="text-[13px] font-medium text-espresso-800 w-18 shrink-0">{pillar.label}</span>
                       <div className='space-x-4'>
                         <span className="text-[12px] text-espresso-600 tabular-nums w-8 text-right">{p.readiness}%</span>
                         <span className="text-[12px] text-espresso-600 tabular-nums w-7 text-right">{p.done}/{p.total}</span>
@@ -301,7 +301,7 @@ export default function DashboardPage() {
                     style={{ background: PILLARS_BY_KEY[task.category.toLowerCase()]?.banner }}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13.5px] font-semibold text-espresso-800 group-hover:text-espresso-900 transition-colors">{task.title}</p>
+                    <p className="text-[13px] font-semibold text-espresso-800 group-hover:text-espresso-900 transition-colors">{task.title}</p>
                     <p className="text-[11px] text-espresso-600 mt-0.5">{task.category} · {task.time}</p>
                   </div>
                   <span className={`text-[11px] font-medium border rounded-full px-2.5 py-0.5 shrink-0 ${task.tagColor}`}>
@@ -340,7 +340,7 @@ export default function DashboardPage() {
               <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-600 uppercase mb-2.5">Action required</p>
               <a
                 href="/dashboard/vault"
-                className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-espresso-700 bg-gold-100 border border-espresso-250 rounded-full px-3 py-1.5 hover:bg-gold-100/70 transition-colors no-underline"
+                className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-700 bg-gold-100 border border-espresso-250 rounded-full px-3 py-1.5 hover:bg-gold-100/70 transition-colors no-underline"
               >
                 <AlertTriangle size={13} strokeWidth={2} className="text-gold-600" />
                 3 critical items missing

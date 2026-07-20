@@ -71,7 +71,7 @@ export default function PlanningPage() {
               fillClassName="bg-linear-to-r from-espresso-500 to-gold-500"
               className="mb-2"
             />
-            <p className="text-[11.5px] text-espresso-600">{remaining}% remaining</p>
+            <p className="text-[12px] text-espresso-600">{remaining}% remaining</p>
           </Card>
         </section>
 
@@ -87,7 +87,7 @@ export default function PlanningPage() {
             <h3 className="font-serif text-xl text-espresso-900 mb-5">Add to any pillar</h3>
             <div className="flex flex-col gap-1">
               {quickActions.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-3 py-2 text-[13.5px] text-espresso-700">
+                <div key={label} className="flex items-center gap-3 py-2 text-[13px] text-espresso-700">
                   <span className="w-8 h-8 rounded-full bg-white border border-espresso-250 flex items-center justify-center shrink-0">
                     <Icon size={14} strokeWidth={1.8} />
                   </span>

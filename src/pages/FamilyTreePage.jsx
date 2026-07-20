@@ -300,7 +300,7 @@ export default function FamilyTreePage() {
         <section>
           <Link
             to="/dashboard/family"
-            className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline mb-4"
+            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline mb-4"
           >
             <ArrowLeft size={14} strokeWidth={2} />
             Back to Family
@@ -409,7 +409,7 @@ export default function FamilyTreePage() {
                   })}
                 </div>
               ) : (
-                <p className="text-[12.5px] text-espresso-600 italic">No documents shared yet.</p>
+                <p className="text-[13px] text-espresso-600 italic">No documents shared yet.</p>
               )}
             </div>
 

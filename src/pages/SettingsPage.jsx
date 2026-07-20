@@ -78,7 +78,7 @@ export default function SettingsPage() {
                 return (
                   <button
                     key={section}
-                    className={`block w-auto md:w-full text-[13.5px] font-medium px-3.5 py-2 rounded-lg border cursor-pointer transition-all duration-150 no-underline text-left bg-transparent ${
+                    className={`block w-auto md:w-full text-[13px] font-medium px-3.5 py-2 rounded-lg border cursor-pointer transition-all duration-150 no-underline text-left bg-transparent ${
                       isActive
                         ? 'bg-white text-espresso-800 font-semibold border-espresso-250'
                         : 'text-espresso-600 border-transparent hover:bg-espresso-50 hover:text-espresso-800'
@@ -114,19 +114,19 @@ export default function SettingsPage() {
                 {/* Form fields — 2 columns */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[12.5px] font-semibold text-espresso-800">Full Name</label>
+                    <label className="text-[13px] font-semibold text-espresso-800">Full Name</label>
                     <input
                       type="text"
-                      className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
+                      className="text-[13px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
                       value={form.fullName}
                       onChange={handleChange('fullName')}
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[12.5px] font-semibold text-espresso-800">Email Address</label>
+                    <label className="text-[13px] font-semibold text-espresso-800">Email Address</label>
                     <input
                       type="email"
-                      className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
+                      className="text-[13px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
                       value={form.email}
                       onChange={handleChange('email')}
                     />
@@ -135,10 +135,10 @@ export default function SettingsPage() {
 
                 {/* Phone — single column */}
                 <div className="flex flex-col gap-1.5 max-w-[calc(50%-10px)]">
-                  <label className="text-[12.5px] font-semibold text-espresso-800">Phone Number</label>
+                  <label className="text-[13px] font-semibold text-espresso-800">Phone Number</label>
                   <input
                     type="tel"
-                    className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
+                    className="text-[13px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
                     value={form.phone}
                     onChange={handleChange('phone')}
                   />
@@ -146,10 +146,10 @@ export default function SettingsPage() {
 
                 {/* Security */}
                 <div className="border-t border-espresso-250 pt-6 mt-2">
-                  <h3 className="text-[14.5px] font-semibold text-espresso-800 mb-4">Security</h3>
+                  <h3 className="text-[14px] font-semibold text-espresso-800 mb-4">Security</h3>
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-[13.5px] font-medium text-espresso-800 mb-0.5">Two-factor authentication</p>
+                      <p className="text-[13px] font-medium text-espresso-800 mb-0.5">Two-factor authentication</p>
                       <p className="text-xs text-espresso-600">Adds a one-time code on every new sign-in.</p>
                     </div>
                     <ToggleSwitch
@@ -161,7 +161,7 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Save */}
-                <Button variant="dark" className="mt-7 text-[13.5px] font-semibold rounded-lg px-6 py-2.5">Save changes</Button>
+                <Button variant="dark" className="mt-7 text-[13px] font-semibold rounded-lg px-6 py-2.5">Save changes</Button>
               </>
             )}
 
@@ -174,7 +174,7 @@ export default function SettingsPage() {
                   {Object.entries(notifications).map(([key, { label, desc, enabled }]) => (
                     <div key={key} className="flex items-center justify-between gap-4 py-4 first:pt-5">
                       <div>
-                        <p className="text-[13.5px] font-medium text-espresso-800 mb-0.5">{label}</p>
+                        <p className="text-[13px] font-medium text-espresso-800 mb-0.5">{label}</p>
                         <p className="text-xs text-espresso-600">{desc}</p>
                       </div>
                       <ToggleSwitch checked={enabled} onChange={() => toggleNotification(key)} />
@@ -190,7 +190,7 @@ export default function SettingsPage() {
                 <p className="text-[13px] text-espresso-600 mb-6">Manage who can see your vault data.</p>
 
                 <div className="border-t border-espresso-250 pt-5">
-                  <h3 className="text-[14.5px] font-semibold text-espresso-800 mb-0.5">Shared Access</h3>
+                  <h3 className="text-[14px] font-semibold text-espresso-800 mb-0.5">Shared Access</h3>
                   <p className="text-xs text-espresso-600 mb-4">
                     {sharedAccess.length} people currently hold access to parts of your vault.
                   </p>
@@ -201,8 +201,8 @@ export default function SettingsPage() {
                         key={person.name}
                         className="flex items-center justify-between gap-4 border border-espresso-250 rounded-lg px-4 py-3"
                       >
-                        <span className="text-[13.5px] font-medium text-espresso-800">{person.name}</span>
-                        <span className="text-[11.5px] font-medium text-espresso-600 bg-cream-150 border border-espresso-250 rounded-full px-3 py-1">
+                        <span className="text-[13px] font-medium text-espresso-800">{person.name}</span>
+                        <span className="text-[12px] font-medium text-espresso-600 bg-cream-150 border border-espresso-250 rounded-full px-3 py-1">
                           {person.role}
                         </span>
                       </div>
@@ -215,7 +215,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="border-t border-espresso-250 mt-6 pt-6">
-                  <h3 className="text-[14.5px] font-semibold text-red-700 mb-0.5">Danger Zone</h3>
+                  <h3 className="text-[14px] font-semibold text-red-700 mb-0.5">Danger Zone</h3>
                   <p className="text-xs text-espresso-600 mb-4">Irreversible actions regarding your data.</p>
                   <div className="flex flex-wrap gap-3">
                     <Button variant="outline" className="text-[13px] font-medium rounded-lg px-4 py-2">
@@ -235,13 +235,13 @@ export default function SettingsPage() {
                 <p className="text-[13px] text-espresso-600 mb-6">Set your preferred language and regional formats.</p>
 
                 <div className="border-t border-espresso-250 pt-5">
-                  <h3 className="text-[13.5px] font-semibold text-espresso-800 mb-3">Language</h3>
+                  <h3 className="text-[13px] font-semibold text-espresso-800 mb-3">Language</h3>
                   <div className="flex flex-wrap gap-2.5 mb-6">
                     {LANGUAGES.map((lang) => (
                       <Button
                         key={lang.code}
                         variant={language === lang.code ? 'dark' : 'outline'}
-                        className="text-[13.5px] font-medium rounded-full px-4 py-2"
+                        className="text-[13px] font-medium rounded-full px-4 py-2"
                         onClick={() => setLanguage(lang.code)}
                       >
                         {lang.label}
@@ -249,13 +249,13 @@ export default function SettingsPage() {
                     ))}
                   </div>
 
-                  <h3 className="text-[13.5px] font-semibold text-espresso-800 mb-3">Currency</h3>
+                  <h3 className="text-[13px] font-semibold text-espresso-800 mb-3">Currency</h3>
                   <div className="flex flex-wrap gap-2.5 mb-3">
                     {CURRENCIES.map((code) => (
                       <Button
                         key={code}
                         variant={currency === code ? 'dark' : 'outline'}
-                        className="text-[13.5px] font-medium rounded-full px-4 py-2"
+                        className="text-[13px] font-medium rounded-full px-4 py-2"
                         onClick={() => setCurrency(code)}
                       >
                         {code}

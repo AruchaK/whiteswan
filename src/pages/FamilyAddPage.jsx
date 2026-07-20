@@ -79,7 +79,7 @@ export default function FamilyAddPage() {
   }
 
   const inputClass = (field) =>
-    `text-[13.5px] text-espresso-800 bg-white border rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400 ${
+    `text-[13px] text-espresso-800 bg-white border rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400 ${
       errors[field] ? 'border-red-400' : 'border-espresso-250'
     }`
 
@@ -89,7 +89,7 @@ export default function FamilyAddPage() {
         <section>
           <Link
             to="/dashboard/family"
-            className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline mb-4"
+            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-600 hover:text-espresso-700 transition-colors no-underline mb-4"
           >
             <ArrowLeft size={14} strokeWidth={2} />
             Back to family
@@ -115,13 +115,13 @@ export default function FamilyAddPage() {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-espresso-800 bg-transparent border-none p-0 cursor-pointer hover:text-espresso-600 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-800 bg-transparent border-none p-0 cursor-pointer hover:text-espresso-600 transition-colors"
                 >
                   <ArrowUp size={14} strokeWidth={2} />
                   Upload photo
                 </button>
-                <p className="text-[11.5px] text-espresso-600 mt-1">JPG or PNG · max 5 MB</p>
-                {photoError && <p className="text-[11.5px] text-red-600 mt-1">{photoError}</p>}
+                <p className="text-[12px] text-espresso-600 mt-1">JPG or PNG · max 5 MB</p>
+                {photoError && <p className="text-[12px] text-red-600 mt-1">{photoError}</p>}
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -135,27 +135,27 @@ export default function FamilyAddPage() {
             {/* Row 1 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12.5px] font-semibold text-espresso-800">First name</label>
+                <label className="text-[13px] font-semibold text-espresso-800">First name</label>
                 <input
                   type="text"
                   className={inputClass('firstName')}
                   value={form.firstName}
                   onChange={handleChange('firstName')}
                 />
-                {errors.firstName && <p className="text-[11.5px] text-red-600">{errors.firstName}</p>}
+                {errors.firstName && <p className="text-[12px] text-red-600">{errors.firstName}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12.5px] font-semibold text-espresso-800">Surname</label>
+                <label className="text-[13px] font-semibold text-espresso-800">Surname</label>
                 <input
                   type="text"
                   className={inputClass('surname')}
                   value={form.surname}
                   onChange={handleChange('surname')}
                 />
-                {errors.surname && <p className="text-[11.5px] text-red-600">{errors.surname}</p>}
+                {errors.surname && <p className="text-[12px] text-red-600">{errors.surname}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12.5px] font-semibold text-espresso-800">Relationship</label>
+                <label className="text-[13px] font-semibold text-espresso-800">Relationship</label>
                 <select
                   className={`${inputClass('relationship')} cursor-pointer`}
                   value={form.relationship}
@@ -166,14 +166,14 @@ export default function FamilyAddPage() {
                     <option key={r} value={r}>{r}</option>
                   ))}
                 </select>
-                {errors.relationship && <p className="text-[11.5px] text-red-600">{errors.relationship}</p>}
+                {errors.relationship && <p className="text-[12px] text-red-600">{errors.relationship}</p>}
               </div>
             </div>
 
             {/* Row 2 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12.5px] font-semibold text-espresso-800">Date of birth</label>
+                <label className="text-[13px] font-semibold text-espresso-800">Date of birth</label>
                 <input
                   type="date"
                   className={inputClass('dob')}
@@ -182,7 +182,7 @@ export default function FamilyAddPage() {
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12.5px] font-semibold text-espresso-800">Phone</label>
+                <label className="text-[13px] font-semibold text-espresso-800">Phone</label>
                 <input
                   type="tel"
                   className={inputClass('phone')}
@@ -191,19 +191,19 @@ export default function FamilyAddPage() {
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12.5px] font-semibold text-espresso-800">Email</label>
+                <label className="text-[13px] font-semibold text-espresso-800">Email</label>
                 <input
                   type="email"
                   className={inputClass('email')}
                   value={form.email}
                   onChange={handleChange('email')}
                 />
-                {errors.email && <p className="text-[11.5px] text-red-600">{errors.email}</p>}
+                {errors.email && <p className="text-[12px] text-red-600">{errors.email}</p>}
               </div>
             </div>
 
             <div className="border-t border-espresso-250 pt-6 mb-6">
-              <h3 className="text-[14.5px] font-semibold text-espresso-800 mb-4">Access level</h3>
+              <h3 className="text-[14px] font-semibold text-espresso-800 mb-4">Access level</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {ACCESS_LEVELS.map((level) => {
                   const isSelected = accessLevel === level.key
@@ -232,21 +232,21 @@ export default function FamilyAddPage() {
             </div>
 
             <div className="flex flex-col gap-1.5 mb-7">
-              <label className="text-[12.5px] font-semibold text-espresso-800">Notes</label>
+              <label className="text-[13px] font-semibold text-espresso-800">Notes</label>
               <textarea
                 rows={4}
                 placeholder="Any private context about this person..."
-                className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.5 transition-colors duration-150 outline-none w-full box-border resize-none focus:border-espresso-400 placeholder:text-espresso-600"
+                className="text-[13px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.5 transition-colors duration-150 outline-none w-full box-border resize-none focus:border-espresso-400 placeholder:text-espresso-600"
                 value={form.notes}
                 onChange={handleChange('notes')}
               />
             </div>
 
             <div className="flex items-center justify-end gap-3">
-              <Button as={Link} to="/dashboard/family" variant="outline" className="text-[13.5px] font-medium rounded-full px-5 py-2.25 no-underline">
+              <Button as={Link} to="/dashboard/family" variant="outline" className="text-[13px] font-medium rounded-full px-5 py-2.25 no-underline">
                 Cancel
               </Button>
-              <Button type="submit" variant="dark" className="text-[13.5px] font-semibold rounded-full px-5 py-2.25">
+              <Button type="submit" variant="dark" className="text-[13px] font-semibold rounded-full px-5 py-2.25">
                 Save member
               </Button>
             </div>
