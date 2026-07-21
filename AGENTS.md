@@ -51,8 +51,8 @@ Font families: `font-sans` (Inter), `font-serif` (Cormorant Garamond), `font-pop
 **Shared UI primitives (`src/components/ui/`):** `Card`, `Button` (variants: primary/outline/dark/light/danger, polymorphic via `as`), `ToggleSwitch`, `CategoryIcon`, `FloatingPreparednessWidget`. Prefer these over re-implementing.
 
 **Domain data & helpers (`src/lib/`):**
-- `pillars.js` — the five pillars (`legal`, `medical`, `financial`, `personal`, `family`) with `label`, `color`, `bg`, `banner`, and lucide `icon`; plus `PILLARS_BY_KEY` lookup. Single source of truth for pillar identity across pages.
-- `pillarData.js` — per-pillar mock planning content (badges, readiness, tasks, completed, contacts, notes) keyed by pillar; consumed by `PillarPlanningPage`.
-- `currentUser.js` — the hardcoded demo user (`Somchai Jaidee`).
+- `pillars.ts` — the five pillars (`legal`, `medical`, `financial`, `personal`, `family`) with `label`, `color`, `bg`, `banner`, and lucide `icon`; plus `PILLARS_BY_KEY` lookup. Single source of truth for pillar identity across pages.
+- `pillarData.ts` — per-pillar mock planning content (badges, readiness, tasks, completed, contacts, notes) keyed by pillar; consumed by `PillarPlanningPage`.
+- `currentUser.ts` — the hardcoded demo user (`Somchai Jaidee`).
 
 **State & data:** No backend or auth is wired up yet. Pages use hardcoded mock data (inline at the top of each file, or in `src/lib/`). Auth form handlers contain `// TODO: integrate auth` stubs. There are no route guards protecting `/dashboard/*`. Interactive state (section tabs, the "Add a new task" dialog in `NewTaskDialog`, checkbox toggles) is local `useState` only — nothing persists across reloads.
