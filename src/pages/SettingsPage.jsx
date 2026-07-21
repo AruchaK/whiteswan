@@ -2,6 +2,7 @@ import { useState } from 'react'
 import AppLayout from '../components/AppLayout'
 import Button from '../components/ui/Button'
 import ToggleSwitch from '../components/ui/ToggleSwitch'
+import PageHeader from '../components/ui/PageHeader'
 
 /* ── Section definitions ── */
 const sections = ['Account', 'Notifications', 'Privacy & Sharing', 'Language & Region']
@@ -58,30 +59,23 @@ export default function SettingsPage() {
       <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
 
         {/* ─ Header ─ */}
-        <section>
-          <p className="text-[10px] font-bold tracking-[0.16em] text-espresso-400 uppercase mb-2">
-            Preferences
-          </p>
-          <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
-            Settings.
-          </h1>
-          <p className="text-[14px] text-espresso-500 leading-relaxed">
-            Manage your account, notifications, privacy and regional preferences.
-          </p>
-        </section>
+        <PageHeader
+          title="Settings."
+          subtitle="Manage your account, notifications, privacy and regional preferences."
+        />
 
         {/* ─ Settings card ─ */}
-        <div className="bg-white border border-espresso-250 rounded-[14px] flex flex-col md:flex-row overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] min-h-120">
+        <div className="bg-white border border-espresso-250 rounded-xl flex flex-col md:flex-row overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] min-h-120">
           {/* Sections nav */}
-          <div className="w-full md:w-60 shrink-0 border-b md:border-b-0 md:border-r border-black/6 px-5 pt-5 pb-4 md:px-6 md:py-7">
-            <p className="text-[10px] font-bold tracking-[0.14em] uppercase text-espresso-500 mb-4">Sections</p>
+          <div className="w-full md:w-60 shrink-0 border-b md:border-b-0 md:border-r border-espresso-250 px-5 pt-5 pb-4 md:px-6 md:py-7">
+            <p className="text-[10px] font-bold tracking-[0.14em] uppercase text-espresso-600 mb-4">Sections</p>
             <nav className="flex flex-row flex-wrap gap-1.5 md:flex-col md:gap-0.5 space-y-2">
               {sections.map((section) => {
                 const isActive = activeSection === section
                 return (
                   <button
                     key={section}
-                    className={`block w-auto md:w-full text-[13.5px] font-medium px-3.5 py-2 rounded-lg border cursor-pointer transition-all duration-150 no-underline text-left bg-transparent ${
+                    className={`block w-auto md:w-full text-[13px] font-medium px-3.5 py-2 rounded-lg border cursor-pointer transition-all duration-150 no-underline text-left bg-transparent ${
                       isActive
                         ? 'bg-white text-espresso-800 font-semibold border-espresso-250'
                         : 'text-espresso-600 border-transparent hover:bg-espresso-50 hover:text-espresso-800'
@@ -100,7 +94,7 @@ export default function SettingsPage() {
             {activeSection === 'Account' && (
               <>
                 <h2 className="text-base font-semibold text-espresso-800 mb-1">Account</h2>
-                <p className="text-[13px] text-espresso-500 mb-6">Update your personal details and security.</p>
+                <p className="text-[13px] text-espresso-600 mb-6">Update your personal details and security.</p>
 
                 {/* Avatar */}
                 <div className="flex items-center gap-4 mb-7">
@@ -117,19 +111,19 @@ export default function SettingsPage() {
                 {/* Form fields — 2 columns */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[12.5px] font-semibold text-espresso-800">Full Name</label>
+                    <label className="text-[13px] font-semibold text-espresso-800">Full Name</label>
                     <input
                       type="text"
-                      className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
+                      className="text-[13px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
                       value={form.fullName}
                       onChange={handleChange('fullName')}
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[12.5px] font-semibold text-espresso-800">Email Address</label>
+                    <label className="text-[13px] font-semibold text-espresso-800">Email Address</label>
                     <input
                       type="email"
-                      className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
+                      className="text-[13px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
                       value={form.email}
                       onChange={handleChange('email')}
                     />
@@ -138,22 +132,22 @@ export default function SettingsPage() {
 
                 {/* Phone — single column */}
                 <div className="flex flex-col gap-1.5 max-w-[calc(50%-10px)]">
-                  <label className="text-[12.5px] font-semibold text-espresso-800">Phone Number</label>
+                  <label className="text-[13px] font-semibold text-espresso-800">Phone Number</label>
                   <input
                     type="tel"
-                    className="text-[13.5px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
+                    className="text-[13px] text-espresso-800 bg-white border border-espresso-250 rounded-lg px-3.5 py-2.25 transition-colors duration-150 outline-none w-full box-border focus:border-espresso-400"
                     value={form.phone}
                     onChange={handleChange('phone')}
                   />
                 </div>
 
                 {/* Security */}
-                <div className="border-t border-black/6 pt-6 mt-2">
-                  <h3 className="text-[14.5px] font-semibold text-espresso-800 mb-4">Security</h3>
+                <div className="border-t border-espresso-250 pt-6 mt-2">
+                  <h3 className="text-[14px] font-semibold text-espresso-800 mb-4">Security</h3>
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-[13.5px] font-medium text-espresso-800 mb-0.5">Two-factor authentication</p>
-                      <p className="text-xs text-espresso-500">Adds a one-time code on every new sign-in.</p>
+                      <p className="text-[13px] font-medium text-espresso-800 mb-0.5">Two-factor authentication</p>
+                      <p className="text-xs text-espresso-600">Adds a one-time code on every new sign-in.</p>
                     </div>
                     <ToggleSwitch
                       checked={form.twoFactor}
@@ -164,23 +158,23 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Save */}
-                <Button variant="dark" className="mt-7 text-[13.5px] font-semibold rounded-[10px] px-6 py-2.5">Save changes</Button>
+                <Button variant="dark" className="mt-7 text-[13px] font-semibold rounded-lg px-6 py-2.5">Save changes</Button>
               </>
             )}
 
             {activeSection === 'Notifications' && (
               <>
                 <h2 className="text-base font-semibold text-espresso-800 mb-1">Notifications</h2>
-                <p className="text-[13px] text-espresso-500 mb-6">Choose what we update you about.</p>
+                <p className="text-[13px] text-espresso-600 mb-6">Choose what we update you about.</p>
 
-                <div className="border-t border-black/6 divide-y divide-black/6">
+                <div className="border-t border-espresso-250 divide-y divide-espresso-250">
                   {Object.entries(notifications).map(([key, { label, desc, enabled }]) => (
                     <div key={key} className="flex items-center justify-between gap-4 py-4 first:pt-5">
                       <div>
-                        <p className="text-[13.5px] font-medium text-espresso-800 mb-0.5">{label}</p>
-                        <p className="text-xs text-espresso-500">{desc}</p>
+                        <p className="text-[13px] font-medium text-espresso-800 mb-0.5">{label}</p>
+                        <p className="text-xs text-espresso-600">{desc}</p>
                       </div>
-                      <ToggleSwitch checked={enabled} onChange={() => toggleNotification(key)} />
+                      <ToggleSwitch checked={enabled} onChange={() => toggleNotification(key)} ariaLabel={`Toggle ${label} notifications`} />
                     </div>
                   ))}
                 </div>
@@ -190,11 +184,11 @@ export default function SettingsPage() {
             {activeSection === 'Privacy & Sharing' && (
               <>
                 <h2 className="text-base font-semibold text-espresso-800 mb-1">Privacy & Sharing</h2>
-                <p className="text-[13px] text-espresso-500 mb-6">Manage who can see your vault data.</p>
+                <p className="text-[13px] text-espresso-600 mb-6">Manage who can see your vault data.</p>
 
-                <div className="border-t border-black/6 pt-5">
-                  <h3 className="text-[14.5px] font-semibold text-espresso-800 mb-0.5">Shared Access</h3>
-                  <p className="text-xs text-espresso-500 mb-4">
+                <div className="border-t border-espresso-250 pt-5">
+                  <h3 className="text-[14px] font-semibold text-espresso-800 mb-0.5">Shared Access</h3>
+                  <p className="text-xs text-espresso-600 mb-4">
                     {sharedAccess.length} people currently hold access to parts of your vault.
                   </p>
 
@@ -204,8 +198,8 @@ export default function SettingsPage() {
                         key={person.name}
                         className="flex items-center justify-between gap-4 border border-espresso-250 rounded-lg px-4 py-3"
                       >
-                        <span className="text-[13.5px] font-medium text-espresso-800">{person.name}</span>
-                        <span className="text-[11.5px] font-medium text-espresso-600 bg-cream-150 border border-espresso-200 rounded-full px-3 py-1">
+                        <span className="text-[13px] font-medium text-espresso-800">{person.name}</span>
+                        <span className="text-[12px] font-medium text-espresso-600 bg-cream-150 border border-espresso-250 rounded-full px-3 py-1">
                           {person.role}
                         </span>
                       </div>
@@ -217,9 +211,9 @@ export default function SettingsPage() {
                   </Button>
                 </div>
 
-                <div className="border-t border-black/6 mt-6 pt-6">
-                  <h3 className="text-[14.5px] font-semibold text-red-700 mb-0.5">Danger Zone</h3>
-                  <p className="text-xs text-espresso-500 mb-4">Irreversible actions regarding your data.</p>
+                <div className="border-t border-espresso-250 mt-6 pt-6">
+                  <h3 className="text-[14px] font-semibold text-red-700 mb-0.5">Danger Zone</h3>
+                  <p className="text-xs text-espresso-600 mb-4">Irreversible actions regarding your data.</p>
                   <div className="flex flex-wrap gap-3">
                     <Button variant="outline" className="text-[13px] font-medium rounded-lg px-4 py-2">
                       Export data
@@ -235,16 +229,16 @@ export default function SettingsPage() {
             {activeSection === 'Language & Region' && (
               <>
                 <h2 className="text-base font-semibold text-espresso-800 mb-1">Language & Region</h2>
-                <p className="text-[13px] text-espresso-500 mb-6">Set your preferred language and regional formats.</p>
+                <p className="text-[13px] text-espresso-600 mb-6">Set your preferred language and regional formats.</p>
 
-                <div className="border-t border-black/6 pt-5">
-                  <h3 className="text-[13.5px] font-semibold text-espresso-800 mb-3">Language</h3>
+                <div className="border-t border-espresso-250 pt-5">
+                  <h3 className="text-[13px] font-semibold text-espresso-800 mb-3">Language</h3>
                   <div className="flex flex-wrap gap-2.5 mb-6">
                     {LANGUAGES.map((lang) => (
                       <Button
                         key={lang.code}
                         variant={language === lang.code ? 'dark' : 'outline'}
-                        className="text-[13.5px] font-medium rounded-full px-4 py-2"
+                        className="text-[13px] font-medium rounded-full px-4 py-2"
                         onClick={() => setLanguage(lang.code)}
                       >
                         {lang.label}
@@ -252,20 +246,20 @@ export default function SettingsPage() {
                     ))}
                   </div>
 
-                  <h3 className="text-[13.5px] font-semibold text-espresso-800 mb-3">Currency</h3>
+                  <h3 className="text-[13px] font-semibold text-espresso-800 mb-3">Currency</h3>
                   <div className="flex flex-wrap gap-2.5 mb-3">
                     {CURRENCIES.map((code) => (
                       <Button
                         key={code}
                         variant={currency === code ? 'dark' : 'outline'}
-                        className="text-[13.5px] font-medium rounded-full px-4 py-2"
+                        className="text-[13px] font-medium rounded-full px-4 py-2"
                         onClick={() => setCurrency(code)}
                       >
                         {code}
                       </Button>
                     ))}
                   </div>
-                  <p className="text-xs text-espresso-500">Times always shown in Asia/Bangkok.</p>
+                  <p className="text-xs text-espresso-600">Times always shown in Asia/Bangkok.</p>
                 </div>
               </>
             )}

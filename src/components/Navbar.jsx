@@ -34,7 +34,7 @@ export default function Navbar() {
           </button>
           <Link
             to="/login"
-            className="text-md bg-espresso-950 text-cream-200 px-[22px] py-[9px] rounded-[6px] no-underline hover:bg-espresso-900 transition-colors"
+            className="text-md bg-espresso-950 text-cream-200 px-[22px] py-[9px] rounded-md no-underline hover:bg-espresso-900 transition-colors"
           >
             Log in
           </Link>
@@ -72,7 +72,7 @@ export default function Navbar() {
           </a>
           <Link
             to="/login"
-            className="text-sm bg-espresso-950 text-cream-200 text-center py-2.5 rounded-[6px] no-underline"
+            className="text-sm bg-espresso-950 text-cream-200 text-center py-2.5 rounded-md no-underline"
             onClick={() => setMenuOpen(false)}
           >
             Log in

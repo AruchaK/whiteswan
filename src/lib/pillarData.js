@@ -13,8 +13,6 @@ export const PILLAR_DATA = {
       { type: 'secure', label: 'Encrypted' },
       { type: 'recency', label: 'Last Will · 12 days ago' },
     ],
-    readiness: 62,
-    essentials: '4 of 6 essentials complete',
     cta: 'Continue planning',
     checklistTitle: 'Legal action items',
     tasks: [
@@ -68,8 +66,6 @@ export const PILLAR_DATA = {
       { type: 'secure', label: 'Encrypted' },
       { type: 'recency', label: 'Last directive · 3 months ago' },
     ],
-    readiness: 38,
-    essentials: '3 of 8 essentials complete',
     cta: 'Continue planning',
     checklistTitle: 'Medical action items',
     tasks: [
@@ -123,8 +119,6 @@ export const PILLAR_DATA = {
       { type: 'secure', label: 'Encrypted' },
       { type: 'recency', label: 'Last sync · 2 days ago' },
     ],
-    readiness: 71,
-    essentials: '5 of 7 essentials complete',
     cta: 'Continue planning',
     checklistTitle: 'Financial action items',
     tasks: [
@@ -178,8 +172,6 @@ export const PILLAR_DATA = {
       { type: 'secure', label: 'Encrypted' },
       { type: 'recency', label: 'Last reflection · 4 months ago' },
     ],
-    readiness: 22,
-    essentials: '2 of 9 essentials complete',
     cta: 'Start guided reflection',
     checklistTitle: 'Personal action items',
     tasks: [
@@ -233,8 +225,6 @@ export const PILLAR_DATA = {
       { type: 'secure', label: 'Encrypted' },
       { type: 'recency', label: 'Last update · 1 month ago' },
     ],
-    readiness: 45,
-    essentials: '4 of 9 essentials complete',
     cta: 'Continue planning',
     checklistTitle: 'Family action items',
     tasks: [

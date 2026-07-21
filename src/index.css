@@ -126,6 +126,18 @@
   }
 }
 
+@keyframes skeleton-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+}
+
 @layer utilities {
   .animate-fade-in {
     animation: fade-in 1s ease-out forwards;
@@ -139,6 +151,10 @@
   .animate-slide-up {
     animation: slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
+
+  .animate-skeleton {
+    animation: skeleton-pulse 1.6s ease-in-out infinite;
+  }
 }
 
 /* Reduced-motion alternative: land content in its final state, no travel.
@@ -146,8 +162,41 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in,
   .animate-slide-up,
-  .animate-gentle-pulse {
+  .animate-gentle-pulse,
+  .animate-skeleton {
     animation: none;
     opacity: 1;
   }
+}
+
+/* react-day-picker — WhiteSwan brand theming. Scoped to the .ws-calendar
+   popover so it never leaks onto other date pickers. Selected day is a filled
+   espresso pill (the base library ships an outline-only selection). */
+.ws-calendar .rdp-root {
+  --rdp-accent-color: #2A1D14;
+  --rdp-accent-background-color: #F5EDE3;
+  --rdp-today-color: #7A5E3F;
+  font-family: var(--font-sans);
+  color: var(--color-espresso-800);
+  margin: 0;
+}
+
+.ws-calendar .rdp-day_button:hover:not([disabled]) {
+  background-color: var(--color-espresso-100);
+}
+
+.ws-calendar .rdp-selected .rdp-day_button {
+  background-color: var(--color-espresso-900);
+  color: var(--color-cream-50);
+  border-color: var(--color-espresso-900);
+}
+
+.ws-calendar .rdp-chevron {
+  fill: var(--color-espresso-600);
+}
+
+.ws-calendar .rdp-caption_label,
+.ws-calendar .rdp-dropdown {
+  color: var(--color-espresso-900);
+  font-weight: 500;
 }

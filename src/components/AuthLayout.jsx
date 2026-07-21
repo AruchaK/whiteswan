@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Lock } from 'lucide-react'
 
 function DuneBackground() {
   return (
@@ -50,37 +51,36 @@ export default function AuthLayout({ children }) {
   return (
     <div className="min-h-screen flex">
       {/* Left decorative panel */}
-      <div className="hidden lg:flex lg:w-1/2 relative flex-col items-start justify-between p-10 select-none">
+      <div className="hidden lg:flex lg:w-1/2 relative flex-col items-start justify-between p-12 select-none">
         <DuneBackground />
 
         {/* Logo */}
         <div className="relative z-10">
-          <Link to="/">
-            <img src="/logo.svg" alt="WhiteSwan" className="w-40 opacity-80" />
+          <Link to="/" aria-label="WhiteSwan home">
+            <img src="/logo.svg" alt="WhiteSwan" className="w-40 opacity-90" />
           </Link>
         </div>
 
         {/* Quote block */}
-        <div className="relative z-10 pb-10 max-w-xs">
-          <p className="text-[10px] tracking-[0.18em] text-espresso-600 mb-6 uppercase">
-            In Confidence
-          </p>
-          <blockquote
-            className="font-serif text-[1.45rem] italic text-espresso-800 leading-[1.55]"
-          >
+        <div className="relative z-10 pb-8 max-w-sm">
+          <blockquote className="font-serif text-[1.65rem] italic text-espresso-900 leading-normal text-balance">
             &ldquo;The most loving decisions are often the ones made before they are needed.&rdquo;
           </blockquote>
-          <p className="text-[10px] tracking-[0.16em] text-espresso-600 mt-5 uppercase">
-            Whiteswan &middot; Brand Belief
+          <p className="text-[13px] font-medium text-espresso-700 mt-5">
+            WhiteSwan &middot; our brand belief
           </p>
         </div>
       </div>
 
       {/* Right form panel */}
-      <div className="w-full lg:w-1/2 bg-white flex items-center justify-center px-8 py-12 lg:px-16">
-        <div className="w-full max-w-sm">
-          {children}
-        </div>
+      <div className="w-full lg:w-1/2 bg-white flex flex-col items-center justify-center px-6 py-12 sm:px-8 lg:px-16">
+        <div className="w-full max-w-md">{children}</div>
+
+        {/* Trust marker — present on every auth surface (PRODUCT: trust on every screen). */}
+        <p className="mt-10 flex items-center justify-center gap-1.5 text-[12px] text-espresso-600">
+          <Lock size={13} strokeWidth={1.8} aria-hidden="true" />
+          Encrypted and private — only you hold the key.
+        </p>
       </div>
     </div>
   )

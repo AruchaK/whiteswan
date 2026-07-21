@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Share2, ShieldCheck, TriangleAlert } from 'lucide-react'
+import { ArrowRight, Share2 } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
+import StatusBadge from '../components/ui/StatusBadge'
+import PageHeader from '../components/ui/PageHeader'
+import { initials } from '../lib/initials'
 
 /* ── Mock data — three generations of the trusted circle ── */
 const members = [
@@ -115,11 +117,6 @@ const members = [
   },
 ]
 
-const STATUS_BADGE = {
-  verified: { label: 'Verified', icon: ShieldCheck, className: 'text-green-700 bg-green-50 border-green-100' },
-  draft: { label: 'Draft', icon: TriangleAlert, className: 'text-amber-700 bg-amber-50 border-amber-100' },
-}
-
 /* ── Exact design tokens (mirrored from the reference template) ── */
 const C = {
   cardBorder: '#E7DCCD',
@@ -135,10 +132,6 @@ const C = {
   selRole: '#D8C7B6',
   selBorn: '#D6CABC',
   selRing: '#8A9099',
-}
-
-function initials(name) {
-  return name.split(' ').map((part) => part[0]).join('')
 }
 
 /* ── Avatar: thin gold ring + gap around a photo (or serif initials) ── */
@@ -297,30 +290,17 @@ export default function FamilyTreePage() {
       <div className="max-w-300 mx-auto space-y-6 animate-fade-in">
 
         {/* ─ Header ─ */}
-        <section>
-          <Link
-            to="/dashboard/family"
-            className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-espresso-500 hover:text-espresso-700 transition-colors no-underline mb-4"
-          >
-            <ArrowLeft size={14} strokeWidth={2} />
-            Back to Family
-          </Link>
-          <p className="text-[10px] font-bold tracking-[0.16em] text-espresso-400 uppercase mb-2">
-            Three Generations
-          </p>
-          <h1 className="text-[28px] sm:text-[36px] font-serif font-semibold text-espresso-900 leading-tight mb-2">
-            Family Tree.
-          </h1>
-          <p className="text-[14px] text-espresso-500 leading-relaxed">
-            Three generations · {members.length} members preserved in your legacy
-          </p>
-        </section>
+        <PageHeader
+          back={{ to: '/dashboard/family', label: 'Back to Family' }}
+          title="Family Tree."
+          subtitle={`Three generations · ${members.length} members preserved in your legacy`}
+        />
 
         {/* ─ Tree + Selected member ─ */}
         <section className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-5 items-start">
 
           {/* Tree — single clean frame */}
-          <div className="rounded-3xl border border-espresso-200 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 sm:p-10 overflow-x-auto">
+          <div className="rounded-3xl border border-espresso-250 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] p-6 sm:p-10 overflow-x-auto">
             <div className="relative mx-auto" style={{ width: CANVAS_W, height: CANVAS_H }}>
               <TreeConnectors />
               {members.map((member) => (
@@ -336,7 +316,7 @@ export default function FamilyTreePage() {
 
           {/* Selected member */}
           <Card className="p-6">
-            <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-400 uppercase mb-4">
+            <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-600 uppercase mb-4">
               Selected Member
             </p>
 
@@ -346,7 +326,7 @@ export default function FamilyTreePage() {
                 <p className="text-[16px] font-serif font-semibold text-espresso-900 leading-tight truncate">
                   {selected.name}
                 </p>
-                <p className="text-[12px] text-espresso-500 mt-0.5">
+                <p className="text-[12px] text-espresso-600 mt-0.5">
                   Generation {selected.generation} · {selected.relation} · Born {selected.bornYear}
                 </p>
               </div>
@@ -358,61 +338,54 @@ export default function FamilyTreePage() {
               </span>
             )}
 
-            <div className="border-t border-black/6 pt-4 mb-4">
-              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-400 uppercase mb-3">Personal</p>
+            <div className="border-t border-espresso-250 pt-4 mb-4">
+              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-600 uppercase mb-3">Personal</p>
               <div className="grid grid-cols-2 gap-y-3 gap-x-3">
                 <div>
-                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Born</p>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-600 uppercase mb-0.5">Born</p>
                   <p className="text-[13px] text-espresso-800">{selected.bornFull} · {selected.location}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Age</p>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-600 uppercase mb-0.5">Age</p>
                   <p className="text-[13px] text-espresso-800">{selected.age}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Spouse</p>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-600 uppercase mb-0.5">Spouse</p>
                   <p className="text-[13px] text-espresso-800 truncate">{selected.spouse}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Children</p>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-600 uppercase mb-0.5">Children</p>
                   <p className="text-[13px] text-espresso-800 truncate">{selected.children}</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Email</p>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-600 uppercase mb-0.5">Email</p>
                   <p className="text-[13px] text-espresso-800 truncate">{selected.email}</p>
                 </div>
                 <div className="col-span-2">
-                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-400 uppercase mb-0.5">Phone</p>
+                  <p className="text-[10px] font-bold tracking-[0.1em] text-espresso-600 uppercase mb-0.5">Phone</p>
                   <p className="text-[13px] text-espresso-800">{selected.phone}</p>
                 </div>
               </div>
             </div>
 
-            <div className="border-t border-black/6 pt-4 mb-4">
-              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-400 uppercase mb-2">Reflection</p>
+            <div className="border-t border-espresso-250 pt-4 mb-4">
+              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-600 uppercase mb-2">Reflection</p>
               <p className="text-[13px] text-espresso-700 italic leading-relaxed">"{selected.reflection}"</p>
             </div>
 
-            <div className="border-t border-black/6 pt-4 mb-5">
-              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-400 uppercase mb-3">Shared Documents</p>
+            <div className="border-t border-espresso-250 pt-4 mb-5">
+              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-600 uppercase mb-3">Shared Documents</p>
               {selected.documents.length > 0 ? (
                 <div className="flex flex-col gap-2.5">
-                  {selected.documents.map((doc) => {
-                    const status = STATUS_BADGE[doc.status]
-                    const StatusIcon = status.icon
-                    return (
-                      <div key={doc.title} className="flex items-center justify-between gap-3">
-                        <span className="text-[13px] text-espresso-800 truncate">{doc.title}</span>
-                        <span className={`inline-flex items-center gap-1 text-[11px] font-medium rounded-full border px-2.25 py-0.75 shrink-0 ${status.className}`}>
-                          <StatusIcon size={11} strokeWidth={2} />
-                          {status.label} · {doc.date}
-                        </span>
-                      </div>
-                    )
-                  })}
+                  {selected.documents.map((doc) => (
+                    <div key={doc.title} className="flex items-center justify-between gap-3">
+                      <span className="text-[13px] text-espresso-800 truncate">{doc.title}</span>
+                      <StatusBadge status={doc.status} size="sm" className="shrink-0">{` · ${doc.date}`}</StatusBadge>
+                    </div>
+                  ))}
                 </div>
               ) : (
-                <p className="text-[12.5px] text-espresso-400 italic">No documents shared yet.</p>
+                <p className="text-[13px] text-espresso-600 italic">No documents shared yet.</p>
               )}
             </div>
 

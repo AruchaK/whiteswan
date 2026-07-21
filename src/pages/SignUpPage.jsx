@@ -1,17 +1,101 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ArrowRight, ArrowLeft, MailCheck } from 'lucide-react'
 import AuthLayout from '../components/AuthLayout'
 import Button from '../components/ui/Button'
+import TextField, { PasswordField } from '../components/ui/TextField'
+import DatePicker from '../components/ui/DatePicker'
+import LocationCombobox from '../components/ui/LocationCombobox'
+
+const TODAY = new Date()
+const DOB_START = new Date(1920, 0, 1)
 
 const TOTAL_STEPS = 4
 
+/* ── Validation ──────────────────────────────────────────────────────────
+ * Each validator returns an empty string when valid, or a warm, plain-spoken
+ * message when not. Messages are shown inline once a field is touched (blurred)
+ * or the step's Continue is attempted — never as a silent disabled button.
+ */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+function validateEmail(v) {
+  const value = v.trim()
+  if (!value) return 'Please enter your email address.'
+  if (!EMAIL_RE.test(value)) return 'That doesn’t look like a complete email address.'
+  return ''
+}
+
+function validateRequired(v, label) {
+  return v.trim() ? '' : `Please enter your ${label}.`
+}
+
+function validatePassword(v) {
+  if (v.length < 8) return 'Use at least 8 characters.'
+  if (!/[A-Za-z]/.test(v) || !/[0-9]/.test(v)) return 'Include both letters and numbers.'
+  return ''
+}
+
+function validateConfirm(pw, confirm) {
+  if (!confirm) return 'Please re-enter your password.'
+  if (pw !== confirm) return 'These passwords don’t match yet.'
+  return ''
+}
+
+function passwordStrength(v) {
+  let score = 0
+  if (v.length >= 8) score += 1
+  if (/[A-Za-z]/.test(v) && /[0-9]/.test(v)) score += 1
+  if (/[^A-Za-z0-9]/.test(v) && v.length >= 10) score += 1
+  return score // 0–3
+}
+
+/* Gates a set of computed field errors behind "touched or submitted", so a
+ * field stays quiet until the user has engaged it or pressed Continue. */
+function useStepValidation(errors) {
+  const [touched, setTouched] = useState({})
+  const [submitted, setSubmitted] = useState(false)
+
+  const touch = (name) => () => setTouched((t) => ({ ...t, [name]: true }))
+  const errorFor = (name) => (touched[name] || submitted ? errors[name] : '')
+  const isValid = Object.values(errors).every((e) => !e)
+  const attempt = (onValid) => () => {
+    if (isValid) onValid()
+    else setSubmitted(true)
+  }
+
+  return { touch, errorFor, attempt }
+}
+
+function StepHeader({ step, title, subtitle }) {
+  return (
+    <>
+      <p className="text-[13px] font-medium text-espresso-500 mb-3">
+        Step {step} of {TOTAL_STEPS}
+      </p>
+      <h1 className="font-serif text-[2.4rem] leading-tight text-espresso-900 mb-3 text-balance">
+        {title}
+      </h1>
+      <p className="text-[15px] text-espresso-600 leading-relaxed mb-7">{subtitle}</p>
+      <StepProgress current={step} />
+    </>
+  )
+}
+
 function StepProgress({ current }) {
   return (
-    <div className="flex gap-1.5 mb-9">
+    <div
+      className="flex gap-1.5 mb-8"
+      role="progressbar"
+      aria-valuenow={current}
+      aria-valuemin={1}
+      aria-valuemax={TOTAL_STEPS}
+      aria-label={`Step ${current} of ${TOTAL_STEPS}`}
+    >
       {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
         <div
           key={i}
-          className={`h-0.5 flex-1 transition-colors duration-400 ${
+          className={`h-1 flex-1 rounded-full transition-colors duration-400 ${
             i < current ? 'bg-espresso-800' : 'bg-espresso-200'
           }`}
         />
@@ -20,80 +104,84 @@ function StepProgress({ current }) {
   )
 }
 
-function FormField({ label, children }) {
-  return (
-    <div>
-      <label className="block text-[10px] tracking-[0.16em] text-espresso-500 uppercase mb-2">
-        {label}
-      </label>
-      {children}
-    </div>
-  )
-}
+const btnClass = 'flex-1 rounded-full py-3.5 text-[15px] font-medium flex items-center justify-center gap-2'
 
-const inputClass =
-  'w-full border-0 border-b border-espresso-200 bg-transparent py-2 text-sm text-espresso-800 placeholder-espresso-300 focus:outline-none focus:border-espresso-600 transition-colors'
-
-function ContinueButton({ onClick, disabled }) {
+function ContinueButton({ onClick }) {
   return (
-    <Button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className="flex-1 py-3 text-xs tracking-[0.12em] uppercase"
-    >
-      Continue →
+    <Button type="button" onClick={onClick} className={btnClass}>
+      Continue
+      <ArrowRight size={17} strokeWidth={2} />
     </Button>
   )
 }
 
 function BackButton({ onClick }) {
   return (
-    <Button
-      variant="outline"
-      type="button"
-      onClick={onClick}
-      className="flex-1 py-3 text-xs tracking-[0.12em] uppercase"
-    >
-      ← Back
+    <Button variant="outline" type="button" onClick={onClick} className={btnClass}>
+      <ArrowLeft size={17} strokeWidth={2} />
+      Back
     </Button>
+  )
+}
+
+/* Three-segment password strength indicator, in the muted brand palette. */
+function PasswordStrength({ value, className = '' }) {
+  const score = passwordStrength(value)
+  const levels = [
+    { label: 'Weak', text: 'text-amber-700', bar: 'bg-amber-400' },
+    { label: 'Fair', text: 'text-gold-600', bar: 'bg-gold-500' },
+    { label: 'Strong', text: 'text-green-700', bar: 'bg-green-600' },
+  ]
+  const lvl = levels[Math.max(0, score - 1)]
+  return (
+    <div className={className}>
+      <div className="flex gap-1.5" aria-hidden="true">
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className={`h-1 flex-1 rounded-full transition-colors ${i < score ? lvl.bar : 'bg-cream-300'}`}
+          />
+        ))}
+      </div>
+      <p className={`mt-1.5 text-[12px] font-medium ${lvl.text}`} aria-live="polite">
+        Password strength: {lvl.label}
+      </p>
+    </div>
   )
 }
 
 /* ── Step 1 ── */
 function Step1({ data, onChange, onNext }) {
+  const { touch, errorFor, attempt } = useStepValidation({ email: validateEmail(data.email) })
+
   return (
     <>
-      <p className="text-[10px] tracking-[0.18em] text-espresso-400 uppercase mb-5">Step 1 of 4</p>
-      <h1 className="font-serif text-[2.4rem] leading-tight text-espresso-900 mb-3">
-        Begin your vault.
-      </h1>
-      <p className="text-sm text-espresso-400 leading-relaxed mb-8">Tell us how to reach you.</p>
-
-      <StepProgress current={1} />
+      <StepHeader step={1} title="Begin your vault." subtitle="Tell us how to reach you." />
 
       <div className="mb-8">
-        <FormField label="Email Address">
-          <input
-            type="email"
-            value={data.email}
-            onChange={(e) => onChange({ email: e.target.value })}
-            placeholder="you@family.com"
-            autoComplete="email"
-            className={inputClass}
-          />
-        </FormField>
+        <TextField
+          label="Email address"
+          type="email"
+          value={data.email}
+          onChange={(e) => onChange({ email: e.target.value })}
+          onBlur={touch('email')}
+          error={errorFor('email') || undefined}
+          placeholder="you@family.com"
+          autoComplete="email"
+        />
       </div>
 
-      <ContinueButton onClick={onNext} disabled={!data.email.trim()} />
+      <div className="flex">
+        <ContinueButton onClick={attempt(onNext)} />
+      </div>
 
-      <p className="text-[11px] text-espresso-400 text-center mt-8">
+      <p className="text-[13px] text-espresso-600 text-center mt-8">
         Already have a vault?{' '}
         <Link
           to="/login"
-          className="text-espresso-700 underline underline-offset-2 hover:text-espresso-900 transition-colors"
+          className="font-medium text-espresso-700 underline underline-offset-2 hover:text-espresso-900 transition-colors"
         >
-          Sign in.
+          Sign in
         </Link>
       </p>
     </>
@@ -102,68 +190,64 @@ function Step1({ data, onChange, onNext }) {
 
 /* ── Step 2 ── */
 function Step2({ data, onChange, onNext, onBack }) {
-  const canContinue = data.firstName.trim() && data.surname.trim()
+  const { touch, errorFor, attempt } = useStepValidation({
+    firstName: validateRequired(data.firstName, 'first name'),
+    surname: validateRequired(data.surname, 'surname'),
+    location: validateRequired(data.location, 'location'),
+  })
 
   return (
     <>
-      <p className="text-[10px] tracking-[0.18em] text-espresso-400 uppercase mb-5">Step 2 of 4</p>
-      <h1 className="font-serif text-[2.4rem] leading-tight text-espresso-900 mb-3">
-        A little about you.
-      </h1>
-      <p className="text-sm text-espresso-400 leading-relaxed mb-8">
-        Help us personalise your vault.
-      </p>
+      <StepHeader step={2} title="A little about you." subtitle="This helps us personalise your vault." />
 
-      <StepProgress current={2} />
-
-      <div className="space-y-6 mb-8">
+      <div className="space-y-5 mb-8">
         <div className="grid grid-cols-2 gap-4">
-          <FormField label="First Name">
-            <input
-              type="text"
-              value={data.firstName}
-              onChange={(e) => onChange({ firstName: e.target.value })}
-              autoComplete="given-name"
-              className={inputClass}
-            />
-          </FormField>
-          <FormField label="Surname">
-            <input
-              type="text"
-              value={data.surname}
-              onChange={(e) => onChange({ surname: e.target.value })}
-              autoComplete="family-name"
-              className={inputClass}
-            />
-          </FormField>
+          <TextField
+            label="First name"
+            type="text"
+            value={data.firstName}
+            onChange={(e) => onChange({ firstName: e.target.value })}
+            onBlur={touch('firstName')}
+            error={errorFor('firstName') || undefined}
+            autoComplete="given-name"
+          />
+          <TextField
+            label="Surname"
+            type="text"
+            value={data.surname}
+            onChange={(e) => onChange({ surname: e.target.value })}
+            onBlur={touch('surname')}
+            error={errorFor('surname') || undefined}
+            autoComplete="family-name"
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <FormField label="Date of Birth">
-            <input
-              type="text"
-              value={data.dob}
-              onChange={(e) => onChange({ dob: e.target.value })}
-              placeholder="mm/dd/yyyy"
-              autoComplete="bday"
-              className={inputClass}
-            />
-          </FormField>
-          <FormField label="Location">
-            <input
-              type="text"
-              value={data.location}
-              onChange={(e) => onChange({ location: e.target.value })}
-              autoComplete="address-level2"
-              className={inputClass}
-            />
-          </FormField>
+          <DatePicker
+            label="Date of birth"
+            value={data.dob}
+            onChange={(d) => onChange({ dob: d })}
+            placeholder="Select a date"
+            calendarProps={{
+              startMonth: DOB_START,
+              endMonth: TODAY,
+              defaultMonth: data.dob ?? new Date(2010, 0),
+              disabled: { after: TODAY },
+            }}
+          />
+          <LocationCombobox
+            label="Location"
+            value={data.location}
+            onChange={(loc) => onChange({ location: loc })}
+            onBlur={touch('location')}
+            error={errorFor('location') || undefined}
+          />
         </div>
       </div>
 
       <div className="flex gap-3">
         <BackButton onClick={onBack} />
-        <ContinueButton onClick={onNext} disabled={!canContinue} />
+        <ContinueButton onClick={attempt(onNext)} />
       </div>
     </>
   )
@@ -171,69 +255,70 @@ function Step2({ data, onChange, onNext, onBack }) {
 
 /* ── Step 3 ── */
 function Step3({ data, onChange, onNext, onBack }) {
-  const canContinue =
-    data.password.length >= 8 &&
-    data.password === data.confirmPassword &&
-    data.agreed
+  const { touch, errorFor, attempt } = useStepValidation({
+    password: validatePassword(data.password),
+    confirmPassword: validateConfirm(data.password, data.confirmPassword),
+    agreed: data.agreed ? '' : 'Please agree to the terms to continue.',
+  })
+
+  const passwordError = errorFor('password')
 
   return (
     <>
-      <p className="text-[10px] tracking-[0.18em] text-espresso-400 uppercase mb-5">Step 3 of 4</p>
-      <h1 className="font-serif text-[2.4rem] leading-tight text-espresso-900 mb-3">
-        Secure your legacy.
-      </h1>
-      <p className="text-sm text-espresso-400 leading-relaxed mb-8">Protect your legacy.</p>
+      <StepHeader step={3} title="Secure your legacy." subtitle="Choose a password only you will know." />
 
-      <StepProgress current={3} />
-
-      <div className="space-y-6 mb-8">
-        <FormField label="Create Password">
-          <input
-            type="password"
+      <div className="space-y-5 mb-8">
+        <div>
+          <PasswordField
+            label="Create password"
             value={data.password}
             onChange={(e) => onChange({ password: e.target.value })}
+            onBlur={touch('password')}
+            error={passwordError || undefined}
+            hint={!data.password && !passwordError ? 'At least 8 characters, with letters and numbers.' : undefined}
             autoComplete="new-password"
-            className={inputClass}
           />
-          <p className="text-[11px] text-espresso-400 mt-1.5">
-            Minimum 8 characters with letters, numbers, symbols
-          </p>
-        </FormField>
+          {data.password && !passwordError && <PasswordStrength value={data.password} className="mt-2" />}
+        </div>
 
-        <FormField label="Confirm Password">
-          <input
-            type="password"
-            value={data.confirmPassword}
-            onChange={(e) => onChange({ confirmPassword: e.target.value })}
-            autoComplete="new-password"
-            className={inputClass}
-          />
-        </FormField>
+        <PasswordField
+          label="Confirm password"
+          value={data.confirmPassword}
+          onChange={(e) => onChange({ confirmPassword: e.target.value })}
+          onBlur={touch('confirmPassword')}
+          error={errorFor('confirmPassword') || undefined}
+          autoComplete="new-password"
+        />
 
-        <label className="flex items-start gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={data.agreed}
-            onChange={(e) => onChange({ agreed: e.target.checked })}
-            className="mt-0.5 accent-espresso-700 w-3.5 h-3.5 shrink-0"
-          />
-          <span className="text-[11px] text-espresso-500 leading-relaxed">
-            I understand WhiteSwan encrypts my vault with AES-256 and agree to the{' '}
-            <a href="#" className="underline underline-offset-2 text-espresso-700 hover:text-espresso-900">
-              Terms of Care
-            </a>{' '}
-            and{' '}
-            <a href="#" className="underline underline-offset-2 text-espresso-700 hover:text-espresso-900">
-              Privacy promise
-            </a>
-            .
-          </span>
-        </label>
+        <div>
+          <label className="flex items-start gap-3 cursor-pointer py-1">
+            <input
+              type="checkbox"
+              checked={data.agreed}
+              onChange={(e) => onChange({ agreed: e.target.checked })}
+              className="mt-0.5 accent-espresso-700 w-4.5 h-4.5 shrink-0"
+            />
+            <span className="text-[13px] text-espresso-600 leading-relaxed">
+              I understand WhiteSwan encrypts my vault with AES-256, and I agree to the{' '}
+              <a href="#" className="font-medium underline underline-offset-2 text-espresso-700 hover:text-espresso-900">
+                Terms of Care
+              </a>{' '}
+              and{' '}
+              <a href="#" className="font-medium underline underline-offset-2 text-espresso-700 hover:text-espresso-900">
+                Privacy promise
+              </a>
+              .
+            </span>
+          </label>
+          {errorFor('agreed') && (
+            <p className="mt-1.5 text-[12px] text-red-700">{errorFor('agreed')}</p>
+          )}
+        </div>
       </div>
 
       <div className="flex gap-3">
         <BackButton onClick={onBack} />
-        <ContinueButton onClick={onNext} disabled={!canContinue} />
+        <ContinueButton onClick={attempt(onNext)} />
       </div>
     </>
   )
@@ -243,40 +328,31 @@ function Step3({ data, onChange, onNext, onBack }) {
 function Step4({ email }) {
   return (
     <>
-      <p className="text-[10px] tracking-[0.18em] text-espresso-400 uppercase mb-5">Step 4 of 4</p>
-      <h1 className="font-serif text-[2.4rem] leading-tight text-espresso-900 mb-3">
-        Welcome to WhiteSwan.
-      </h1>
-      <p className="text-sm text-espresso-400 leading-relaxed mb-8">Your vault is ready.</p>
+      <StepHeader step={4} title="Welcome to WhiteSwan." subtitle="Your vault is ready." />
 
-      <StepProgress current={4} />
-
-      <div className="border border-espresso-200 p-6 mb-8">
+      <div className="rounded-xl border border-espresso-250 bg-cream-50 p-6 mb-8">
         <div className="flex items-start gap-4">
-          <div className="w-6 h-6 rounded-full border border-espresso-400 flex items-center justify-center shrink-0 mt-0.5">
-            <svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true">
-              <path
-                d="M1 4L3.5 6.5L9 1"
-                stroke="#5C4530"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+          <span className="w-11 h-11 rounded-full bg-white border border-espresso-250 flex items-center justify-center shrink-0">
+            <MailCheck size={20} strokeWidth={1.8} className="text-espresso-700" />
+          </span>
           <div>
-            <p className="text-sm text-espresso-700 mb-2">your vault is ready.</p>
-            <p className="text-[12px] text-espresso-400 leading-relaxed">
+            <p className="text-[15px] font-medium text-espresso-900 mb-1">Check your inbox</p>
+            <p className="text-[13px] text-espresso-600 leading-relaxed">
               We&rsquo;ve sent a verification email to{' '}
-              <span className="text-espresso-700">{email}</span>. You can continue exploring now, or
-              verify later from Settings.
+              <span className="font-medium text-espresso-800">{email || 'your address'}</span>. You
+              can start exploring now, or verify later from Settings.
             </p>
           </div>
         </div>
       </div>
 
-      <Button type="button" className="w-full py-3 text-xs tracking-[0.12em] uppercase">
-        Enter the vault →
+      <Button
+        as={Link}
+        to="/dashboard"
+        className="w-full rounded-full py-3.5 text-[15px] font-medium flex items-center justify-center gap-2 no-underline"
+      >
+        Enter the vault
+        <ArrowRight size={17} strokeWidth={2} />
       </Button>
     </>
   )
@@ -289,8 +365,8 @@ export default function SignUpPage() {
     email: '',
     firstName: '',
     surname: '',
-    dob: '',
-    location: 'Bangkok, Thailand',
+    dob: null,
+    location: '',
     password: '',
     confirmPassword: '',
     agreed: false,
@@ -300,26 +376,19 @@ export default function SignUpPage() {
 
   return (
     <AuthLayout>
-      {step === 1 && (
-        <Step1 data={formData} onChange={update} onNext={() => setStep(2)} />
-      )}
-      {step === 2 && (
-        <Step2
-          data={formData}
-          onChange={update}
-          onNext={() => setStep(3)}
-          onBack={() => setStep(1)}
-        />
-      )}
-      {step === 3 && (
-        <Step3
-          data={formData}
-          onChange={update}
-          onNext={() => setStep(4)}
-          onBack={() => setStep(2)}
-        />
-      )}
-      {step === 4 && <Step4 email={formData.email} />}
+      {/* key remounts the step so the slide-up entrance re-runs each advance,
+          and each step starts with a clean validation slate
+          (reduced-motion falls back to an instant land — index.css). */}
+      <div key={step} className="animate-slide-up">
+        {step === 1 && <Step1 data={formData} onChange={update} onNext={() => setStep(2)} />}
+        {step === 2 && (
+          <Step2 data={formData} onChange={update} onNext={() => setStep(3)} onBack={() => setStep(1)} />
+        )}
+        {step === 3 && (
+          <Step3 data={formData} onChange={update} onNext={() => setStep(4)} onBack={() => setStep(2)} />
+        )}
+        {step === 4 && <Step4 email={formData.email} />}
+      </div>
     </AuthLayout>
   )
 }

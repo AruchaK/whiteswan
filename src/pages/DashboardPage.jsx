@@ -1,22 +1,16 @@
 import { TriangleAlert, Pencil, Clock, ChevronRight, AlertTriangle } from 'lucide-react'
 import AppLayout from '../components/AppLayout'
 import Card from '../components/ui/Card'
+import ProgressBar from '../components/ui/ProgressBar'
 import { PILLARS_BY_KEY } from '../lib/pillars'
 import { currentUser } from '../lib/currentUser'
+import { READINESS_LIST, overallPreparedness } from '../lib/readiness'
 
 /* ── Mock data ── */
-const pillarProgress = [
-  { key: 'legal', pct: 62, done: 4, total: 6 },
-  { key: 'medical', pct: 38, done: 3, total: 8 },
-  { key: 'financial', pct: 71, done: 5, total: 7 },
-  { key: 'personal', pct: 22, done: 2, total: 9 },
-  { key: 'family', pct: 45, done: 4, total: 9 },
-]
-
 const todayTasks = [
   { title: 'Sign your Power of Attorney', category: 'Legal', time: '~30 min', tag: 'Priority', tagColor: 'bg-red-50 text-red-700 border-red-200' },
-  { title: 'Write a letter to Nara', category: 'Personal', time: '~30 min', tag: 'Reflection', tagColor: 'bg-espresso-50 text-espresso-700 border-espresso-200' },
-  { title: 'Invite Pim as spouse Trustee', category: 'Family', time: '~2 min', tag: 'Quick', tagColor: 'bg-espresso-50 text-espresso-600 border-espresso-200' },
+  { title: 'Write a letter to Nara', category: 'Personal', time: '~30 min', tag: 'Reflection', tagColor: 'bg-espresso-50 text-espresso-700 border-espresso-250' },
+  { title: 'Invite Pim as spouse Trustee', category: 'Family', time: '~2 min', tag: 'Quick', tagColor: 'bg-espresso-50 text-espresso-600 border-espresso-250' },
 ]
 
 const vaultItems = [
@@ -46,14 +40,15 @@ function pentagonPoints(cx, cy, r) {
 
 /* Each entry's index fixes its angle (0°, 72°, 144°, 216°, 288° clockwise from top).
    `anchor` is the SVG text-anchor for that angle: labels to the right of center grow
-   rightward (start), labels to the left grow leftward (end), the top one is centered. */
-const radarDimensions = [
-  { label: 'Legal', pct: 62, anchor: 'middle' },
-  { label: 'Medical', pct: 38, anchor: 'start' },
-  { label: 'Financial', pct: 71, anchor: 'start' },
-  { label: 'Personal', pct: 22, anchor: 'end' },
-  { label: 'Family', pct: 45, anchor: 'end' },
-]
+   rightward (start), labels to the left grow leftward (end), the top one is centered.
+   Numbers are derived from the shared readiness source — only the anchors (a
+   presentation concern tied to the fixed angles) live here. */
+const RADAR_ANCHORS = ['middle', 'start', 'start', 'end', 'end']
+const radarDimensions = READINESS_LIST.map((p, i) => ({
+  label: PILLARS_BY_KEY[p.key].label,
+  pct: p.readiness,
+  anchor: RADAR_ANCHORS[i],
+}))
 
 function PentagonChart() {
   // Everything — grid, data shape, and labels — lives in one coordinate space
@@ -168,7 +163,7 @@ export default function DashboardPage() {
             </h1>
           </div>
 
-          <button className="animate-gentle-pulse flex items-center gap-2 bg-gold-100 border border-espresso-200 text-espresso-700 text-[13px] font-medium px-4 py-2 rounded-xl cursor-pointer hover:bg-espresso-50 transition-colors self-end">
+          <button className="animate-gentle-pulse flex items-center gap-2 bg-gold-100 border border-espresso-250 text-espresso-700 text-[13px] font-medium px-4 py-2 rounded-xl cursor-pointer hover:bg-espresso-50 transition-colors self-end">
             <TriangleAlert size={14} strokeWidth={1.8} className="text-gold-500" />
             3 items need attention
           </button>
@@ -188,12 +183,12 @@ export default function DashboardPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <h2 className="text-3xl font-semibold font-serif text-espresso-900 leading-tight">{currentUser.fullName}</h2>
-                    <button className="flex items-center gap-1 text-[11.5px] text-espresso-500 bg-espresso-50 border border-espresso-200 rounded-full px-2.5 py-0.5 hover:bg-espresso-100 transition-colors cursor-pointer">
+                    <button className="flex items-center gap-1 text-[12px] text-espresso-600 bg-espresso-50 border border-espresso-250 rounded-full px-2.5 py-0.5 hover:bg-espresso-100 transition-colors cursor-pointer">
                       <Pencil size={10} strokeWidth={2} />
                       Edit profile
                     </button>
                   </div>
-                  <p className="text-[12px] text-espresso-400 mt-0.5">
+                  <p className="text-[12px] text-espresso-600 mt-0.5">
                     Your life, organised with care · Last updated {currentUser.lastUpdated}
                   </p>
                 </div>
@@ -203,18 +198,13 @@ export default function DashboardPage() {
               <div className="flex flex-col max-w-[60%] gap-3 mb-5">
                 <div className="flex items-center justify-between">
                   <span className="text-[12px] font-medium text-espresso-600 shrink-0">Overall preparedness</span>
-                  <span className="text-[14px] font-semibold text-espresso-800 tabular-nums">{currentUser.preparedness}%</span>
+                  <span className="text-[14px] font-semibold text-espresso-800 tabular-nums">{overallPreparedness}%</span>
                 </div>
-                <div className="w-full h-1.5 rounded-full bg-cream-300 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-espresso-900 transition-[width] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                    style={{ width: `${currentUser.preparedness}%` }}
-                  />
-                </div>
+                <ProgressBar value={overallPreparedness} fillClassName="bg-espresso-900" className="w-full" />
               </div>
 
               {/* Details grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-4 pt-4 border-t border-black/6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-4 pt-4 border-t border-espresso-250">
                 {[
                   ['BORN', currentUser.born],
                   ['AGE', currentUser.age],
@@ -224,20 +214,20 @@ export default function DashboardPage() {
                   ['BLOOD TYPE', currentUser.bloodType],
                 ].map(([label, value]) => (
                   <div key={label}>
-                    <p className="text-[10px] font-semibold tracking-[0.12em] text-espresso-400 uppercase mb-1">{label}</p>
-                    <p className="text-[13.5px] font-medium text-espresso-800">{value}</p>
+                    <p className="text-[10px] font-semibold tracking-[0.12em] text-espresso-600 uppercase mb-1">{label}</p>
+                    <p className="text-[13px] font-medium text-espresso-800">{value}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Quote section — shares the outer gradient, with left border */}
-            <div className="border-t lg:border-t-0 lg:border-l border-black/6 p-6 xl:p-8 flex flex-col justify-center">
-              <span className="font-serif text-5xl leading-none text-espresso-400 opacity-60 select-none">&ldquo;</span>
-              <blockquote className="font-serif text-[17px] sm:text-[18px] italic text-espresso-700 leading-relaxed -mt-4 mb-4">
+            <div className="border-t lg:border-t-0 lg:border-l border-espresso-250 p-6 xl:p-8 flex flex-col justify-center">
+              <span className="font-serif text-5xl leading-none text-espresso-600 opacity-60 select-none">&ldquo;</span>
+              <blockquote className="font-serif text-[16px] sm:text-[18px] italic text-espresso-700 leading-relaxed -mt-4 mb-4">
                 {quote.text}
               </blockquote>
-              <p className="text-[11px] tracking-[0.06em] text-espresso-400 italic">
+              <p className="text-[11px] tracking-[0.06em] text-espresso-600 italic">
                 {quote.attribution}
               </p>
             </div>
@@ -259,7 +249,7 @@ export default function DashboardPage() {
             <p className="text-[12px] text-espresso-550 mb-5">Progress across all five</p>
 
             <div className="space-y-10">
-              {pillarProgress.map(p => {
+              {READINESS_LIST.map(p => {
                 const pillar = PILLARS_BY_KEY[p.key]
                 const PillarIcon = pillar.icon
                 return (
@@ -273,18 +263,13 @@ export default function DashboardPage() {
 
                   <div className='w-full'>
                     <div className='flex flex-row justify-between w-full'>
-                      <span className="text-[13.5px] font-medium text-espresso-800 w-18 shrink-0">{pillar.label}</span>
+                      <span className="text-[13px] font-medium text-espresso-800 w-18 shrink-0">{pillar.label}</span>
                       <div className='space-x-4'>
-                        <span className="text-[12px] text-espresso-500 tabular-nums w-8 text-right">{p.pct}%</span>
-                        <span className="text-[12px] text-espresso-400 tabular-nums w-7 text-right">{p.done}/{p.total}</span>
+                        <span className="text-[12px] text-espresso-600 tabular-nums w-8 text-right">{p.readiness}%</span>
+                        <span className="text-[12px] text-espresso-600 tabular-nums w-7 text-right">{p.done}/{p.total}</span>
                       </div>
                     </div>
-                    <div className="flex-1 h-1.25 rounded-full bg-cream-200 overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-[width] duration-800 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                        style={{ width: `${p.pct}%`, background: pillar.banner }}
-                      />
-                    </div>
+                    <ProgressBar value={p.readiness} color={pillar.banner} height="h-1.25" />
                   </div>
                 </div>
                 )
@@ -300,15 +285,15 @@ export default function DashboardPage() {
             <div className="flex items-start justify-between mb-1">
               <div>
                 <h3 className="text-[15px] font-semibold text-espresso-900 mb-0.5">Today's focus</h3>
-                <p className="text-[12px] text-espresso-400">3 tasks · take what you can</p>
+                <p className="text-[12px] text-espresso-600">3 tasks · take what you can</p>
               </div>
-              <span className="flex items-center gap-1.5 text-[12px] text-espresso-500 border border-espresso-200 rounded-full px-3 py-1">
+              <span className="flex items-center gap-1.5 text-[12px] text-espresso-600 border border-espresso-250 rounded-full px-3 py-1">
                 <Clock size={13} strokeWidth={1.8} />
                 ~1 hr
               </span>
             </div>
 
-            <div className="mt-5 space-y-0 divide-y divide-black/6">
+            <div className="mt-5 space-y-0 divide-y divide-espresso-250">
               {todayTasks.map((task, i) => (
                 <div key={i} className="flex items-center gap-3 py-3.5 first:pt-0 group cursor-pointer">
                   <span
@@ -316,8 +301,8 @@ export default function DashboardPage() {
                     style={{ background: PILLARS_BY_KEY[task.category.toLowerCase()]?.banner }}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13.5px] font-semibold text-espresso-800 group-hover:text-espresso-900 transition-colors">{task.title}</p>
-                    <p className="text-[11px] text-espresso-400 mt-0.5">{task.category} · {task.time}</p>
+                    <p className="text-[13px] font-semibold text-espresso-800 group-hover:text-espresso-900 transition-colors">{task.title}</p>
+                    <p className="text-[11px] text-espresso-600 mt-0.5">{task.category} · {task.time}</p>
                   </div>
                   <span className={`text-[11px] font-medium border rounded-full px-2.5 py-0.5 shrink-0 ${task.tagColor}`}>
                     {task.tag}
@@ -331,7 +316,7 @@ export default function DashboardPage() {
           {/* Vault status */}
           <Card className="p-6">
             <h3 className="text-[15px] font-semibold text-espresso-900 mb-0.5">Vault status</h3>
-            <p className="text-[12px] text-espresso-400 mb-5">Security overview</p>
+            <p className="text-[12px] text-espresso-600 mb-5">Security overview</p>
 
             <div className="space-y-3.5">
               {vaultItems.map((item, i) => (
@@ -351,11 +336,11 @@ export default function DashboardPage() {
             </div>
 
             {/* Action required */}
-            <div className="mt-5 pt-4 border-t border-black/6">
-              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-500 uppercase mb-2.5">Action required</p>
+            <div className="mt-5 pt-4 border-t border-espresso-250">
+              <p className="text-[10px] font-bold tracking-[0.14em] text-espresso-600 uppercase mb-2.5">Action required</p>
               <a
                 href="/dashboard/vault"
-                className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-espresso-700 bg-gold-100 border border-espresso-200 rounded-full px-3 py-1.5 hover:bg-gold-100/70 transition-colors no-underline"
+                className="inline-flex items-center gap-1.5 text-[13px] font-medium text-espresso-700 bg-gold-100 border border-espresso-250 rounded-full px-3 py-1.5 hover:bg-gold-100/70 transition-colors no-underline"
               >
                 <AlertTriangle size={13} strokeWidth={2} className="text-gold-600" />
                 3 critical items missing
