@@ -15,10 +15,9 @@ No test suite is configured.
 
 ## Architecture
 
-**Stack:** React 19 + Vite 8 + Tailwind CSS v4, JavaScript (`.jsx`), react-router-dom v7, lucide-react icons.
+**Stack:** React 19 + Vite 8 + Tailwind CSS v4, TypeScript (`.ts`/`.tsx`), react-router-dom v7, lucide-react icons.
 
-**Routing** is defined entirely in `src/App.jsx`:
-
+**Routing** is defined entirely in `src/App.tsx`:
 | Path | Component |
 |---|---|
 | `/` | `LandingPage` (inline, composed of section components) |
