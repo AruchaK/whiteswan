@@ -168,3 +168,35 @@
     opacity: 1;
   }
 }
+
+/* react-day-picker — WhiteSwan brand theming. Scoped to the .ws-calendar
+   popover so it never leaks onto other date pickers. Selected day is a filled
+   espresso pill (the base library ships an outline-only selection). */
+.ws-calendar .rdp-root {
+  --rdp-accent-color: #2A1D14;
+  --rdp-accent-background-color: #F5EDE3;
+  --rdp-today-color: #7A5E3F;
+  font-family: var(--font-sans);
+  color: var(--color-espresso-800);
+  margin: 0;
+}
+
+.ws-calendar .rdp-day_button:hover:not([disabled]) {
+  background-color: var(--color-espresso-100);
+}
+
+.ws-calendar .rdp-selected .rdp-day_button {
+  background-color: var(--color-espresso-900);
+  color: var(--color-cream-50);
+  border-color: var(--color-espresso-900);
+}
+
+.ws-calendar .rdp-chevron {
+  fill: var(--color-espresso-600);
+}
+
+.ws-calendar .rdp-caption_label,
+.ws-calendar .rdp-dropdown {
+  color: var(--color-espresso-900);
+  font-weight: 500;
+}
